@@ -6,7 +6,7 @@ body {
 .top_head {
 	background: white;
 	display: flex;
-	width: 90%;
+	width: 100%;
 	height: 100px;
 	margin: 0 auto;
 	position: sticky;
@@ -124,9 +124,8 @@ body {
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	display: flex;
-	width: 90%;
+	width: 100%;
 	height: 900px;
-	margin: 0 auto;
 	margin-bottom: 50px;
 	color: white;
 }
@@ -144,3 +143,86 @@ body {
 	height: 100%;
 	line-height: 70px;
 }
+
+.middle_page {
+	width: 90%;
+	height: 500px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	display: flex;
+}
+
+.middle_page .caption {
+	background: url("imgs/flower.png");
+	background-size: 100%;
+	background-position: center;
+	display: flex;
+	flex-direction: column;
+	width: 30%;
+	height: 85%;
+	margin: auto;
+}
+
+.middle_page .caption div#title {
+	height: 15%;
+	margin-top: 30%;
+}
+
+.middle_page .caption div#title p{
+	width: 80%;
+	height: 100%;
+	margin: auto;
+	font-size: 24px;
+	color: white;
+	line-height: 65px;
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.middle_page .caption div#caption {
+	margin-top: 25%;
+}
+
+.middle_page .caption div#caption p{
+	color: white;
+	width: 80%;
+	height: 100%;
+	margin: auto;
+	text-align: center;
+}
+
+.middle_page .caption div#button {
+	height: 20%;
+	margin-top: 5%;
+	text-align: center;
+}
+
+.middle_page .caption div#button button{
+	width: 65%;
+	height: 50%;
+	background-color: transparent;
+	position: relative;
+	top: 25%;
+	font-size: 10px;
+	color: white;
+	border: 2px solid white;
+	text-transform: uppercase;
+
+}
+
+.middle_page .figure {
+	background-color: blueviolet;
+	width: 60%;
+	height: 85%;
+	margin: auto;
+	margin-left: auto;
+}
+
+.middle_page .figure img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 100%;
+}
+
