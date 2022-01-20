@@ -1,58 +1,146 @@
-hr { 
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    border-style: inset;
-    border-width: 10px;
-	border-color:red;
-} 
-
-.my_navi{
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: white;
-	position: fixed;
-  	top: 1;
-	z-index: 10000;
+body {
+	background: white;
+	margin: 0 0;
 }
 
-.my_navi > .title{
-	float: left;
+.top_head {
+	background: white;
+	display: flex;
+	width: 90%;
+	height: 100px;
+	margin: 0 auto;
+	position: sticky;
+	top: 0;
+	z-index: 10000;
+	color: white;
+}
+
+.top_head .title{
+	width: 30%;
+	height: 100%;
 	text-align: center;
-	padding: 30px 100px;
 	font-size: 25px;
 	color: #f3c50e;
-	line-height: 30px;
+	line-height: 100px;
 }
 
-.my_navi > .item{
+.top_head .my_navi{
+	width: 70%;
+    margin: auto;
+    padding: 0;
+}
+
+.top_head .my_navi ul{
+	display: flex;
+	height: 60%;
+	margin: auto;
+	list-style-type: none;
+	overflow: hidden;
+}
+
+.top_head .my_navi li{
 	float: right;
+	text-align: center;
+	margin: 0 auto;
 }
 
-.my_navi > .item > a {
-	display: block;
+
+.top_head .my_navi li a {
 	color: black;
 	text-align: center;
 	padding: 30px 20px;
 	font-size: 15px;
 	line-height: 30px;
 	text-decoration: none;
-	box-sizing: border-box;
 }
 
-/* Change the link color to #111 (black) on hover */
-.my_navi > .item > a:hover {
+.top_head .my_navi li a:hover {
 	color: #f3c50e;
 }
 
-.my_navi > .item > .active {
+.top_head .my_navi li .active {
 	color: #f3c50e;
 }
 
-.selector {
-	word-wrap: break-word;      /* IE 5.5-7 */
-	white-space: -moz-pre-wrap; /* Firefox 1.0-2.0 */
-	white-space: pre-wrap;      /* current browsers */
+.top_head .my_navi li:last-child {
+	margin-right: 0px;
+}
+
+.bottom {
+	background: #f3c50e;
+	display: flex;
+	width: 90%;
+	height: 100px;
+	margin: 0 auto;
+	margin-bottom: 20px;
+	color: white;
+}
+
+.bottom section.info  {
+	width: 60%;
+	margin: auto;
+}
+
+.bottom section ul  {
+	list-style-type: none;
+	display: flex;
+	overflow: hidden;
+	width: 80%;
+	height: 50px;
+	margin: 0 auto;
+	font-size: 10px;
+}
+
+.bottom section ul li  {
+	border-right: 1px dashed white;
+	width: 80%;
+	margin: 0 auto;
+	margin-left: 5px;
+}
+
+.bottom section ul li:last-child {
+	border-right: none;
+}
+
+.bottom section.book  {
+	display: inline-block;
+	width: 30%;
+	height: 40%;
+	margin: auto;
+	text-align: center;
+}
+
+.bottom section.book button  {
+	background-color: #f3c50e;
+	height: 100%;
+	color: white;
+	border: 2px solid white;
+}
+
+.front_page {
+	background: url("./imgs/image3.png");
+	background-size: cover;
+	background-position: bottom;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	display: flex;
+	width: 90%;
+	height: 900px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	color: white;
+}
+
+.front_page .slogan {
+	width: 40%;
+	height: 30%;
+	margin: auto;
+}
+
+.front_page .slogan p {
+	text-align: center;
+	font-size: 45px;
+	margin: auto;
+	height: 100%;
+	line-height: 70px;
 }
