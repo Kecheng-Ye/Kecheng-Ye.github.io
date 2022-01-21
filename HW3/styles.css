@@ -3,7 +3,7 @@ body {
 	margin: 0 0;
 }
 
-.top_head {
+header {
 	background: white;
 	display: flex;
 	width: 100%;
@@ -15,22 +15,28 @@ body {
 	color: white;
 }
 
-.top_head .title{
+header .top_head {
+	display: flex;
+	width: 90%;
+	margin: auto;
+}
+
+header .top_head .title{
 	width: 30%;
 	height: 100%;
 	text-align: center;
 	font-size: 25px;
-	color: #f3c50e;
+	color: #af9453;
 	line-height: 100px;
 }
 
-.top_head .my_navi{
+header .top_head .my_navi{
 	width: 70%;
     margin: auto;
     padding: 0;
 }
 
-.top_head .my_navi ul{
+header .top_head .my_navi ul{
 	display: flex;
 	height: 60%;
 	margin: auto;
@@ -38,14 +44,14 @@ body {
 	overflow: hidden;
 }
 
-.top_head .my_navi li{
+header .top_head .my_navi li{
 	float: right;
 	text-align: center;
 	margin: 0 auto;
 }
 
 
-.top_head .my_navi li a {
+header .top_head .my_navi li a {
 	color: black;
 	text-align: center;
 	padding: 30px 20px;
@@ -54,20 +60,20 @@ body {
 	text-decoration: none;
 }
 
-.top_head .my_navi li a:hover {
-	color: #f3c50e;
+header .top_head .my_navi li a:hover {
+	color: #af9453;
 }
 
-.top_head .my_navi li .active {
-	color: #f3c50e;
+header .top_head .my_navi li .active {
+	color: #af9453;
 }
 
-.top_head .my_navi li:last-child {
+header .top_head .my_navi li:last-child {
 	margin-right: 0px;
 }
 
 .bottom {
-	background: #f3c50e;
+	background: #af9453;
 	display: flex;
 	width: 90%;
 	height: 100px;
@@ -111,7 +117,7 @@ body {
 }
 
 .bottom section.book button  {
-	background-color: #f3c50e;
+	background-color: #af9453;
 	height: 100%;
 	color: white;
 	border: 2px solid white;
@@ -120,12 +126,12 @@ body {
 .front_page {
 	background: url("./imgs/image3.png");
 	background-size: cover;
-	background-position: bottom;
+	background-position: 0 -100px; 
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	display: flex;
 	width: 100%;
-	height: 900px;
+	height: 800px;
 	margin-bottom: 50px;
 	color: white;
 }
@@ -146,13 +152,44 @@ body {
 
 .middle_page {
 	width: 90%;
-	height: 500px;
+	height: 600px;
 	margin: 0 auto;
 	margin-bottom: 20px;
 	display: flex;
 }
 
-.middle_page .caption {
+.middle_page .figure {
+	width: 60%;
+	height: 85%;
+	margin: auto;
+	margin-left: auto;
+	margin-right: 0;
+}
+
+.middle_page .figure img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: 100%;
+}
+
+.gallery_sect {
+	background: url("./imgs/image2.png");
+	background-size: cover;
+	background-position: 0 250px; 
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	display: flex;
+	width: 90%;
+	height: 600px;
+	margin: auto;
+	margin-bottom: 50px;
+	color: white;
+}
+
+
+* .flower_caption {
 	background: url("imgs/flower.png");
 	background-size: 100%;
 	background-position: center;
@@ -163,12 +200,12 @@ body {
 	margin: auto;
 }
 
-.middle_page .caption div#title {
+.flower_caption div#title {
 	height: 15%;
-	margin-top: 30%;
+	margin-top: 40%;
 }
 
-.middle_page .caption div#title p{
+.flower_caption div#title p{
 	width: 80%;
 	height: 100%;
 	margin: auto;
@@ -179,25 +216,28 @@ body {
 	text-transform: uppercase;
 }
 
-.middle_page .caption div#caption {
-	margin-top: 25%;
+.flower_caption div#caption {
+	margin-top: 20%;
+	height: 10%;
 }
 
-.middle_page .caption div#caption p{
+.flower_caption div#caption p{
 	color: white;
 	width: 80%;
 	height: 100%;
+	font-size: 18px;
 	margin: auto;
 	text-align: center;
+	line-height: 180%;
 }
 
-.middle_page .caption div#button {
-	height: 20%;
+.flower_caption div#button {
+	height: 25%;
 	margin-top: 5%;
 	text-align: center;
 }
 
-.middle_page .caption div#button button{
+.flower_caption div#button button{
 	width: 65%;
 	height: 50%;
 	background-color: transparent;
@@ -209,20 +249,3 @@ body {
 	text-transform: uppercase;
 
 }
-
-.middle_page .figure {
-	background-color: blueviolet;
-	width: 60%;
-	height: 85%;
-	margin: auto;
-	margin-left: auto;
-}
-
-.middle_page .figure img{
-	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	width: 100%;
-	height: 100%;
-}
-
