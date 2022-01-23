@@ -76,7 +76,7 @@ header .top_head .my_navi li:last-child {
 	background: #af9453;
 	display: flex;
 	width: 90%;
-	height: 100px;
+	height: 140px;
 	margin: 0 auto;
 	margin-bottom: 20px;
 	color: white;
@@ -94,14 +94,17 @@ header .top_head .my_navi li:last-child {
 	width: 80%;
 	height: 50px;
 	margin: 0 auto;
-	font-size: 10px;
 }
 
 .bottom section ul li  {
-	border-right: 1px dashed white;
+	/* background-color: green; */
+	border-right: 1px solid white;
 	width: 80%;
-	margin: 0 auto;
+	margin-top: 5px;
 	margin-left: 5px;
+	margin-right: 5px;
+	font-size: 13px;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .bottom section ul li:last-child {
@@ -118,9 +121,11 @@ header .top_head .my_navi li:last-child {
 
 .bottom section.book button  {
 	background-color: #af9453;
-	height: 100%;
+	width: 60%;
+	height: 80%;
 	color: white;
 	border: 2px solid white;
+	text-transform: uppercase;
 }
 
 .front_page {
@@ -148,6 +153,8 @@ header .top_head .my_navi li:last-child {
 	margin: auto;
 	height: 100%;
 	line-height: 70px;
+	font-family: "Garamond";
+	letter-spacing: 0.2em;
 }
 
 .middle_page {
@@ -188,20 +195,20 @@ header .top_head .my_navi li:last-child {
 }
 
 
-* .flower_caption {
+.flower_caption {
 	background: url("imgs/flower.png");
 	background-size: 100%;
 	background-position: center;
 	display: flex;
 	flex-direction: column;
-	width: 30%;
+	width: 35%;
 	height: 85%;
 	margin: auto;
 }
 
 .flower_caption div#title {
 	height: 15%;
-	margin-top: 40%;
+	margin-top: 35%;
 }
 
 .flower_caption div#title p{
@@ -210,24 +217,30 @@ header .top_head .my_navi li:last-child {
 	margin: auto;
 	font-size: 24px;
 	color: white;
-	line-height: 65px;
+	line-height: 100%;
 	text-align: center;
 	text-transform: uppercase;
+	font-family: "Arial";
+	letter-spacing: 0.2em;
 }
 
 .flower_caption div#caption {
-	margin-top: 20%;
 	height: 10%;
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 20%;
 }
 
 .flower_caption div#caption p{
 	color: white;
 	width: 80%;
 	height: 100%;
-	font-size: 18px;
+	font-size: 20px;
+	letter-spacing: 0.15em;
 	margin: auto;
 	text-align: center;
-	line-height: 180%;
+	line-height: 150%;
+	font-family: "Times New Roman";
 }
 
 .flower_caption div#button {
@@ -237,16 +250,15 @@ header .top_head .my_navi li:last-child {
 }
 
 .flower_caption div#button button{
-	width: 65%;
-	height: 50%;
+	width: 50%;
+	height: 30%;
 	background-color: transparent;
 	position: relative;
 	top: 25%;
-	font-size: 10px;
+	font-size: 13px;
 	color: white;
 	border: 2px solid white;
 	text-transform: uppercase;
-
 }
 
 
@@ -276,33 +288,41 @@ header .top_head .my_navi li:last-child {
 
 .quote .midlle {
 	width: 70%;
-	height: 50%;
+	height: 70%;
 	display: flex;
 	margin: auto;
 	flex-direction: column;
 }
 
-.quote .midlle #quote_mark {
-	font-family:'Times New Roman', Times, serif;
-	text-align: center;
-	font-size: 50px;
+.quote .midlle .quote_mark {
+	height: 30%;
+	display: flex;
+	justify-content: center;
+	font-family: "Times New Roman";
+	font-size: 80px;
 }
 
-.quote .midlle #quote {
-	margin-top: 3%;
+.quote .midlle .quote_mark p {
+	width: 30%;
+	height: 50%;
+	margin: auto;
+	margin-bottom: 2%;
 	text-align: center;
-	font-size: 23px;
 }
 
-.quote .midlle #quote {
-	margin-top: 3%;
+.quote .midlle .word {
+	height: 50%;
 	text-align: center;
-	font-size: 23px;
+	font-family: "Times New Roman";
+	letter-spacing: 0.1em;
+	font-size: 25px;
+	line-height: 175%;
 }
 
-.quote .midlle #author {
-	margin-top: 5%;
+.quote .midlle .author {
+	height: 20%;
 	text-align: center;
 	font-size: 15px;
 	color: #af9453;
+	margin-top: 5%;
 }
