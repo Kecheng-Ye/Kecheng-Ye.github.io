@@ -78,7 +78,7 @@ header .top_head .my_navi li:last-child {
 	width: 90%;
 	height: 140px;
 	margin: 0 auto;
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 	color: white;
 }
 
@@ -130,13 +130,13 @@ header .top_head .my_navi li:last-child {
 
 .front_page {
 	background: url("./imgs/image3.png");
-	background-size: cover;
-	background-position: 0 -100px; 
 	background-repeat: no-repeat;
 	background-attachment: fixed;
+	background-size: 1294px 1300px;
 	display: flex;
-	width: 100%;
-	height: 800px;
+	width: 1294px;
+	height: 1000px;
+	margin: auto;
 	margin-bottom: 50px;
 	color: white;
 }
@@ -159,7 +159,7 @@ header .top_head .my_navi li:last-child {
 
 .middle_page {
 	width: 90%;
-	height: 600px;
+	height: 700px;
 	margin: 0 auto;
 	display: flex;
 }
@@ -188,7 +188,7 @@ header .top_head .my_navi li:last-child {
 	background-attachment: fixed;
 	display: flex;
 	width: 90%;
-	height: 600px;
+	height: 700px;
 	margin: auto;
 	margin-bottom: 50px;
 	color: white;
@@ -208,7 +208,7 @@ header .top_head .my_navi li:last-child {
 
 .flower_caption div#title {
 	height: 15%;
-	margin-top: 35%;
+	margin-top: 30%;
 }
 
 .flower_caption div#title p{
