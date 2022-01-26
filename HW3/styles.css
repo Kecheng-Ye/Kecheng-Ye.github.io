@@ -133,11 +133,9 @@ header .top_head .my_navi li:last-child {
 	background: url("./imgs/image3.png");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	background-size: 1294px 1300px;
 	display: flex;
-	width: 1294px;
+	width: 1239px;
 	height: 1000px;
-	margin: auto;
 	margin-bottom: 50px;
 	color: white;
 }
