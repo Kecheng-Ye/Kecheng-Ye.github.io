@@ -1,0 +1,19 @@
+{
+    "brief": {
+        "exchange": "NASDAQ NMS - GLOBAL MARKET",
+        "finnhubIndustry": "Automobiles",
+        "ipo": "2010-06-09",
+        "logo": "https://finnhub.io/api/logo?symbol=TSLA",
+        "name": "Tesla Inc",
+        "ticker": "TSLA"
+    },
+    "summary": {
+        "d": -25.59,
+        "dp": -2.7479,
+        "h": 931.4999,
+        "l": 889.47,
+        "o": 928.18,
+        "pc": 931.25,
+        "t": "02 February,2022"
+    }
+}
