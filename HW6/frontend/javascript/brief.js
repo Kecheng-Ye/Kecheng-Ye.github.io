@@ -4,7 +4,7 @@ const brief_format = template`
 <div id="brief_layout">
   <img src=\'${'brief.logo'}\' alt=${'brief.name'} icon />
 
-  <ul class="my_info_list">
+  <ul class="my_info_list" style="height: 50%;">
     <li>
       <div class="key">Company Name</div>
       <div class="value">${'brief.name'}</div>

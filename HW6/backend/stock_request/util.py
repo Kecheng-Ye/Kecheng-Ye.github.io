@@ -12,7 +12,7 @@ brief_required          = {"logo": identity, "name": identity, "ticker": identit
 # summary constant
 summary_req             = "https://finnhub.io/api/v1/quote?symbol={}&token={}"
 summary_required        = {
-                            "t"   : (lambda timestamp : datetime.datetime.fromtimestamp(timestamp).strftime("%d %B,%Y")),
+                            "t"   : (lambda timestamp : datetime.datetime.fromtimestamp(timestamp).strftime("%d %B, %Y")),
                             "pc"  : identity,
                             "o"   : identity,
                             "h"   : identity,
@@ -20,3 +20,7 @@ summary_required        = {
                             "d"   : identity,
                             "dp"  : identity
                         }
+
+# Recommendation trend constant
+recommend_req          = "https://finnhub.io/api/v1/stock/recommendation?symbol={}&token={}"
+recommend_required     = {"strongSell" : identity, "sell" : identity, "hold" : identity, "buy": identity, "strongBuy" : identity}
