@@ -1,4 +1,4 @@
-import {template, content} from "./content.js"
+import {template, content, identity} from "./content.js"
 
 const brief_format = template`
 <div id="brief_layout">
@@ -34,6 +34,17 @@ const brief_format = template`
 </div>`;
 
 export default class brief_content extends content {
+  constructor(main = null, DOM_id = "") {
+    super(main, DOM_id);
+    this.required = {"logo": identity, 
+                     "name": identity, 
+                     "ticker": identity, 
+                     "exchange": identity, 
+                     "ipo": identity, 
+                     "finnhubIndustry": identity};
+  }
+  
+
   show_content() {
     if(Object.keys(this.main.data).length == 0) return "";
     return brief_format(this.main.data);

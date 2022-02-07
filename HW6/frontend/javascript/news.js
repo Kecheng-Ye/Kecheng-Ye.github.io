@@ -1,4 +1,4 @@
-import {template, content} from "./content.js"
+import {template, content, identity} from "./content.js"
 
 const news_format = "news";
 

@@ -1,6 +1,8 @@
-import {template, content} from "./content.js"
+import {template, content, identity} from "./content.js"
+import { dateFormat } from "./utils.js";
 
-const arrow_imgs = {"upward" : "./img/GreenArrowUp.png", "downward" : "./img/RedArrowDown.png"}
+
+const arrow_imgs = {"upward" : "/frontend/img/GreenArrowUp.png", "downward" : "/frontend/img/RedArrowDown.png"}
 
 const summary_format = template`
 <div id="summary_content">
@@ -69,9 +71,49 @@ const summary_format = template`
   </p>
 </div>`;
 
-
 export default class summary_content extends content {
+  constructor(main = null, DOM_id = "") {
+    super(main, DOM_id);
+    this.required = {
+      "t"   : (timestamp) =>  dateFormat(new Date(timestamp * 1000), "d mmmm, yyyy"),
+      "pc"  : identity,
+      "o"   : identity,
+      "h"   : identity,
+      "l"   : identity,
+      "d"   : identity,
+      "dp"  : identity,
+      "strongSell" : identity, 
+      "sell" : identity, 
+      "hold" : identity, 
+      "buy": identity, 
+      "strongBuy" : identity
+    };
+  }
+  
+  waitForCondition(brief) {
+    return new Promise(resolve => {
+      function checkFlag() {
+        if (brief.isReady) {
+          console.log('met');
+          resolve();
+        }else {
+          window.setTimeout(checkFlag, 100); 
+        }
+      }
+      checkFlag();
+    });
+  }
+
+  async process_data(data) {
+    await this.waitForCondition(this.main.buttons['brief']);
+    const new_data = {...data['summary'], ...data['recommend']};
+    super.process_data(new_data);  
+  }
+  
+
   show_content() {
+    if(Object.keys(this.main.data).length == 0) return "";
+
     const combined_data = {
       ...this.main.data.summary, 
       ...this.main.data.recommend,
@@ -80,7 +122,7 @@ export default class summary_content extends content {
       stock_name :this.main.data.brief.ticker
     }
 
-    console.log(combined_data)
+    // console.log(summary_format(combined_data));
 
     return summary_format(combined_data);
   }

@@ -1,7 +1,7 @@
 import datetime
 
 API_KEY = "c7qumeiad3ia6nr4tkfg"
-ERROR   = {"result" : "error"}
+ERROR   = {"Error" : "error"}
 
 identity = lambda x : x
 

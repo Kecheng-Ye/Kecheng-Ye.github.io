@@ -9,13 +9,25 @@ class request_lst(Resource):
     def get(self):
         args = request.args
         stock_name = args["stock_name"]
+        section = args["section"]
+        
+        if isinstance(self.req_list[section], request_lst):
+            return self.get_all(self.req_list[section], stock_name)
+        else:
+            result = self.req_list[section].get(stock_name)
+            if(result == ERROR):
+                return ERROR
+            
+            return result
+        
+    def get_all(self, sub_list, stock_name):
         result = {}
         
-        for name, req in self.req_list.items():
+        for name, req in sub_list.req_list.items():
             one_result = req.get(stock_name)
             if(one_result == ERROR):
                 return ERROR
             
             result[name] = one_result
-
+            
         return result

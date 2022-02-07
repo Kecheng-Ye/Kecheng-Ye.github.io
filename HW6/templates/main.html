@@ -2,17 +2,27 @@
 <html>
 	<head>
 		<title>HW 6</title>
-		<link rel="stylesheet" href="styles.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 	</head>
 
 	<body>
-		<!--search bar-->
-		<header class="search">
-			search bar
-		</header>
+		
+		<div class="search">
+			<p style="margin-top: 30px; font-size:25px; margin-bottom: 15px;">
+				Stock Searc
+			</p>
 
-		<div class="content">
-			<ul class="section_navi">
+			<!-- <div class="search_box">
+				<img src="./img/search-solid.svg" style="float: left; margin-left : 5px;"/>
+				<input type="text" placeholder="Enter Stock Ticker Symbol">
+				<img src="./img/times-solid.svg" style="float: right;margin-right :5px;"/>
+			</div> -->
+
+			<div class="alert_box">nmb</div>
+		</div>
+
+		<div id="content">
+			<!-- <ul class="section_navi">
 				<li>
 					<button type="button" id="brief">Company</button>
 				</li>
@@ -28,9 +38,9 @@
 				<li>
 					<button type="button" id="news">Latest News</button>
 				</li>
-			</ul>
+			</ul> -->
 
-			<div id="main_content">
+			<!-- <div id="main_content"> -->
 				<!-- <div id="summary_content">
 					<ul class="my_info_list" style="height: 65%;">
 						<li>
@@ -96,8 +106,8 @@
 						Recommendation Trends
 					</p>
 				</div> -->
-			</div>
+		<!-- </div> -->
 
-		<script type="module"script src="./javascript/main.js"></script>
+		<script type="module" src={{ url_for('static', filename='./javascript/main.js') }}></script>
 	</body>
 </html>

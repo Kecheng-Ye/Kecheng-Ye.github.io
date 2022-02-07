@@ -4,10 +4,9 @@ import requests
 import json
 
 class base_req(Resource):
-    def __init__(self, req_format, required_field, post_process=identity):
+    def __init__(self, req_format, post_process=identity):
         super().__init__()
         self.request = req_format
-        self.required = required_field
         self.post_process = post_process
         
     def get(self, stock_name):
@@ -18,6 +17,6 @@ class base_req(Resource):
         
         result = self.post_process(result)
         
-        return {key : self.required[key](result[key]) for key in result.keys() if key in self.required}
+        return result
      
         
