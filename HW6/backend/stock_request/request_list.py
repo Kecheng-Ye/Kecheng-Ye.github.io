@@ -11,14 +11,16 @@ class request_lst(Resource):
         stock_name = args["stock_name"]
         section = args["section"]
         
+        result = {}
+        
         if isinstance(self.req_list[section], request_lst):
-            return self.get_all(self.req_list[section], stock_name)
+            result = self.get_all(self.req_list[section], stock_name)
         else:
             result = self.req_list[section].get(stock_name)
-            if(result == ERROR):
-                return ERROR
+
+        # print(result)
             
-            return result
+        return result
         
     def get_all(self, sub_list, stock_name):
         result = {}

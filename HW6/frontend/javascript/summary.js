@@ -1,5 +1,5 @@
 import {template, content, identity} from "./content.js"
-import { dateFormat } from "./utils.js";
+import { dateFormat, FAILED} from "./utils.js";
 
 
 const arrow_imgs = {"upward" : "/frontend/img/GreenArrowUp.png", "downward" : "/frontend/img/RedArrowDown.png"}
@@ -9,7 +9,7 @@ const summary_format = template`
   <ul class="my_info_list" style="height: 65%;">
     <li>
       <div class="key">Stock Ticker Symbol</div>
-      <div class="value">${'stock_name'}</div>
+      <div class="value">${'symbol'}</div>
     </li>
 
     <li>
@@ -72,8 +72,8 @@ const summary_format = template`
 </div>`;
 
 export default class summary_content extends content {
-  constructor(main = null, DOM_id = "") {
-    super(main, DOM_id);
+  constructor(main = null, DOM_id = "", name = "") {
+    super(main, DOM_id, name);
     this.required = {
       "t"   : (timestamp) =>  dateFormat(new Date(timestamp * 1000), "d mmmm, yyyy"),
       "pc"  : identity,
@@ -86,28 +86,18 @@ export default class summary_content extends content {
       "sell" : identity, 
       "hold" : identity, 
       "buy": identity, 
-      "strongBuy" : identity
+      "strongBuy" : identity,
+      "symbol" : identity
     };
   }
-  
-  waitForCondition(brief) {
-    return new Promise(resolve => {
-      function checkFlag() {
-        if (brief.isReady) {
-          console.log('met');
-          resolve();
-        }else {
-          window.setTimeout(checkFlag, 100); 
-        }
-      }
-      checkFlag();
-    });
-  }
 
-  async process_data(data) {
-    await this.waitForCondition(this.main.buttons['brief']);
-    const new_data = {...data['summary'], ...data['recommend']};
-    super.process_data(new_data);  
+  process_data(data) {
+    if(this.main.STATUS == FAILED || data.hasOwnProperty("Error")) {
+      super.process_data(data);  
+    }else{
+      const new_data = {...data['summary'], ...data['recommend']};
+      super.process_data(new_data);  
+    }
   }
   
 
@@ -119,7 +109,6 @@ export default class summary_content extends content {
       ...this.main.data.recommend,
       d_arrow : (this.main.data.summary.d >= 0) ? arrow_imgs["upward"] : arrow_imgs["downward"],
       dp_arrow : (this.main.data.summary.dp >= 0) ? arrow_imgs["upward"] : arrow_imgs["downward"],
-      stock_name :this.main.data.brief.ticker
     }
 
     // console.log(summary_format(combined_data));

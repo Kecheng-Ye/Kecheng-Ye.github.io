@@ -1,8 +1,9 @@
 import {template, content, identity} from "./content.js"
+import { createRequest , query} from "./utils.js";
 
 const brief_format = template`
 <div id="brief_layout">
-  <img src=\'${'brief.logo'}\' alt=${'brief.name'} icon />
+  <img src=\'${'brief.logo'}\' alt=${'brief.name'} icon style="width:128px; height:128px;"/>
 
   <ul class="my_info_list" style="height: 50%;">
     <li>
@@ -34,8 +35,8 @@ const brief_format = template`
 </div>`;
 
 export default class brief_content extends content {
-  constructor(main = null, DOM_id = "") {
-    super(main, DOM_id);
+  constructor(main = null, DOM_id = "", name = "") {
+    super(main, DOM_id, name);
     this.required = {"logo": identity, 
                      "name": identity, 
                      "ticker": identity, 
@@ -43,7 +44,7 @@ export default class brief_content extends content {
                      "ipo": identity, 
                      "finnhubIndustry": identity};
   }
-  
+
 
   show_content() {
     if(Object.keys(this.main.data).length == 0) return "";

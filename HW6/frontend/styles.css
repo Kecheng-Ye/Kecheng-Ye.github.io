@@ -3,7 +3,7 @@ html, body{
     margin: 0 0;
 }
 
-.search {
+#search {
     margin: 0 0;
     background-image: url("./img/back.svg");
     background-size: 100% 100%;
@@ -17,10 +17,10 @@ html, body{
     flex-direction: column;
 }
 
-.search .search_box {
+#search #search_box {
     background-color: white;
+    position: relative;
     width: 60%;
-    height: 40px;
     margin-top: 5px;
     border-radius: 10px;
     display: flex;
@@ -29,7 +29,7 @@ html, body{
     box-shadow: 0px 2px 1px grey;
 }
 
-.search .search_box img {
+#search #search_box img {
     width: 20px;
     height: 20px;
     display: flex;
@@ -39,11 +39,11 @@ html, body{
     filter:  invert(84%) sepia(1%) saturate(0%) hue-rotate(225deg) brightness(96%) contrast(92%);
 }
 
-.search .search_box img:hover {
+#search #search_box img:hover {
     filter:  invert(55%) sepia(0%) saturate(0%) hue-rotate(208deg) brightness(99%) contrast(91%);
 }
 
-.search .search_box input[type=text] {
+#search #search_box input[type=text] {
     width: 90%;
     height: 100%;
     font: 50px;
@@ -101,7 +101,7 @@ html, body{
 }
 
 #brief_layout {
-    width : 55%;
+    width : 50%;
     height: 60%;
     margin: 0 auto;
     text-align: center;
@@ -225,11 +225,13 @@ html, body{
 }
 
 
-.alert_box {
-    width: 200px;
-    height: 30px;
+#alert_box {
+    top:110%;
+    left: 40%;
+    width: 160px;
+    height: 20px;
     background-color: white;
-    position: relative;
+    position: absolute;
     padding: 3px;
     display: flex;
     align-items: center;
@@ -237,19 +239,42 @@ html, body{
     border-style: solid;
     border-color: black;
     border-width: 1px;
-    border-radius: 10px;
-
+    border-radius: 5px;
+    z-index: 10;
 }
 
-.alert_box::after {
+#alert_box::before {
     content: "";
     position: absolute;
     display: block;
-    top:-10px;
+    top:-5px;
     left: 35px;
-    width: 20px;
-    height: 20px;
+    width: 11px;
+    height: 11px;
     background-color: white;
     box-shadow: 1px 1px black;
-    transform: rotate(225deg)
+    transform: rotate(225deg);
+}
+
+#alert_box .exclamation {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10%;
+    height: 80%;
+    background-color: orange;
+    margin: auto 5px auto 2px;
+    color: white;
+    font-size: 15px;
+    padding-top: 1%;
+}
+
+#alert_box .text {
+    height: 85%;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 2px;
+    z-index: 10;
 }

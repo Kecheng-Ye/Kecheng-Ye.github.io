@@ -2,6 +2,7 @@ import brief_content from "./brief.js"
 import news_content from "./news.js"
 import charts_content from "./charts.js"
 import summary_content from "./summary.js"
+import search_bar from "./search_bar.js"
 import {SUCCESS, FAILED, PENDING, query, createRequest} from "./utils.js"
 
 class main_content {
@@ -9,18 +10,20 @@ class main_content {
     this.id = DOM_id;
     this.data = {};
     this.buttons = {
-      brief   : new brief_content(this, "brief"),
-      summary : new summary_content(this, "summary"),
-      // charts  : new charts_content(this, "chart"),
-      // news    : new news_content(this, "news")              
+      brief   : new brief_content(this, "brief", "Company"),
+      summary : new summary_content(this, "summary", "Stock Summary"),
+      // charts  : new charts_content(this, "chart", "Charts"),
+      // news    : new news_content(this, "news", "Latest News")              
     };
-    
+
     // defaultly we are on the Company section
     this.current_btn = this.buttons.brief;
     this.STATUS = PENDING;
   }
 
   reset() {
+    var content_section = document.getElementById("content");
+    content_section.innerHTML = "";
     main.STATUS = PENDING;
     for (let [ _, value] of Object.entries(this.buttons)) {
       value.isReady = false;
@@ -29,6 +32,7 @@ class main_content {
 
   render() {
     var content_section = document.getElementById("content");
+
     if(this.STATUS == FAILED) {
       this.render_fail(content_section);
     }else if(this.STATUS == SUCCESS) {
@@ -49,9 +53,8 @@ class main_content {
     var button_lst = document.createElement('ul');
     button_lst.classList.add("section_navi");
     this.register_buttons(button_lst);
-    button_lst.classList.add("section_navi");
     content.appendChild(button_lst);
-    
+
     var main_content = document.createElement('div');
     main_content.id = "main_content";
     content.appendChild(main_content);
@@ -61,7 +64,7 @@ class main_content {
   register_buttons(button_lst) {
     for (let [ _, value] of Object.entries(this.buttons)) {
       let new_button = document.createElement('li');
-      new_button.innerHTML = `<button type="button" id="${value.id}">Company</button>`;
+      new_button.innerHTML = `<button type="button" id="${value.id}">${value.name}</button>`;
       new_button.onclick = this.content_generator(value);
       button_lst.appendChild(new_button);
     }
@@ -84,7 +87,7 @@ class main_content {
 
   do_query(stock_name) {
     this.reset();
-  
+    
     for (let [ _, value] of Object.entries(this.buttons)) {
       createRequest(query({"stock" : stock_name, "sec" : value.id}), value.process_data.bind(value));
     }
@@ -92,6 +95,9 @@ class main_content {
 }
 
 var main = new main_content("main_content");
+var bar = new search_bar(document.getElementById("search"), main);
 
-main.do_query("TSLA");
+window.addEventListener("resize", function(event) {
+  bar.render();
+})
 

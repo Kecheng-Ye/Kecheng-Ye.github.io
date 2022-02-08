@@ -2,9 +2,10 @@ import {query, template, identity, SUCCESS, FAILED, PENDING} from "./utils.js";
 
 class content {
 
-  constructor(main = null, DOM_id = "") {
+  constructor(main = null, DOM_id = "", name = "") {
     this.main = main
     this.id = DOM_id
+    this.name = name
     this.required = {}
     this.isReady = false;
   }
@@ -20,10 +21,10 @@ class content {
       });
 
       this.main.data[this.id] = result_data
-      this.isReady = true;
       this.main.STATUS = SUCCESS
     }
 
+    this.isReady = true;
     if(this.main.current_btn == this) this.main.render();
   }
 
