@@ -14,4 +14,7 @@ summary_req             = "https://finnhub.io/api/v1/quote?symbol={}&token={}"
 
 
 # Recommendation trend constant
-recommend_req          = "https://finnhub.io/api/v1/stock/recommendation?symbol={}&token={}"
+recommend_req           = "https://finnhub.io/api/v1/stock/recommendation?symbol={}&token={}"
+
+# Stock charts
+charts_req              = "https://finnhub.io/api/v1/stock/candle?symbol={}&resolution=D&from={}&to={}&token={}"

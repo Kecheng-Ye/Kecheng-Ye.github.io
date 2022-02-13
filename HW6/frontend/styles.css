@@ -278,3 +278,9 @@ html, body{
     padding-top: 2px;
     z-index: 10;
 }
+
+#chart_container {
+    margin-top: 3%;
+    height: 55%;
+
+}

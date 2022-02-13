@@ -15,15 +15,15 @@ api = Api(app)
 
 @app.route('/')
 def home():
-   return render_template('./main.html')
+   return app.send_static_file("./main.html")
 
 def main():
     api.add_resource(request_lst, "/query", endpoint="query", 
                      resource_class_kwargs={
                         'brief'     : base_req(brief_req),
                         'summary'   : request_lst(recommend=base_req(recommend_req, post_process=lambda x : x[0]), #only get the most recent day's recommendation
-                                                  summary=base_req(summary_req)) 
-                                                  
+                                                  summary=base_req(summary_req)),
+                        'charts'    : stock_history_request(charts_req) 
                         }
                     )
     

@@ -1,37 +1,37 @@
 export function template(strings, ...keys) {
-  return (function(...values) {
+  return function (...values) {
     let dict = values[values.length - 1] || {};
     let result = [strings[0]];
-    keys.forEach(function(key, i) {
-      let value = dict
+    keys.forEach(function (key, i) {
+      let value = dict;
       key.split(".").forEach((one_key) => {
-        value = value[one_key]
-      })
+        value = value[one_key];
+      });
 
       result.push(value, strings[i + 1]);
     });
-    return result.join('');
-  });
+    return result.join("");
+  };
 }
 
-export const query = template`http://127.0.0.1:5000/query?stock_name=${'stock'}&section=${'sec'}`
+export const query = template`http://127.0.0.1:5000/query?stock_name=${"stock"}&section=${"sec"}`;
 
-export const identity = f => f;
+export const identity = (f) => f;
 
 export function createRequest(url, callback) {
   var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function() { 
+  xhr.onreadystatechange = function () {
     if (xhr.readyState == 4 && xhr.status == 200)
-        callback(JSON.parse(xhr.responseText));
-  }
+      callback(JSON.parse(xhr.responseText));
+  };
   xhr.open("GET", url, true);
-  xhr.send(null)
+  xhr.send(null);
   return xhr;
 }
 
-export const SUCCESS = Symbol("success")
-export const FAILED = Symbol("failed")
-export const PENDING = Symbol("pending")
+export const SUCCESS = Symbol("success");
+export const FAILED = Symbol("failed");
+export const PENDING = Symbol("pending");
 
 /*
  * Date Format 1.2.3
@@ -47,114 +47,426 @@ export const PENDING = Symbol("pending")
  * The mask defaults to dateFormat.masks.default.
  */
 
-export var dateFormat = function () {
-	var	token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
-		timezone = /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
-		timezoneClip = /[^-+\dA-Z]/g,
-		pad = function (val, len) {
-			val = String(val);
-			len = len || 2;
-			while (val.length < len) val = "0" + val;
-			return val;
-		};
+export var dateFormat = (function () {
+  var token = /d{1,4}|m{1,4}|yy(?:yy)?|([HhMsTt])\1?|[LloSZ]|"[^"]*"|'[^']*'/g,
+    timezone =
+      /\b(?:[PMCEA][SDP]T|(?:Pacific|Mountain|Central|Eastern|Atlantic) (?:Standard|Daylight|Prevailing) Time|(?:GMT|UTC)(?:[-+]\d{4})?)\b/g,
+    timezoneClip = /[^-+\dA-Z]/g,
+    pad = function (val, len) {
+      val = String(val);
+      len = len || 2;
+      while (val.length < len) val = "0" + val;
+      return val;
+    };
 
-	// Regexes and supporting functions are cached through closure
-	return function (date, mask, utc) {
-		var dF = dateFormat;
+  // Regexes and supporting functions are cached through closure
+  return function (date, mask, utc) {
+    var dF = dateFormat;
 
-		// You can't provide utc if you skip other args (use the "UTC:" mask prefix)
-		if (arguments.length == 1 && Object.prototype.toString.call(date) == "[object String]" && !/\d/.test(date)) {
-			mask = date;
-			date = undefined;
-		}
+    // You can't provide utc if you skip other args (use the "UTC:" mask prefix)
+    if (
+      arguments.length == 1 &&
+      Object.prototype.toString.call(date) == "[object String]" &&
+      !/\d/.test(date)
+    ) {
+      mask = date;
+      date = undefined;
+    }
 
-		// Passing date through Date applies Date.parse, if necessary
-		date = date ? new Date(date) : new Date;
-		if (isNaN(date)) throw SyntaxError("invalid date");
+    // Passing date through Date applies Date.parse, if necessary
+    date = date ? new Date(date) : new Date();
+    if (isNaN(date)) throw SyntaxError("invalid date");
 
-		mask = String(dF.masks[mask] || mask || dF.masks["default"]);
+    mask = String(dF.masks[mask] || mask || dF.masks["default"]);
 
-		// Allow setting the utc argument via the mask
-		if (mask.slice(0, 4) == "UTC:") {
-			mask = mask.slice(4);
-			utc = true;
-		}
+    // Allow setting the utc argument via the mask
+    if (mask.slice(0, 4) == "UTC:") {
+      mask = mask.slice(4);
+      utc = true;
+    }
 
-		var	_ = utc ? "getUTC" : "get",
-			d = date[_ + "Date"](),
-			D = date[_ + "Day"](),
-			m = date[_ + "Month"](),
-			y = date[_ + "FullYear"](),
-			H = date[_ + "Hours"](),
-			M = date[_ + "Minutes"](),
-			s = date[_ + "Seconds"](),
-			L = date[_ + "Milliseconds"](),
-			o = utc ? 0 : date.getTimezoneOffset(),
-			flags = {
-				d:    d,
-				dd:   pad(d),
-				ddd:  dF.i18n.dayNames[D],
-				dddd: dF.i18n.dayNames[D + 7],
-				m:    m + 1,
-				mm:   pad(m + 1),
-				mmm:  dF.i18n.monthNames[m],
-				mmmm: dF.i18n.monthNames[m + 12],
-				yy:   String(y).slice(2),
-				yyyy: y,
-				h:    H % 12 || 12,
-				hh:   pad(H % 12 || 12),
-				H:    H,
-				HH:   pad(H),
-				M:    M,
-				MM:   pad(M),
-				s:    s,
-				ss:   pad(s),
-				l:    pad(L, 3),
-				L:    pad(L > 99 ? Math.round(L / 10) : L),
-				t:    H < 12 ? "a"  : "p",
-				tt:   H < 12 ? "am" : "pm",
-				T:    H < 12 ? "A"  : "P",
-				TT:   H < 12 ? "AM" : "PM",
-				Z:    utc ? "UTC" : (String(date).match(timezone) || [""]).pop().replace(timezoneClip, ""),
-				o:    (o > 0 ? "-" : "+") + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4),
-				S:    ["th", "st", "nd", "rd"][d % 10 > 3 ? 0 : (d % 100 - d % 10 != 10) * d % 10]
-			};
+    var _ = utc ? "getUTC" : "get",
+      d = date[_ + "Date"](),
+      D = date[_ + "Day"](),
+      m = date[_ + "Month"](),
+      y = date[_ + "FullYear"](),
+      H = date[_ + "Hours"](),
+      M = date[_ + "Minutes"](),
+      s = date[_ + "Seconds"](),
+      L = date[_ + "Milliseconds"](),
+      o = utc ? 0 : date.getTimezoneOffset(),
+      flags = {
+        d: d,
+        dd: pad(d),
+        ddd: dF.i18n.dayNames[D],
+        dddd: dF.i18n.dayNames[D + 7],
+        m: m + 1,
+        mm: pad(m + 1),
+        mmm: dF.i18n.monthNames[m],
+        mmmm: dF.i18n.monthNames[m + 12],
+        yy: String(y).slice(2),
+        yyyy: y,
+        h: H % 12 || 12,
+        hh: pad(H % 12 || 12),
+        H: H,
+        HH: pad(H),
+        M: M,
+        MM: pad(M),
+        s: s,
+        ss: pad(s),
+        l: pad(L, 3),
+        L: pad(L > 99 ? Math.round(L / 10) : L),
+        t: H < 12 ? "a" : "p",
+        tt: H < 12 ? "am" : "pm",
+        T: H < 12 ? "A" : "P",
+        TT: H < 12 ? "AM" : "PM",
+        Z: utc
+          ? "UTC"
+          : (String(date).match(timezone) || [""])
+              .pop()
+              .replace(timezoneClip, ""),
+        o:
+          (o > 0 ? "-" : "+") +
+          pad(Math.floor(Math.abs(o) / 60) * 100 + (Math.abs(o) % 60), 4),
+        S: ["th", "st", "nd", "rd"][
+          d % 10 > 3 ? 0 : (((d % 100) - (d % 10) != 10) * d) % 10
+        ],
+      };
 
-		return mask.replace(token, function ($0) {
-			return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
-		});
-	};
-}();
+    return mask.replace(token, function ($0) {
+      return $0 in flags ? flags[$0] : $0.slice(1, $0.length - 1);
+    });
+  };
+})();
 
 // Some common format strings
 dateFormat.masks = {
-	"default":      "ddd mmm dd yyyy HH:MM:ss",
-	shortDate:      "m/d/yy",
-	mediumDate:     "mmm d, yyyy",
-	longDate:       "mmmm d, yyyy",
-	fullDate:       "dddd, mmmm d, yyyy",
-	shortTime:      "h:MM TT",
-	mediumTime:     "h:MM:ss TT",
-	longTime:       "h:MM:ss TT Z",
-	isoDate:        "yyyy-mm-dd",
-	isoTime:        "HH:MM:ss",
-	isoDateTime:    "yyyy-mm-dd'T'HH:MM:ss",
-	isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'"
+  default: "ddd mmm dd yyyy HH:MM:ss",
+  shortDate: "m/d/yy",
+  mediumDate: "mmm d, yyyy",
+  longDate: "mmmm d, yyyy",
+  fullDate: "dddd, mmmm d, yyyy",
+  shortTime: "h:MM TT",
+  mediumTime: "h:MM:ss TT",
+  longTime: "h:MM:ss TT Z",
+  isoDate: "yyyy-mm-dd",
+  isoTime: "HH:MM:ss",
+  isoDateTime: "yyyy-mm-dd'T'HH:MM:ss",
+  isoUtcDateTime: "UTC:yyyy-mm-dd'T'HH:MM:ss'Z'",
 };
 
 // Internationalization strings
 dateFormat.i18n = {
-	dayNames: [
-		"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat",
-		"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-	],
-	monthNames: [
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
-		"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"
-	]
+  dayNames: [
+    "Sun",
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri",
+    "Sat",
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
+  monthNames: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
 };
 
 // For convenience...
 Date.prototype.format = function (mask, utc) {
-	return dateFormat(this, mask, utc);
+  return dateFormat(this, mask, utc);
 };
+
+export var test_data = [
+  [
+    [1628640000000, 707.82],
+    [1628726400000, 722.25],
+    [1628812800000, 717.17],
+    [1629072000000, 686.17],
+    [1629158400000, 665.71],
+    [1629244800000, 688.99],
+    [1629331200000, 673.47],
+    [1629417600000, 680.26],
+    [1629676800000, 706.3],
+    [1629763200000, 708.49],
+    [1629849600000, 711.2],
+    [1629936000000, 701.16],
+    [1630022400000, 711.92],
+    [1630281600000, 730.91],
+    [1630368000000, 735.72],
+    [1630454400000, 734.09],
+    [1630540800000, 732.39],
+    [1630627200000, 733.57],
+    [1630972800000, 752.92],
+    [1631059200000, 753.87],
+    [1631145600000, 754.86],
+    [1631232000000, 736.27],
+    [1631491200000, 743],
+    [1631577600000, 744.49],
+    [1631664000000, 755.83],
+    [1631750400000, 756.99],
+    [1631836800000, 759.49],
+    [1632096000000, 730.17],
+    [1632182400000, 739.38],
+    [1632268800000, 751.94],
+    [1632355200000, 753.64],
+    [1632441600000, 774.39],
+    [1632700800000, 791.36],
+    [1632787200000, 777.56],
+    [1632873600000, 781.31],
+    [1632960000000, 775.48],
+    [1633046400000, 775.22],
+    [1633305600000, 781.53],
+    [1633392000000, 780.59],
+    [1633478400000, 782.75],
+    [1633564800000, 793.61],
+    [1633651200000, 785.49],
+    [1633910400000, 791.94],
+    [1633996800000, 805.72],
+    [1634083200000, 811.08],
+    [1634169600000, 818.32],
+    [1634256000000, 843.03],
+    [1634515200000, 870.11],
+    [1634601600000, 864.27],
+    [1634688000000, 865.8],
+    [1634774400000, 894],
+    [1634860800000, 909.68],
+    [1635120000000, 1024.86],
+    [1635206400000, 1018.43],
+    [1635292800000, 1037.86],
+    [1635379200000, 1077.04],
+    [1635465600000, 1114],
+    [1635724800000, 1208.59],
+    [1635811200000, 1172],
+    [1635897600000, 1213.86],
+    [1635984000000, 1229.91],
+    [1636070400000, 1222.09],
+    [1636329600000, 1162.94],
+    [1636416000000, 1023.5],
+    [1636502400000, 1067.95],
+    [1636588800000, 1063.51],
+    [1636675200000, 1033.42],
+    [1636934400000, 1013.39],
+    [1637020800000, 1054.73],
+    [1637107200000, 1089.01],
+    [1637193600000, 1096.38],
+    [1637280000000, 1137.06],
+    [1637539200000, 1156.87],
+    [1637625600000, 1109.03],
+    [1637712000000, 1116],
+    [1637884800000, 1081.92],
+    [1638144000000, 1136.99],
+    [1638230400000, 1144.76],
+    [1638316800000, 1095],
+    [1638403200000, 1084.6],
+    [1638489600000, 1014.97],
+    [1638748800000, 1009.01],
+    [1638835200000, 1051.75],
+    [1638921600000, 1068.96],
+    [1639008000000, 1003.8],
+    [1639094400000, 1017.03],
+    [1639353600000, 966.41],
+    [1639440000000, 958.51],
+    [1639526400000, 975.99],
+    [1639612800000, 926.92],
+    [1639699200000, 932.57],
+    [1639958400000, 899.94],
+    [1640044800000, 938.53],
+    [1640131200000, 1008.87],
+    [1640217600000, 1067],
+    [1640563200000, 1093.94],
+    [1640649600000, 1088.47],
+    [1640736000000, 1086.19],
+    [1640822400000, 1070.34],
+    [1640908800000, 1056.78],
+    [1641168000000, 1199.78],
+    [1641254400000, 1149.59],
+    [1641340800000, 1088.12],
+    [1641427200000, 1064.7],
+    [1641513600000, 1026.96],
+    [1641772800000, 1058.12],
+    [1641859200000, 1064.4],
+    [1641945600000, 1106.22],
+    [1642032000000, 1031.56],
+    [1642118400000, 1049.61],
+    [1642464000000, 1030.51],
+    [1642550400000, 995.65],
+    [1642636800000, 996.27],
+    [1642723200000, 943.9],
+    [1642982400000, 930],
+    [1643068800000, 918.4],
+    [1643155200000, 937.41],
+    [1643241600000, 829.1],
+    [1643328000000, 846.35],
+    [1643587200000, 936.72],
+    [1643673600000, 931.25],
+    [1643760000000, 905.66],
+    [1643846400000, 891.14],
+    [1643932800000, 923.32],
+    [1644192000000, 907.34],
+    [1644278400000, 922],
+    [1644364800000, 932],
+    [1644451200000, 904.55],
+    [1644537600000, 860],
+  ],
+  [
+    [1628640000000, 9800558],
+    [1628726400000, 17681686],
+    [1628812800000, 16731467],
+    [1629072000000, 23103303],
+    [1629158400000, 23721279],
+    [1629244800000, 20349375],
+    [1629331200000, 14313486],
+    [1629417600000, 14841865],
+    [1629676800000, 20264859],
+    [1629763200000, 13083071],
+    [1629849600000, 12645562],
+    [1629936000000, 13214292],
+    [1630022400000, 13833763],
+    [1630281600000, 18604220],
+    [1630368000000, 20855436],
+    [1630454400000, 12676047],
+    [1630540800000, 12796739],
+    [1630627200000, 15271045],
+    [1630972800000, 20039825],
+    [1631059200000, 18793036],
+    [1631145600000, 14077731],
+    [1631232000000, 15184170],
+    [1631491200000, 22952482],
+    [1631577600000, 18524881],
+    [1631664000000, 15357685],
+    [1631750400000, 13923393],
+    [1631836800000, 28204176],
+    [1632096000000, 24757652],
+    [1632182400000, 16330723],
+    [1632268800000, 15126272],
+    [1632355200000, 11947527],
+    [1632441600000, 21373022],
+    [1632700800000, 28070657],
+    [1632787200000, 25381422],
+    [1632873600000, 20942877],
+    [1632960000000, 17955961],
+    [1633046400000, 17031414],
+    [1633305600000, 30483341],
+    [1633392000000, 18432625],
+    [1633478400000, 14632768],
+    [1633564800000, 19195782],
+    [1633651200000, 16738604],
+    [1633910400000, 14200322],
+    [1633996800000, 22020040],
+    [1634083200000, 14120075],
+    [1634169600000, 12247170],
+    [1634256000000, 18924567],
+    [1634515200000, 24207244],
+    [1634601600000, 17381128],
+    [1634688000000, 14032052],
+    [1634774400000, 31481454],
+    [1634860800000, 22880835],
+    [1635120000000, 62852099],
+    [1635206400000, 62414968],
+    [1635292800000, 38526459],
+    [1635379200000, 27213173],
+    [1635465600000, 29918417],
+    [1635724800000, 56048716],
+    [1635811200000, 42737797],
+    [1635897600000, 34628519],
+    [1635984000000, 25397410],
+    [1636070400000, 21628812],
+    [1636329600000, 33445715],
+    [1636416000000, 59105836],
+    [1636502400000, 42802722],
+    [1636588800000, 22396568],
+    [1636675200000, 25573148],
+    [1636934400000, 34775649],
+    [1637020800000, 26542359],
+    [1637107200000, 31445365],
+    [1637193600000, 20898930],
+    [1637280000000, 21642258],
+    [1637539200000, 33072509],
+    [1637625600000, 36171700],
+    [1637712000000, 22560238],
+    [1637884800000, 11680890],
+    [1638144000000, 19464467],
+    [1638230400000, 27092038],
+    [1638316800000, 22934698],
+    [1638403200000, 24371623],
+    [1638489600000, 30773995],
+    [1638748800000, 27221037],
+    [1638835200000, 18694857],
+    [1638921600000, 13968790],
+    [1639008000000, 19812832],
+    [1639094400000, 19888122],
+    [1639353600000, 26198502],
+    [1639440000000, 23602090],
+    [1639526400000, 25056410],
+    [1639612800000, 27590483],
+    [1639699200000, 33626754],
+    [1639958400000, 18826671],
+    [1640044800000, 23839305],
+    [1640131200000, 31211362],
+    [1640217600000, 30904429],
+    [1640563200000, 23715273],
+    [1640649600000, 20107969],
+    [1640736000000, 18718015],
+    [1640822400000, 15680313],
+    [1640908800000, 13577875],
+    [1641168000000, 34895349],
+    [1641254400000, 33416086],
+    [1641340800000, 26706599],
+    [1641427200000, 30112158],
+    [1641513600000, 28054916],
+    [1641772800000, 30604959],
+    [1641859200000, 22021070],
+    [1641945600000, 27913005],
+    [1642032000000, 32403264],
+    [1642118400000, 24308137],
+    [1642464000000, 22329803],
+    [1642550400000, 25147496],
+    [1642636800000, 23496248],
+    [1642723200000, 34472009],
+    [1642982400000, 50791714],
+    [1643068800000, 28865302],
+    [1643155200000, 34955761],
+    [1643241600000, 49036523],
+    [1643328000000, 44929650],
+    [1643587200000, 34812032],
+    [1643673600000, 24379446],
+    [1643760000000, 22264345],
+    [1643846400000, 26285186],
+    [1643932800000, 24541822],
+    [1644192000000, 20331488],
+    [1644278400000, 16909671],
+    [1644364800000, 17419848],
+    [1644451200000, 22042277],
+    [1644537600000, 26492700],
+  ],
+];
