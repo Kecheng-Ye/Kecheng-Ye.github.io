@@ -21,9 +21,13 @@ def main():
     api.add_resource(request_lst, "/query", endpoint="query", 
                      resource_class_kwargs={
                         'brief'     : base_req(brief_req),
+                        
                         'summary'   : request_lst(recommend=base_req(recommend_req, post_process=lambda x : x[0]), #only get the most recent day's recommendation
                                                   summary=base_req(summary_req)),
-                        'charts'    : stock_history_request(charts_req) 
+                        
+                        'charts'    : stock_history_request(charts_req),
+                        
+                        'news'      : stock_news_request(news_req)
                         }
                     )
     

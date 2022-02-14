@@ -101,11 +101,13 @@ export default class summary_content extends content {
       super.process_data(new_data);
     }
 
-    if(this.main.current_btn == this) this.main.render();
+    if (this.main.current_btn == this) this.main.render();
   }
 
   async show_content(element) {
     await this.wait_for_ready();
+
+    element.style = "";
 
     const combined_data = {
       ...this.main.data.summary,

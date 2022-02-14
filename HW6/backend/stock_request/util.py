@@ -18,3 +18,6 @@ recommend_req           = "https://finnhub.io/api/v1/stock/recommendation?symbol
 
 # Stock charts
 charts_req              = "https://finnhub.io/api/v1/stock/candle?symbol={}&resolution=D&from={}&to={}&token={}"
+
+# Stock news
+news_req                = "https://finnhub.io/api/v1/company-news?symbol={}&from={}&to={}&token={}"

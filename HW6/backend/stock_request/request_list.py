@@ -17,9 +17,7 @@ class request_lst(Resource):
             result = self.get_all(self.req_list[section], stock_name)
         else:
             result = self.req_list[section].get(stock_name)
-
-        # print(result)
-            
+ 
         return result
         
     def get_all(self, sub_list, stock_name):

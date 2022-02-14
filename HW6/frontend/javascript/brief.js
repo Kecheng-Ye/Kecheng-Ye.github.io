@@ -50,6 +50,7 @@ export default class brief_content extends content {
   async show_content(element) {
     await this.wait_for_ready();
 
+    element.style = "";
     let content = brief_format(this.main.data);
 
     element.innerHTML = content;

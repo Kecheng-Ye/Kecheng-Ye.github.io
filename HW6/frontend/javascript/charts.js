@@ -15,11 +15,12 @@ export default class charts_content extends content {
       this.main.data[this.id] = {};
       this.main.STATUS = FAILED;
     } else {
-      var price = [], volumn = [];
+      var price = [],
+        volumn = [];
 
-      for(var i = 0; i < data['t'].length; i++) {
-        price.push([data['t'][i] * 1000, data['c'][i]])
-        volumn.push([data['t'][i] * 1000, data['v'][i]])
+      for (var i = 0; i < data["t"].length; i++) {
+        price.push([data["t"][i] * 1000, data["c"][i]]);
+        volumn.push([data["t"][i] * 1000, data["v"][i]]);
       }
 
       this.main.data[this.id] = [price, volumn];
@@ -27,13 +28,13 @@ export default class charts_content extends content {
     }
 
     this.isReady = true;
-    if(this.main.current_btn == this) this.main.render();
+    if (this.main.current_btn == this) this.main.render();
   }
 
   async show_content(element) {
     await this.wait_for_ready();
 
-    console.log("charts should be ready");
+    element.style = "";
     var chart = document.createElement("div");
     chart.id = "chart_container";
     element.appendChild(chart);
@@ -75,7 +76,7 @@ export default class charts_content extends content {
       },
 
       subtitle: {
-        text: '<a href="https://finnhub.io/">Source: Finnhub</a>',
+        text: '<a href="https://finnhub.io/" target="_blank">Source: Finnhub</a>',
       },
 
       yAxis: [

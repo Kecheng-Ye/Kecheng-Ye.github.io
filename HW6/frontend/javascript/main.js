@@ -13,7 +13,7 @@ class main_content {
       brief: new brief_content(this, "brief", "Company"),
       summary: new summary_content(this, "summary", "Stock Summary"),
       charts: new charts_content(this, "charts", "Charts"),
-      // news    : new news_content(this, "news", "Latest News")
+      news: new news_content(this, "news", "Latest News"),
     };
 
     // defaultly we are on the Company section

@@ -53,3 +53,22 @@ class stock_history_request(base_req):
         result = self.post_process(result)
         
         return result
+    
+class stock_news_request(base_req):
+    def __init__(self, req_format):
+        super().__init__(req_format)
+        # self.post_process = self.transfer_data
+    
+    def get(self, stock_name):
+        end = datetime.now().date()
+        delta = relativedelta(days=30)
+        start = end - delta
+        
+        result = requests.get(self.request.format(stock_name, start.strftime('%Y-%m-%d'), end.strftime('%Y-%m-%d'), API_KEY)).json()
+        
+        if len(result) == 0:
+            return ERROR
+        
+        result = self.post_process(result)
+        
+        return result

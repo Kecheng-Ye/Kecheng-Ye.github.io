@@ -57,11 +57,11 @@ export default class search_bar {
 
   clear() {
     this.input_field.value = "";
+    this.main.reset()
   }
 
   search() {
     if (this.input_field.value.length == 0) {
-      let rect = this.bar.getBoundingClientRect();
       this.bar.appendChild(this.alarm);
     } else {
       this.main.do_query(this.input_field.value.toUpperCase());

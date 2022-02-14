@@ -1,11 +1,4 @@
-import {
-  query,
-  template,
-  identity,
-  SUCCESS,
-  FAILED,
-  PENDING,
-} from "./utils.js";
+import { query, template, identity, SUCCESS, FAILED } from "./utils.js";
 
 class content {
   constructor(main = null, DOM_id = "", name = "") {
@@ -31,12 +24,12 @@ class content {
     }
 
     this.isReady = true;
-    if(this.main.current_btn == this) this.main.render();
+    if (this.main.current_btn == this) this.main.render();
   }
 
   async wait_for_ready() {
-    var start_time = new Date().getTime()
-  
+    var start_time = new Date().getTime();
+
     while (true) {
       if (this.isReady) {
         console.log(this.id + " data is ready");
@@ -46,7 +39,7 @@ class content {
         console.log(this.id + " get data failed");
         break; // or throw
       }
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
     }
   }
 
@@ -56,4 +49,4 @@ class content {
   }
 }
 
-export { template, content, query, identity, SUCCESS, FAILED};
+export { template, content, query, identity, SUCCESS, FAILED };
