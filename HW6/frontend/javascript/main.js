@@ -90,7 +90,7 @@ class main_content {
     this.refresh_button(cnt);
     var content = document.getElementById(this.id);
     content.innerHTML = "";
-    cnt.show_content(document.getElementById(this.id));
+    cnt.show_content(content);
   };
 
   do_query(stock_name) {
@@ -112,3 +112,11 @@ var bar = new search_bar(document.getElementById("search"), main);
 window.addEventListener("resize", function (event) {
   bar.render();
 });
+
+bar.input_field.addEventListener('keypress', function (e) {
+  if (e.key === 'Enter') {
+    console.log("Enter key preesed");
+    bar.search();
+  }
+});
+

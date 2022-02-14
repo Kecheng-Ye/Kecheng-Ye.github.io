@@ -1,4 +1,5 @@
 import { template, content, identity, SUCCESS, FAILED } from "./content.js";
+import { dateFormat } from "./utils.js";
 
 const charts_format = "charts";
 
@@ -34,6 +35,7 @@ export default class charts_content extends content {
   async show_content(element) {
     await this.wait_for_ready();
 
+    var today = new Date();
     element.style = "";
     var chart = document.createElement("div");
     chart.id = "chart_container";
@@ -72,7 +74,7 @@ export default class charts_content extends content {
       },
 
       title: {
-        text: `${this.main.query} Stock Price`,
+        text: `${this.main.query} Stock Price ${dateFormat(today, "yyyy-mm-d")}`,
       },
 
       subtitle: {
@@ -139,6 +141,7 @@ export default class charts_content extends content {
           dataGrouping: {
             units: groupingUnits,
           },
+          pointWidth: 5,
         },
       ],
     });

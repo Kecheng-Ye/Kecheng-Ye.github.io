@@ -42,7 +42,12 @@ export default class news_content extends content {
         let one_news = {};
         let success = true;
         Object.keys(this.required).forEach((element) => {
-          if(!(data[i].hasOwnProperty(element))) success = false;
+          if(!(data[i].hasOwnProperty(element)) || data[i][element].length == 0) {
+            success = false;
+          }
+
+          if(!success) return;
+
           one_news[element] = this.required[element](data[i][element]);
         });
         
