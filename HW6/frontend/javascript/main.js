@@ -11,7 +11,7 @@ class main_content {
     this.data = {};
     this.buttons = {
       brief: new brief_content(this, "brief", "Company"),
-      summary: new summary_content(this, "summary", "Stock Summary"),
+      // summary: new summary_content(this, "summary", "Stock Summary"),
       charts: new charts_content(this, "charts", "Charts"),
       news: new news_content(this, "news", "Latest News"),
     };
@@ -35,6 +35,7 @@ class main_content {
 
   render() {
     var content_section = document.getElementById("content");
+    content_section.innerHTML = "";
 
     if (this.STATUS == FAILED) {
       this.render_fail(content_section);

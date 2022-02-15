@@ -5,6 +5,10 @@ export function template(strings, ...keys) {
     keys.forEach(function (key, i) {
       let value = dict;
       key.split(".").forEach((one_key) => {
+        if(!value.hasOwnProperty(one_key)) {
+          value = "N.A"
+          return;
+        }
         value = value[one_key];
       });
 
@@ -14,7 +18,7 @@ export function template(strings, ...keys) {
   };
 }
 
-export const query = template`http://127.0.0.1:5000/query?stock_name=${"stock"}&section=${"sec"}`;
+export const query = template`http://localhost:8000/query?stock_name=${"stock"}&section=${"sec"}`;
 
 export const identity = (f) => f;
 

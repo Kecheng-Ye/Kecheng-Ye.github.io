@@ -104,6 +104,18 @@ export default class summary_content extends content {
     if (this.main.current_btn == this) this.main.render();
   }
 
+  get_arrow(change) {
+    if(change == 0) {
+      return "";
+    }else if(change > 0) {
+      return arrow_imgs["upward"];
+    }else{
+      return arrow_imgs["downward"];
+    }
+
+    return 
+  }
+
   async show_content(element) {
     await this.wait_for_ready();
 
@@ -112,17 +124,12 @@ export default class summary_content extends content {
     const combined_data = {
       ...this.main.data.summary,
       ...this.main.data.recommend,
-      d_arrow:
-        this.main.data.summary.d >= 0
-          ? arrow_imgs["upward"]
-          : arrow_imgs["downward"],
-      dp_arrow:
-        this.main.data.summary.dp >= 0
-          ? arrow_imgs["upward"]
-          : arrow_imgs["downward"],
+      d_arrow: this.get_arrow(this.main.data.summary.d),
+      dp_arrow: this.get_arrow(this.main.data.summary.dp),
     };
 
     let content = summary_format(combined_data);
+
     element.innerHTML = content;
   }
 }

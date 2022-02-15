@@ -20,6 +20,8 @@ class request_lst(Resource):
  
         return result
         
+        # return {1:2}
+        
     def get_all(self, sub_list, stock_name):
         result = {}
         

@@ -3,7 +3,7 @@ import { createRequest, query } from "./utils.js";
 
 const brief_format = template`
 <div id="brief_layout">
-  <img src=\'${"brief.logo"}\' alt=${"brief.name"} icon style="width:128px; height:128px;"/>
+  <img id="logo" src=\'${"brief.logo"}\' style="width:128px; height:128px;"/>
 
   <ul class="my_info_list" style="height: 50%;">
     <li>
@@ -52,7 +52,6 @@ export default class brief_content extends content {
 
     element.style = "";
     let content = brief_format(this.main.data);
-
     element.innerHTML = content;
   }
 }
