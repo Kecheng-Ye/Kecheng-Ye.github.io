@@ -105,7 +105,7 @@ export default class summary_content extends content {
   }
 
   get_arrow(change) {
-    if(change == 0) {
+    if(change == 0 || change == undefined) {
       return "";
     }else if(change > 0) {
       return arrow_imgs["upward"];
@@ -123,7 +123,6 @@ export default class summary_content extends content {
 
     const combined_data = {
       ...this.main.data.summary,
-      ...this.main.data.recommend,
       d_arrow: this.get_arrow(this.main.data.summary.d),
       dp_arrow: this.get_arrow(this.main.data.summary.dp),
     };

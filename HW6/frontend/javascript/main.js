@@ -11,7 +11,7 @@ class main_content {
     this.data = {};
     this.buttons = {
       brief: new brief_content(this, "brief", "Company"),
-      // summary: new summary_content(this, "summary", "Stock Summary"),
+      summary: new summary_content(this, "summary", "Stock Summary"),
       charts: new charts_content(this, "charts", "Charts"),
       news: new news_content(this, "news", "Latest News"),
     };
@@ -116,7 +116,6 @@ window.addEventListener("resize", function (event) {
 
 bar.input_field.addEventListener('keypress', function (e) {
   if (e.key === 'Enter') {
-    console.log("Enter key preesed");
     bar.search();
   }
 });

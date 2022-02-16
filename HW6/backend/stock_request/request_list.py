@@ -17,19 +17,18 @@ class request_lst(Resource):
             result = self.get_all(self.req_list[section], stock_name)
         else:
             result = self.req_list[section].get(stock_name)
- 
+
         return result
-        
-        # return {1:2}
         
     def get_all(self, sub_list, stock_name):
         result = {}
         
+        meet_err = True
         for name, req in sub_list.req_list.items():
             one_result = req.get(stock_name)
-            if(one_result == ERROR):
-                return ERROR
-            
-            result[name] = one_result
-            
-        return result
+            if(one_result != ERROR):
+                meet_err = False
+                result[name] = one_result
+        
+        
+        return result if not meet_err else ERROR
