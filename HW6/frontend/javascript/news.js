@@ -38,7 +38,7 @@ export default class news_content extends content {
     } else {
       let result = [];
       let count = 0;
-      for (var i = 0; i < data.length && count <= 5; i++) {
+      for (var i = 0; i < data.length && count < 5; i++) {
         let one_news = {};
         let success = true;
         Object.keys(this.required).forEach((element) => {

@@ -24,8 +24,8 @@ api.add_resource(request_lst, "/query", endpoint="query",
                     'charts'    : stock_history_request(charts_req),
                     
                     'news'      : stock_news_request(news_req)
-                    }
-                )
+                  }
+               )
     
 if __name__ == "__main__":
     app.run(host='127.0.0.1', port=8080, debug=True)

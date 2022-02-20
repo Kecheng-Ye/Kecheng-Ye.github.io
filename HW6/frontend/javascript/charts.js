@@ -71,6 +71,8 @@ export default class charts_content extends content {
             text: "6m",
           },
         ],
+        selected: 0,
+        inputEnabled: false,
       },
 
       title: {
@@ -78,6 +80,7 @@ export default class charts_content extends content {
       },
 
       subtitle: {
+        useHTML: true,
         text: '<a href="https://finnhub.io/" target="_blank">Source: Finnhub</a>',
       },
 
