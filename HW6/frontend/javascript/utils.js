@@ -26,7 +26,7 @@ export const trime = (max_size) => (input) => {
   if(input.length < max_size) {
     return input
   }else{
-    let result = input.substring(max_size - 3);
+    let result = input.substring(0, max_size - 3);
     result += "...";
     return result;
   }
