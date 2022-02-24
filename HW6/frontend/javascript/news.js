@@ -1,6 +1,6 @@
 import charts_content from "./charts.js";
 import { template, content, identity, SUCCESS, FAILED } from "./content.js";
-import { dateFormat } from "./utils.js";
+import { dateFormat, trime } from "./utils.js";
 
 const news_format = template`
   <div class="news_logo">
@@ -24,7 +24,7 @@ export default class news_content extends content {
     super(main, DOM_id, name);
     this.required = {
       image: identity,
-      headline: identity,
+      headline: trime(100),
       url: identity,
       datetime: (timestamp) =>
         dateFormat(new Date(timestamp * 1000), "d mmmm, yyyy"),

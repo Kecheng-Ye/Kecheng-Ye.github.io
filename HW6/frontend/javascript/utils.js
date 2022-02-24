@@ -22,6 +22,16 @@ export const query = template`/query?stock_name=${"stock"}&section=${"sec"}`;
 
 export const identity = (f) => f;
 
+export const trime = (max_size) => (input) => {
+  if(input.length < max_size) {
+    return input
+  }else{
+    let result = input.substring(max_size - 3);
+    result += "...";
+    return result;
+  }
+}
+
 export function createRequest(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {

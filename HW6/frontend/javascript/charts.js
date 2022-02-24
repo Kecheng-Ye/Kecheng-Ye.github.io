@@ -75,6 +75,12 @@ export default class charts_content extends content {
         inputEnabled: false,
       },
 
+      plotOptions: {
+        column: {
+           pointPlacement: 'on'
+        }
+     },
+
       title: {
         text: `${this.main.query} Stock Price ${dateFormat(today, "yyyy-mm-d")}`,
       },

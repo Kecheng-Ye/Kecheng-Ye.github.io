@@ -1,5 +1,5 @@
 import { template, content, identity } from "./content.js";
-import { createRequest, query } from "./utils.js";
+import { trime } from "./utils.js";
 
 const brief_format = template`
 <div id="brief_layout">
@@ -41,7 +41,7 @@ export default class brief_content extends content {
       logo: identity,
       name: identity,
       ticker: identity,
-      exchange: identity,
+      exchange: trime(30),
       ipo: identity,
       finnhubIndustry: identity,
     };
