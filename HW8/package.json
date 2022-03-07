@@ -1,13 +1,16 @@
 {
   "name": "my-app",
   "version": "0.0.1",
+  "type": "module",
   "private": true,
   "dependencies": {
     "ejs": "latest",
     "aws-sdk": "latest",
     "express": "latest",
     "body-parser": "latest",
-    "path": "latest"
+    "path": "latest",
+    "node-fetch": "2.6.0",
+    "moment": "latest"
   },
   "scripts": {
     "start": "node app.js"
