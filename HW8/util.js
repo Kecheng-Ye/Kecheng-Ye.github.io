@@ -31,7 +31,6 @@ export function createRequest(url, callback) {
   return xhr;
 }
 
-
 export async function fetch_and_process(url, post_process) {
   try {
     const response = await fetch(url);

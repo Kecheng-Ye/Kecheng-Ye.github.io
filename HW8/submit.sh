@@ -1,0 +1,1 @@
+zip -r result.zip frontend/* backend/* *.js package.json

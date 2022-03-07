@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "private": true,
   "dependencies": {
@@ -9,7 +9,7 @@
     "express": "latest",
     "body-parser": "latest",
     "path": "latest",
-    "node-fetch": "2.6.0",
+    "node-fetch": "latest",
     "moment": "latest"
   },
   "scripts": {

@@ -1,4 +1,4 @@
-import * as util from "../util.js"
+import * as util from "../util.js";
 
 export const API_KEY = "c7qumeiad3ia6nr4tkfg";
 export const ERROR = { Error: "error" };

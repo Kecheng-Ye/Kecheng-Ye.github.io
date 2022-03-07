@@ -14,7 +14,7 @@ export class base_req {
       this.request_format({ stock: ticker, token: API_KEY }),
       this.post_process
     );
-    
+
     return result;
   }
 
@@ -24,7 +24,7 @@ export class base_req {
       if (Object.keys(result).length == 0) {
         res.status(404);
       }
-  
+
       res.send(result);
     });
   }
@@ -37,20 +37,18 @@ export class base_req_lst extends base_req {
   }
 
   async fetch_data(request) {
-
-    const ticker = request.params.stock;
     let results = {};
     let meet_error = true;
 
     for (const req of this.requests) {
       const one_result = await req.fetch_data(request);
-      if(Object.keys(one_result).length != 0) {
+      if (Object.keys(one_result).length != 0) {
         meet_error = false;
-        results = {...results, ...one_result};
+        results = { ...results, ...one_result };
       }
     }
 
-    return results
+    return results;
   }
 }
 
@@ -90,6 +88,6 @@ export class stock_news_request extends base_req {
       this.post_process
     );
 
-    return result;;
+    return result;
   }
 }
