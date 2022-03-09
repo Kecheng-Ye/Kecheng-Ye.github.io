@@ -1,0 +1,10 @@
+<div class="container">
+  <button
+    [ngClass]="{ active: is_active }"
+    (click)="onClick()"
+  >
+    <a routerLink="{{ route_link }}">
+      {{ text }}
+    </a>
+  </button>
+</div>

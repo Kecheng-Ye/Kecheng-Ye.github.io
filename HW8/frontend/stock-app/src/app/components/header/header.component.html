@@ -1,0 +1,46 @@
+<div class="container">
+  <nav class="navbar navbar-expand-sm navbar-custom fixed-top">
+    <a class="navbar-brand" style="color: white; margin-left:10px;">Stock Search</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item active">
+          <app-navi-search-button
+            text="Search"
+            (should_active)="click_search($event)"
+            [is_active]="search_active"
+          ></app-navi-search-button>
+        </li>
+
+        <li class="nav-item">
+          <app-navi-button
+            text="WatchList"
+            route_link="watchlist"
+            [is_active]="watchlist_active"
+            (change_routes)="click_watchlist()"
+          ></app-navi-button>
+        </li>
+
+        <li class="nav-item" style="margin-right:10px;">
+          <app-navi-button
+            text="Portfolio"
+            route_link="portfolio"
+            [is_active]="portfolio_active"
+            (change_routes)="click_portfolio()"
+          ></app-navi-button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

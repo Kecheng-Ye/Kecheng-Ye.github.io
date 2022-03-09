@@ -1,0 +1,15 @@
+footer {
+  background-color: #dddddd;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+a {
+    color: blue;
+}

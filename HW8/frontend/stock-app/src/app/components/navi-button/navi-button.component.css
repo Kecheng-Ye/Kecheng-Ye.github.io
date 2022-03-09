@@ -1,0 +1,39 @@
+.container {
+  height: 90%;
+  width: 100%;
+  margin: 0 0;
+  padding: 0 0;
+  margin-right: 5px;
+}
+
+a {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #696ac6;
+}
+
+a:hover {
+  color: #9ca0fa;
+}
+
+button {
+  width: 100%;
+  height: 90%;
+  margin-top: 2.5%;
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.active {
+  color: white;
+	border: 2px solid white;
+  border-radius: 5px;
+}
+
+.active a {
+  color: white;
+}

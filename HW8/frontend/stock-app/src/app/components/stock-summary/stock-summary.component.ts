@@ -9,11 +9,7 @@ import { StockQueryServiceService } from '../../services/stock-query-service.ser
 export class StockSummaryComponent implements OnInit {
   summary: Object = {};
 
-  constructor(private stock_query_service: StockQueryServiceService) {
-    stock_query_service.getBrief('TSLA').subscribe((result) => {
-      this.summary = result;
-    });
-  }
+  constructor(private stock_query_service: StockQueryServiceService) {}
 
   ngOnInit(): void {}
 }
