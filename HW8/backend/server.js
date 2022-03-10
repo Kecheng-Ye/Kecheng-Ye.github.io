@@ -16,6 +16,7 @@ const api_list = {
   ),
   "/charts/:stock": new stock_history_request(back_util.charts_req),
   "/news/:stock": new stock_news_request(back_util.news_req),
+  "/autocomplete/:stock": new base_req(back_util.autocomplete_req),
 };
 
 export class api {

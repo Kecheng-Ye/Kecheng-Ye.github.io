@@ -17,3 +17,6 @@ export const charts_req = util.template`https://finnhub.io/api/v1/stock/candle?s
 
 // Stock news
 export const news_req = util.template`https://finnhub.io/api/v1/company-news?symbol=${"stock"}&from=${"start"}&to=${"end"}&token=${"token"}`;
+
+// Autocomplete
+export const autocomplete_req = util.template`https://finnhub.io/api/v1/search?q=${"stock"}&token=${"token"}`

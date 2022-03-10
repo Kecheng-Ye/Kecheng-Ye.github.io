@@ -1,8 +1,5 @@
-<div class="container">
-  <button
-    [ngClass]="{ active: is_active }"
-    (click)="onClick()"
-  >
+<div class="my_container">
+  <button [ngClass]="{ active: is_active }" (click)="onClick()" style="flex: 1">
     <a routerLink="{{ route_link }}">
       {{ text }}
     </a>

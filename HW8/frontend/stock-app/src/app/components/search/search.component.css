@@ -1,0 +1,23 @@
+:host {
+  width: 100%;
+  height: 100%;
+}
+
+.my_container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+app-search-bar {
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+app-stock-info {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

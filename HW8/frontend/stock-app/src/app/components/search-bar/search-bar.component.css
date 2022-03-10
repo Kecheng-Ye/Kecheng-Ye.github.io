@@ -1,0 +1,26 @@
+.search_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+}
+
+.form-control:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.btn:focus {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+
+input.mat-input-element {
+  margin: 0 0 0 0;
+}
+
+.container {
+  max-width: 400px;
+}

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { StockQueryServiceService } from './stock-query-service.service';
+import { StockQueryService } from './stock-query.service';
 
 describe('StockQueryServiceService', () => {
-  let service: StockQueryServiceService;
+  let service: StockQueryService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(StockQueryServiceService);
+    service = TestBed.inject(StockQueryService);
   });
 
   it('should be created', () => {

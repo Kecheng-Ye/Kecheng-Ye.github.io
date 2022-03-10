@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { StockQueryServiceService } from '../../services/stock-query-service.service';
+import { StockQueryService } from '../../services/stock-query.service';
 
 @Component({
   selector: 'app-stock-summary',
@@ -9,7 +9,7 @@ import { StockQueryServiceService } from '../../services/stock-query-service.ser
 export class StockSummaryComponent implements OnInit {
   summary: Object = {};
 
-  constructor(private stock_query_service: StockQueryServiceService) {}
+  constructor(private stock_query_service: StockQueryService) {}
 
   ngOnInit(): void {}
 }
