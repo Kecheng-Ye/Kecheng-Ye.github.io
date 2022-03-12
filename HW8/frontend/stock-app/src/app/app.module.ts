@@ -23,6 +23,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { StockInfoComponent } from './components/stock-info/stock-info.component';
 import {MatInputModule} from "@angular/material/input";
+import { StockMainInfoComponent } from './components/stock-main-info/stock-main-info.component';
+import { StockSubInfoComponent } from './components/stock-sub-info/stock-sub-info.component';
+import { StockMainInfoNameComponent } from './components/stock-main-info-name/stock-main-info-name.component';
+import { StockMainInfoPriceComponent } from './components/stock-main-info-price/stock-main-info-price.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const appRoutes: Routes = [
   { path: 'search/:ticker', component: SearchComponent },
@@ -46,6 +51,10 @@ const appRoutes: Routes = [
     NaviSearchButtonComponent,
     SearchBarComponent,
     StockInfoComponent,
+    StockMainInfoComponent,
+    StockSubInfoComponent,
+    StockMainInfoNameComponent,
+    StockMainInfoPriceComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +67,7 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

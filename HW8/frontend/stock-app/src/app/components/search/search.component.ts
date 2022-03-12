@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SearchUpdateService } from "../../services/search-update.service";
 import { Subscription } from 'rxjs';
@@ -8,7 +8,8 @@ const HOME_PAGE: string = "home";
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
-  styleUrls: ['./search.component.css']
+  styleUrls: ['./search.component.css'],
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class SearchComponent implements OnInit {
   ticker: any;

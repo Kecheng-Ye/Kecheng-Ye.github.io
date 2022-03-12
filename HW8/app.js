@@ -5,6 +5,7 @@ import { api } from "./backend/server.js";
 import {fileURLToPath} from 'url';
 
 const app = express();
+app.use(express.json())
 const port = process.env.PORT || 5555;
 
 const __filename = fileURLToPath(import.meta.url);

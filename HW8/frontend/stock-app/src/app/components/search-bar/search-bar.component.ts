@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { StockQueryService } from '../../services/stock-query.service';
 import { Suggestion } from '../../data_interface/suggestion';
@@ -11,11 +11,13 @@ const MAX_WIDTH = 400;
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.css'],
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class SearchBarComponent implements OnInit {
   public myControl = new FormControl();
   filteredOptions: Suggestion[] = [];
   public isLoading: boolean = false;
+  reload = true;
 
   constructor(private router: Router, private stock_query: StockQueryService) {}
 
@@ -24,13 +26,16 @@ export class SearchBarComponent implements OnInit {
       .pipe(
         debounceTime(500),
         tap(() => {
+          this.reload = false;
           this.filteredOptions = [];
           this.isLoading = true;
         }),
         switchMap((prefix) => this.do_prefix_query(prefix))
       )
       .subscribe(
-        (suggest_query) => (this.filteredOptions = suggest_query.result)
+        (suggest_query) =>
+          (this.filteredOptions =
+            this.reload ? [] : suggest_query.result)
       );
   }
 
@@ -49,8 +54,13 @@ export class SearchBarComponent implements OnInit {
   }
 
   search_click(): void {
+    this.isLoading = false;
+    this.filteredOptions = [];
+    this.reload = true;
     const target_ticker =
-      this.myControl.value.length == 0 ? 'home' : this.myControl.value;
+      this.myControl.value.length == 0
+        ? 'home'
+        : this.myControl.value.toUpperCase();
 
     this.router.navigateByUrl('/search/' + target_ticker);
   }

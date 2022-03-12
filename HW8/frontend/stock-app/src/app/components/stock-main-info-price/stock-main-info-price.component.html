@@ -1,0 +1,34 @@
+<div class="container-fluid">
+  <div class="mb-1 p-0 d-flex justify-content-end">
+    <p
+      class="h2"
+      [ngStyle]="{ color: price.d < 0 ? 'red' : 'green' }"
+    >
+      {{ price.c }}
+    </p>
+  </div>
+
+  <div
+    class="d-flex justify-content-end mb-1"
+    [ngStyle]="{ color: price.d < 0 ? 'red' : 'green' }"
+  >
+    <i
+      *ngIf="price.d < 0"
+      class="fa-light fa-caret-down me-1 h5"
+    ></i>
+
+    <i
+      *ngIf="price.d > 0"
+      class="fa-light fa-caret-up me-1 h5"
+    ></i>
+
+    {{ price.d }}({{ round(price.dp, 2) }}%)
+  </div>
+
+  <div
+    class="fw-normal mb-2 d-flex justify-content-end text-end"
+    style="font-size: 12px;margin-right: 0;margin-left: auto; overflow-y: scroll;"
+  >
+    {{ transfer_time() }}
+  </div>
+</div>

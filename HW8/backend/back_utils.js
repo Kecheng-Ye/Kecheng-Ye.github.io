@@ -7,7 +7,7 @@ export const ERROR = { Error: "error" };
 export const brief_req = util.template`https://finnhub.io/api/v1/stock/profile2?symbol=${"stock"}&token=${"token"}`;
 
 // summary constant
-export const summary_req = util.template`https://finnhub.io/api/v1/quote?symbol=${"stock"}&token=${"token"}`;
+export const price_req = util.template`https://finnhub.io/api/v1/quote?symbol=${"stock"}&token=${"token"}`;
 
 // Recommendation trend constant
 export const recommend_req = util.template`https://finnhub.io/api/v1/stock/recommendation?symbol=${"stock"}&token=${"token"}`;

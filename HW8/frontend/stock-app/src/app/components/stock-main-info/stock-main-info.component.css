@@ -1,0 +1,53 @@
+.market {
+  height: 20%;
+}
+
+.stock {
+  height: 80%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stock .name {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.stock .img {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.stock .price {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.responsive {
+  max-width: 100px;
+  width: 100%;
+  padding-top: 100%; /* 1:1 Aspect Ratio */
+  position: relative; /* If you want text inside of it */
+}
+
+.responsive-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+app-stock-main-info-price {
+  width: 100%;
+  display: flex;
+}

@@ -10,10 +10,11 @@ import {
 // {entry_point: request}
 const api_list = {
   "/brief/:stock": new base_req(back_util.brief_req),
-  "/summary/:stock": new base_req_lst(
-    new base_req(back_util.summary_req),
-    new base_req(back_util.recommend_req, (lst) => lst[0])
-  ),
+  "/price/:stock": new base_req(back_util.price_req),
+  // "/summary/:stock": new base_req_lst(
+  //   new base_req(back_util.summary_req),
+  //   new base_req(back_util.recommend_req, (lst) => lst[0])
+  // ),
   "/charts/:stock": new stock_history_request(back_util.charts_req),
   "/news/:stock": new stock_news_request(back_util.news_req),
   "/autocomplete/:stock": new base_req(back_util.autocomplete_req),

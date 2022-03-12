@@ -1,0 +1,16 @@
+.container-xs {
+  min-width: 70vw;
+}
+
+app-stock-main-info {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  justify-content: center;
+}
+
+app-stock-sub-info {
+  width: 100%;
+  height: 70%;
+  display: flex;
+}

@@ -1,6 +1,7 @@
 import { identity, fetch_and_process } from "../util.js";
 import { API_KEY } from "./back_utils.js";
 import moment from "moment";
+import { logger } from "./logger.js";
 
 export class base_req {
   constructor(request_format, post_process = identity) {
@@ -20,6 +21,7 @@ export class base_req {
 
   register(app, query_entry) {
     app.get(query_entry, async (req, res) => {
+      logger.info("Get request at " + req.url)
       const result = await this.fetch_data(req);
       if (Object.keys(result).length == 0) {
         res.status(404);

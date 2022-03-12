@@ -4,16 +4,18 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "ejs": "latest",
     "aws-sdk": "latest",
-    "express": "latest",
     "body-parser": "latest",
-    "path": "latest",
+    "ejs": "latest",
+    "express": "latest",
+    "express-winston": "^4.2.0",
+    "moment": "latest",
     "node-fetch": "latest",
-    "moment": "latest"
+    "path": "latest",
+    "winston": "^3.6.0"
   },
   "scripts": {
-    "start": "node app.js", 
+    "start": "node app.js",
     "dev": "nodemon app.js"
   }
 }
