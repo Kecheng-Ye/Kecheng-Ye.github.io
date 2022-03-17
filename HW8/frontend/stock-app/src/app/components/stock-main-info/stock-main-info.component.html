@@ -1,37 +1,38 @@
-<div style="width: 100%; height: 100%">
+<div style="width: 100%; height: 100%;">
   <div class="stock">
     <div class="name">
       <app-stock-main-info-name
-        [stock_name]="main_info_data"
+        *ngIf="cur_state == state.SUCCESS"
+        [stock_name]="main_info_data.name"
       ></app-stock-main-info-name>
     </div>
     <div class="img">
       <div class="responsive">
-        <img [src]="main_info_data.logo" alt="logo" class="responsive-img" />
+        <img *ngIf="cur_state == state.SUCCESS" [src]="main_info_data.img" alt="logo" class="responsive-img" />
       </div>
     </div>
     <div class="price">
       <app-stock-main-info-price
-        [price]="main_info_data"
+        *ngIf="cur_state == state.SUCCESS"
+        [price]="main_info_data.price"
       ></app-stock-main-info-price>
     </div>
   </div>
 
   <div
     class="market d-flex justify-content-center align-content-center"
-    *ngIf="is_market_open(main_info_data.t); else market_close"
+    *ngIf="cur_state == state.SUCCESS && main_info_data.is_market_open"
     style="color: green"
   >
     Market is Open
   </div>
 
-  <ng-template #market_close>
-    <div
-      class="market d-flex justify-content-center align-content-center"
-      style="color: red"
-    >
-      Market closed on
-      {{ moment.unix(main_info_data.t).format("YYYY-MM-DD HH:mm:ss") }}
-    </div>
-  </ng-template>
+  <div
+    class="market d-flex justify-content-center align-content-center"
+    *ngIf="cur_state == state.SUCCESS && !main_info_data.is_market_open"
+    style="color: red"
+  >
+    Market closed on
+    {{ main_info_data.market_time }}
+  </div>
 </div>

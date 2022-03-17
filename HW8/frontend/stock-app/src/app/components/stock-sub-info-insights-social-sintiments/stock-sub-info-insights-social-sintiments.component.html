@@ -1,0 +1,29 @@
+<div class="w-100 h-100 mt-2" style="max-width: 500px">
+  <h2 class="text-center mb-1">Social Sentiments</h2>
+  <table class="table table-bordered text-center">
+    <thead>
+      <tr class="table-active">
+        <th scope="col">{{ data.name }}</th>
+        <th scope="col">Reddit</th>
+        <th scope="col">Twitter</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td scope="row" class="table-active">Total Mentions</td>
+        <td>{{ data.reddit.total_mention }}</td>
+        <td>{{ data.twitter.total_mention }}</td>
+      </tr>
+      <tr>
+        <td scope="row" class="table-active">Positive Mentions</td>
+        <td>{{ data.reddit.positive }}</td>
+        <td>{{ data.twitter.positive }}</td>
+      </tr>
+      <tr>
+        <td scope="row" class="table-active">Negative Mentions</td>
+        <td>{{ data.reddit.negative }}</td>
+        <td>{{ data.twitter.negative }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

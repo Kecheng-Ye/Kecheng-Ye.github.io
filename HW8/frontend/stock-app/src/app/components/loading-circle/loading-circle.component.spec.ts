@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StockSummaryComponent } from './stock-summary.component';
+import { LoadingCircleComponent } from './loading-circle.component';
 
-describe('StockSummaryComponent', () => {
-  let component: StockSummaryComponent;
-  let fixture: ComponentFixture<StockSummaryComponent>;
+describe('LoadingCircleComponent', () => {
+  let component: LoadingCircleComponent;
+  let fixture: ComponentFixture<LoadingCircleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ StockSummaryComponent ]
+      declarations: [ LoadingCircleComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StockSummaryComponent);
+    fixture = TestBed.createComponent(LoadingCircleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

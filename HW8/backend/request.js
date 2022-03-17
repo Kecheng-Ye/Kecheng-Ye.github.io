@@ -21,12 +21,14 @@ export class base_req {
 
   register(app, query_entry) {
     app.get(query_entry, async (req, res) => {
-      logger.info("Get request at " + req.url)
+      logger.info("Get request at " + req.url);
       const result = await this.fetch_data(req);
       if (Object.keys(result).length == 0) {
-        res.status(404);
+        logger.info("Requst at " + req.url + " failed");
+        res.status(404).send(result);
+        return;
       }
-
+      logger.info("Requst at " + req.url + " succeed");
       res.send(result);
     });
   }
@@ -55,14 +57,30 @@ export class base_req_lst extends base_req {
 }
 
 export class stock_history_request extends base_req {
+  constructor(request_format, {resolution='D', years=0, months=0, days=0, hours=0}) {
+    super(request_format);
+    this.resolution = resolution;
+    this.years = years;
+    this.months = months;
+    this.days = days;
+    this.hours = hours;
+  }
+
   async fetch_data(request) {
-    const end = moment();
-    const start = moment().subtract(6, "months").subtract(1, "days");
     const ticker = request.params.stock;
+    const start_timestamp = parseInt(request.query.start);
+    const end = moment.unix(start_timestamp);
+    const start = moment
+      .unix(start_timestamp)
+      .subtract(this.years, "years")
+      .subtract(this.months, "months")
+      .subtract(this.days, "days")
+      .subtract(this.hours, "hours");
 
     const result = await fetch_and_process(
       this.request_format({
         stock: ticker,
+        resolution: this.resolution,
         start: start.format("X"),
         end: end.format("X"),
         token: API_KEY,

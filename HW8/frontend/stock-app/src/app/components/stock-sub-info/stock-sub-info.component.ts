@@ -1,4 +1,12 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
+
+enum tab {
+  summary = 1,
+  news = 2,
+  charts = 3,
+  insights = 4,
+}
 
 @Component({
   selector: 'app-stock-sub-info',
@@ -7,11 +15,16 @@ import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
   encapsulation: ViewEncapsulation.Emulated,
 })
 export class StockSubInfoComponent implements OnInit {
-  @Input() ticker: string = "";
+  active: tab = tab.insights;
+  tab = tab;
 
-  constructor() { }
+  constructor(config: NgbPaginationConfig) {
 
-  ngOnInit(): void {
   }
 
+  ngOnInit(): void {}
+
+  onClick(section: tab) {
+    this.active = section;
+  }
 }

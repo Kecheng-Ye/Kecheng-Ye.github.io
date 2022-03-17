@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import { Location } from '@angular/common';
+import { SearchUpdateService } from "../../services/search-update.service";
 
 @Component({
   selector: 'app-header',
@@ -12,14 +13,16 @@ export class HeaderComponent implements OnInit {
   watchlist_active: boolean = false;
   portfolio_active: boolean = false;
 
-  constructor(private location: Location) {
+  constructor(private location: Location, private ticker_query: SearchUpdateService) {
   }
 
   ngOnInit(): void {
     const components = this.location.path().split('/');
-    this.search_active = components.includes("search") && !components.includes("home");
     this.watchlist_active = components.includes("watchlist");
     this.portfolio_active = components.includes("portfolio");
+    this.ticker_query.get_search_state().subscribe((is_home) => {
+      this.search_active = !is_home;
+    })
   }
 
   refresh_all() {

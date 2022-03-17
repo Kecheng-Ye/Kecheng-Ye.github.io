@@ -1,0 +1,17 @@
+<div style="margin-bottom: 10px">
+  <p class="text-center h5"><u>About the Company</u></p>
+  <p><strong>IPO Start Date</strong> {{ about.ipo }}</p>
+  <p><strong>Industry:</strong> {{ about.finnhubIndustry }}</p>
+  <p>
+    <strong>Webpage:&nbsp;</strong
+    ><a href="{{ about.weburl }}" target="_blank">{{ about.weburl }}</a>
+  </p>
+  <p class="mb-0"><strong>Company peers:</strong></p>
+  <div>
+    <p *ngFor="let peer of about.peers" style="display: inline">
+      <a routerLink="/search/{{ peer }}">{{ peer }}</a
+      >,&nbsp;
+    </p>
+  </div>
+</div>
+

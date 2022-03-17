@@ -1,4 +1,4 @@
-<div class="search_box container">
+<div class="search_box w-75 h-100 pt-4">
   <p class="h3">Stock Search</p>
   <div
     class="mx-sm-1 border border-2 rounded-pill"
@@ -10,8 +10,8 @@
         type="search"
         placeholder="Enter stock ticker symbol"
         id="search-input"
-        [matAutocomplete]="auto"
         matInput
+        [matAutocomplete]="auto"
         [formControl]="myControl"
         (keyup.enter)="search_click()"
       />

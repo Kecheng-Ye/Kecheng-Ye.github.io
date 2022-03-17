@@ -1,0 +1,16 @@
+<app-loading-circle
+  class="h-100 w-100"
+  *ngIf="is_loading; else ready_content"
+></app-loading-circle>
+
+<ng-template #ready_content>
+  <highcharts-chart
+    [Highcharts]="Highcharts"
+    [constructorType]="'stockChart'"
+    [options]="chartOptions"
+    class="w-100 d-block"
+    style="min-height: 700px;"
+  >
+  </highcharts-chart>
+</ng-template>
+

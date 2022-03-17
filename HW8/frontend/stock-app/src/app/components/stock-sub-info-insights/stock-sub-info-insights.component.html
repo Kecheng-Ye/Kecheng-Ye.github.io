@@ -1,0 +1,27 @@
+<app-loading-circle
+  class="h-100 w-100"
+  *ngIf="is_loading; else ready_content"
+></app-loading-circle>
+
+<ng-template #ready_content>
+  <div class="container-fluid">
+    <div class="row">
+      <app-stock-sub-info-insights-social-sintiments
+        class="d-flex justify-content-center align-content-center"
+        [data]="insights_data.social_sentiments"
+      ></app-stock-sub-info-insights-social-sintiments>
+    </div>
+    <div class="row">
+      <div class="col-sm-6">
+        <app-stock-sub-info-insights-recommends
+          [data]="insights_data.recommends"
+        ></app-stock-sub-info-insights-recommends>
+      </div>
+      <div class="col-sm-6">
+        <app-stock-sub-info-insights-earning
+          [data]="insights_data.earnings"
+        ></app-stock-sub-info-insights-earning>
+      </div>
+    </div>
+  </div>
+</ng-template>

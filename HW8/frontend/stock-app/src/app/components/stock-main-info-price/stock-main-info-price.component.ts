@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { stock_price } from '../../data_interface/stock_main_info';
 import * as moment from 'moment';
-import { round} from "../../util";
+import { round } from '../../util';
+import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { StockQueryService } from "../../services/stock-query.service";
 
 @Component({
   selector: 'app-stock-main-info-price',
@@ -9,13 +11,34 @@ import { round} from "../../util";
   styleUrls: ['./stock-main-info-price.component.css'],
 })
 export class StockMainInfoPriceComponent implements OnInit {
-  @Input() price: stock_price = {} as stock_price;
+  @Input()
+  get price(): any {
+    return this._price;
+  }
+
+  set price(new_price: stock_price) {
+    this._price = {
+      ...new_price,
+      dp: round(new_price.dp, 2),
+      up: new_price.d > 0,
+      down: new_price.d < 0,
+      cur_time: moment().format('YYYY-MM-DD HH:mm:ss'),
+    };
+
+    this._price.color = this._price.up
+      ? 'green'
+      : this._price.down
+      ? 'red'
+      : 'black';
+
+    this.stock_query.update_color(this._price.color);
+  }
+  private _price: any = {};
   round = round;
-  constructor() {}
+  faCaretUp = faCaretUp;
+  faCaretDown = faCaretDown;
+
+  constructor(private stock_query: StockQueryService) {}
 
   ngOnInit(): void {}
-
-  transfer_time() {
-    return moment().format('YYYY-MM-DD HH:mm:ss');
-  }
 }

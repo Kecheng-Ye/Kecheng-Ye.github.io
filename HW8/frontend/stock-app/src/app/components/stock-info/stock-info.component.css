@@ -4,13 +4,13 @@
 
 app-stock-main-info {
   width: 100%;
-  height: 30%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  margin-bottom: 10px;
 }
 
 app-stock-sub-info {
   width: 100%;
-  height: 70%;
   display: flex;
 }

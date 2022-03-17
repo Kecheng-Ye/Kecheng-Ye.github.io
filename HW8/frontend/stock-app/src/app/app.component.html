@@ -1,5 +1,14 @@
-<app-header></app-header>
-<div class="content">
-  <router-outlet></router-outlet>
+<div class="d-flex flex-column w-100 h-100">
+  <header>
+    <app-header></app-header>
+  </header>
+
+  <div class="content">
+    <router-outlet style="height: 0"></router-outlet>
+
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+  </div>
+
 </div>
-<app-footer></app-footer>

@@ -1,0 +1,7 @@
+.table-active {
+  background-color: #e8ecef;
+}
+
+.table > :not(:first-child) {
+  border-top: 0;
+}

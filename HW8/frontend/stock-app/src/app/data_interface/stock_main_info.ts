@@ -16,12 +16,35 @@ export interface stock_price {
 }
 
 export interface stock_main_info {
-  ticker: string;
-  name: string;
-  exchange: string;
-  logo: string;
-  c: number;
-  d: number;
-  t: number;
-  dp: number;
+  name: stock_name_block,
+  img: stock_img,
+  price: stock_price,
+  is_market_open: boolean,
+  market_time: string,
+}
+
+export interface Company_Brief {
+  country: string,
+  currency: string,
+  exchange: string,
+  finnhubIndustry: string,
+  ipo: string,
+  logo: string,
+  marketCapitalization: number,
+  name: string,
+  phone: string,
+  shareOutstanding: number,
+  ticker: string,
+  weburl: string,
+}
+
+export interface Cur_Price {
+  c: number,
+  d: number,
+  dp: number,
+  h: number,
+  l: number,
+  o: number,
+  pc: number,
+  t: number,
 }

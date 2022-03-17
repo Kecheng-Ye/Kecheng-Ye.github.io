@@ -1,0 +1,56 @@
+<div class="modal-header d-block">
+  <div class="d-flex">
+    <h1 class="modal-title" style="margin-bottom: 3px !important">
+      <strong>{{ news.source }}</strong>
+    </h1>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    ></button>
+  </div>
+  <h3 class="modal-title" style="margin-bottom: 3px !important">
+    {{ news.time }}
+  </h3>
+</div>
+<div class="modal-body">
+  <h2>
+    <strong>{{ news.headline }}</strong>
+  </h2>
+  <p>{{ news.summary }}</p>
+  <p>For more details click <a [href]="news.url" target="_blank">here</a></p>
+  <div
+    class="border border-2 w-100 ps-2 d-flex flex-column"
+    style="height: 90px; border-color: #dddddd"
+  >
+    <h2 style="margin-bottom: 0;">Share</h2>
+
+    <div class="d-flex" style="margin-top: 10px">
+      <a
+        href="https://twitter.com/share?title={{ news.headline }}&url={{
+          news.url
+        }}"
+        class="twitter-share-button me-1"
+        target="_blank"
+        style="margin-bottom: 0"
+      >
+        <i class="fa-brands fa-twitter-square h1"></i>
+      </a>
+      <script src="//platform.twitter.com/widgets.js"></script>
+      <a href="https://www.facebook.com/sharer/sharer.php?u={{news.url}}" target="_blank">
+        <i class="fa-brands fa-facebook-square h1"></i>
+      </a>
+    </div>
+  </div>
+
+  <!--</div>-->
+  <!--<div class="modal-footer">-->
+  <!--  <button-->
+  <!--    type="button"-->
+  <!--    class="btn btn-outline-dark"-->
+  <!--    (click)="activeModal.close('Close click')"-->
+  <!--  >-->
+  <!--    Close-->
+  <!--  </button>-->
+</div>

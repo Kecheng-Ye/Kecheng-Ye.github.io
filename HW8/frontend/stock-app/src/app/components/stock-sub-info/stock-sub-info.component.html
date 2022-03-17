@@ -1,1 +1,56 @@
-<p>stock-sub-info {{ticker}} works!</p>
+<div class="container-fluid d-flex flex-column justify-content-center align-content-center">
+  <div class="btn-group-justified d-flex justify-content-center align-content-center" role="group">
+    <button
+      type="button"
+      class="btn border-bottom border-2 w-100"
+      [ngClass]="{ active: active == tab.summary }"
+      (click)="onClick(tab.summary)"
+    >
+      Summary
+    </button>
+    <button
+      type="button"
+      class="btn border-bottom border-2 w-100"
+      [ngClass]="{ active: active == tab.news }"
+      (click)="onClick(tab.news)"
+    >
+      Top News
+    </button>
+    <button
+      type="button"
+      class="btn border-bottom border-2 w-100"
+      [ngClass]="{ active: active == tab.charts }"
+      (click)="onClick(tab.charts)"
+    >
+      Charts
+    </button>
+    <button
+      type="button"
+      class="btn border-bottom border-2 w-100"
+      [ngClass]="{ active: active == tab.insights }"
+      (click)="onClick(tab.insights)"
+    >
+      Insights
+    </button>
+  </div>
+
+  <app-stock-sub-info-summary
+    class="w-100 h-100"
+    [hidden]="active !== tab.summary"
+  ></app-stock-sub-info-summary>
+
+  <app-stock-sub-info-news
+    class="w-100 h-100"
+    [hidden]="active !== tab.news"
+  ></app-stock-sub-info-news>
+
+  <app-stock-sub-info-charts
+    class="w-100 h-100"
+    [hidden]="active !== tab.charts"
+  ></app-stock-sub-info-charts>
+
+  <app-stock-sub-info-insights
+    class="w-100 h-100"
+    [hidden]="active !== tab.insights"
+  ></app-stock-sub-info-insights>
+</div>

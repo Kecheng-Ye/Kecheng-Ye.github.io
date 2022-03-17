@@ -1,4 +1,18 @@
-<div class="container-xs">
-  <app-stock-main-info [ticker]="ticker" [main_info_data]="main_info"></app-stock-main-info>
-  <app-stock-sub-info [ticker]="ticker"></app-stock-sub-info>
+<div class="d-flex flex-column justify-content-center align-content-center w-75 h-100" style=" max-width: 1000px">
+  <app-loading-circle
+    class="h-100 w-100"
+    *ngIf="search_state == state.PENDING"
+  ></app-loading-circle>
+
+  <div
+    *ngIf="search_state != state.FAIL"
+    [hidden]="search_state == state.PENDING"
+    class="w-100 h-100 d-flex flex-column"
+  >
+    <app-stock-main-info></app-stock-main-info>
+    <app-stock-sub-info *ngIf="search_state == state.SUCCESS" style="flex: 1;"></app-stock-sub-info>
+  </div>
+
+  <div *ngIf="search_state == state.FAIL" class="container-xs">failed</div>
 </div>
+
