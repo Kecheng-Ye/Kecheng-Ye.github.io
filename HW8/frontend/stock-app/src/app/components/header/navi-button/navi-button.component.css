@@ -8,14 +8,7 @@
   align-items: center;
 }
 
-/*a {*/
-/*  display: block;*/
-/*  text-align: center;*/
-/*  text-decoration: none;*/
-/*  color: #696ac6;*/
-/*}*/
-
-button:hover {
+button:not(.active):hover {
   color: #9ca0fa;
 }
 
@@ -35,6 +28,6 @@ button {
 .active {
   color: white;
 	border: 2px solid white;
-  border-radius: 5px;
+  border-radius: 9px;
 }
 

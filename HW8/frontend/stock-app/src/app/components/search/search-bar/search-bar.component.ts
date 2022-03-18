@@ -18,13 +18,13 @@ export class SearchBarComponent implements OnInit {
   filteredOptions: Suggestion[] = [];
   public isLoading: boolean = false;
   reload = true;
+  warning = false;
 
   constructor(private router: Router, private stock_query: StockQueryService) {}
 
   ngOnInit() {
     this.myControl.valueChanges
       .pipe(
-        debounceTime(500),
         tap(() => {
           this.reload = false;
           this.filteredOptions = [];
@@ -57,15 +57,20 @@ export class SearchBarComponent implements OnInit {
     this.isLoading = false;
     this.filteredOptions = [];
     this.reload = true;
-    const target_ticker =
-      this.myControl.value.length == 0
-        ? 'home'
-        : this.myControl.value.toUpperCase();
+    if(!this.myControl.value) {
+      this.warning = true;
+      return;
+    }
 
+    const target_ticker = this.myControl.value.toUpperCase();
     this.router.navigateByUrl('/search/' + target_ticker);
   }
 
   clear_click(): void {
     this.myControl.setValue('');
+  }
+
+  close_warning() {
+    this.warning = false;
   }
 }

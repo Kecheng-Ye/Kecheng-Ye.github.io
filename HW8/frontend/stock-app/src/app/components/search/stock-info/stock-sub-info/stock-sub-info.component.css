@@ -1,15 +1,2 @@
-.btn:focus {
-  border-color: transparent;
-  box-shadow: none;
-}
 
-.active {
-  border-bottom-color: #8866c3 !important;
-}
-
-.pagination:after {
-  content: '';
-  width: 100%;
-  display: inline-block;
-}
 

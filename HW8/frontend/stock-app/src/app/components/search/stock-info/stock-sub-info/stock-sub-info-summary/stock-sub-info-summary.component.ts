@@ -2,11 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Summary_Info } from '../../../../../data_interface/stock_sub_info';
 import { StockQueryService } from '../../../../../services/stock-query.service';
 import {
+  concat,
+  concatMap,
+  delay,
   forkJoin,
   Subscription,
-  switchMap, take,
-  timer
-} from "rxjs";
+  switchMap,
+  take,
+  timer,
+} from 'rxjs';
 import * as moment from 'moment';
 import { SearchUpdateService } from '../../../../../services/search-update.service';
 import { PreviousStateService } from '../../../../../services/previous-state.service';
@@ -21,7 +25,7 @@ export class StockSubInfoSummaryComponent implements OnInit {
   ticker: string = '';
   stock_summary_data: Summary_Info = {} as Summary_Info;
   market_time: moment.Moment = moment();
-  is_loading = false;
+  is_loading = true;
   subscription: Subscription = new Subscription();
   color: string = 'black';
 
@@ -33,21 +37,17 @@ export class StockSubInfoSummaryComponent implements OnInit {
 
   joined_query_list = (need_fresh: boolean) => () => {
     this.is_loading = need_fresh;
-    return this.stock_query.get_market_time().pipe(
-      switchMap((new_time) => {
-        this.market_time = new_time;
-        const query_list = {
-          cur_price: this.stock_query.get_cur_price(this.ticker),
-          brief_info: this.stock_query.get_brief(this.ticker),
-          peers: this.stock_query.get_peers(this.ticker),
-          hourly_record: this.stock_query.get_hourly_record(
-            this.ticker,
-            this.market_time
-          ),
-        };
+    const query_list = {
+      cur_price: this.stock_query.get_cur_price(this.ticker),
+      brief_info: this.stock_query.get_brief(this.ticker),
+      peers: this.stock_query.get_peers(this.ticker),
+      hourly_record: this.stock_query.get_hourly_record(
+        this.ticker,
+        this.market_time
+      ),
+    };
 
-        return forkJoin(query_list);
-      }));
+    return forkJoin(query_list);
   };
 
   retrieve_data = (result: any) => {
@@ -77,36 +77,43 @@ export class StockSubInfoSummaryComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.ticker_query
-      .fetch_ticker()
+    this.stock_query
+      .get_market_time()
       .pipe(
-        switchMap(([ticker, ticker_change]) => {
-          this.ticker = ticker;
-          if (ticker_change) {
-            return this.joined_query_list(true)();
-          } else {
-            return this.prev_info_query.get_prev_summary_info();
-          }
+        delay(100),
+        concatMap((new_time) => {
+          this.market_time = new_time;
+          return this.ticker_query.fetch_ticker().pipe(
+            delay(100),
+            concatMap(([ticker, ticker_change]) => {
+              this.ticker = ticker;
+              if (ticker_change) {
+                return this.joined_query_list(true)();
+              } else {
+                return this.prev_info_query.get_prev_summary_info();
+              }
+            })
+          );
         })
       )
-      .subscribe({
-        next: this.retrieve_data,
-        error: (err) => {},
-        complete: () => {},
-      });
+      .subscribe(this.retrieve_data);
+
 
     const _timer = timer(TIME_INTERVAL, TIME_INTERVAL);
 
     this.subscription = _timer
       .pipe(
-        switchMap(this.joined_query_list(false)),
-        take(1),
+        concatMap(() => {
+          return this.stock_query.get_market_time().pipe(
+            delay(100),
+            concatMap((new_time) => {
+              this.market_time = new_time;
+              return this.joined_query_list(false)();
+            })
+          );
+        })
       )
-      .subscribe({
-        next: this.retrieve_data,
-        error: (err) => {},
-        complete: () => {},
-      });
+      .subscribe(this.retrieve_data);
   }
 
   ngOnDestroy() {

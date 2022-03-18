@@ -42,6 +42,7 @@ import { NewsModalComponent } from './components/search/stock-info/stock-sub-inf
 import { StockSubInfoInsightsSocialSintimentsComponent } from './components/search/stock-info/stock-sub-info/stock-sub-info-insights/stock-sub-info-insights-social-sintiments/stock-sub-info-insights-social-sintiments.component';
 import { StockSubInfoInsightsRecommendsComponent } from './components/search/stock-info/stock-sub-info/stock-sub-info-insights/stock-sub-info-insights-recommends/stock-sub-info-insights-recommends.component';
 import { StockSubInfoInsightsEarningComponent } from './components/search/stock-info/stock-sub-info/stock-sub-info-insights/stock-sub-info-insights-earning/stock-sub-info-insights-earning.component';
+import { MatTabsModule } from "@angular/material/tabs";
 
 const appRoutes: Routes = [
   { path: 'search/:ticker', component: SearchComponent },
@@ -96,6 +97,7 @@ const appRoutes: Routes = [
     FontAwesomeModule,
     ChartModule,
     HighchartsChartModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent],

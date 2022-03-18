@@ -1,56 +1,30 @@
 <div class="container-fluid d-flex flex-column justify-content-center align-content-center">
-  <div class="btn-group-justified d-flex justify-content-center align-content-center" role="group">
-    <button
-      type="button"
-      class="btn border-bottom border-2 w-100"
-      [ngClass]="{ active: active == tab.summary }"
-      (click)="onClick(tab.summary)"
-    >
-      Summary
-    </button>
-    <button
-      type="button"
-      class="btn border-bottom border-2 w-100"
-      [ngClass]="{ active: active == tab.news }"
-      (click)="onClick(tab.news)"
-    >
-      Top News
-    </button>
-    <button
-      type="button"
-      class="btn border-bottom border-2 w-100"
-      [ngClass]="{ active: active == tab.charts }"
-      (click)="onClick(tab.charts)"
-    >
-      Charts
-    </button>
-    <button
-      type="button"
-      class="btn border-bottom border-2 w-100"
-      [ngClass]="{ active: active == tab.insights }"
-      (click)="onClick(tab.insights)"
-    >
-      Insights
-    </button>
+  <div>
+  <nav mat-tab-nav-bar mat-stretch-tabs [tabPanel]="tabPanel">
+    <a mat-tab-link *ngFor="let section of sections"
+       (click)="active = section"
+       [active]="active == section"> {{tab[section]}} </a>
+  </nav>
+  <mat-tab-nav-panel #tabPanel></mat-tab-nav-panel>
   </div>
 
   <app-stock-sub-info-summary
     class="w-100 h-100"
-    [hidden]="active !== tab.summary"
+    [hidden]="active !== tab.Summary"
   ></app-stock-sub-info-summary>
 
   <app-stock-sub-info-news
     class="w-100 h-100"
-    [hidden]="active !== tab.news"
+    [hidden]="active !== tab.News"
   ></app-stock-sub-info-news>
 
   <app-stock-sub-info-charts
     class="w-100 h-100"
-    [hidden]="active !== tab.charts"
+    [hidden]="active !== tab.Charts"
   ></app-stock-sub-info-charts>
 
   <app-stock-sub-info-insights
     class="w-100 h-100"
-    [hidden]="active !== tab.insights"
+    [hidden]="active !== tab.Insights"
   ></app-stock-sub-info-insights>
 </div>

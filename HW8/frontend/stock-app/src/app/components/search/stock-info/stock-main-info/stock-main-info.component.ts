@@ -80,7 +80,6 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
 
   retrieve_joined_query = (result_dct: any) => {
     this.main_info_data = {} as stock_main_info;
-    this.stock_query.update_search_state(state.SUCCESS);
     this.stock_query.update_market_time(result_dct.cur_price.t);
     this.market_time = moment.unix(result_dct.cur_price.t);
     this.main_info_data = {
@@ -92,9 +91,11 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
     };
 
     this.prev_info_query.update_main_info(this.main_info_data);
+    this.stock_query.update_search_state(state.SUCCESS);
   };
 
   handel_err = (err: any) => {
+    console.log("no such stock");
     this.stock_query.update_search_state(state.FAIL);
     this.subscription.unsubscribe();
   };
@@ -112,6 +113,5 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
       'YYYY-MM-DD HH:mm:ss'
     );
   };
-
 
 }

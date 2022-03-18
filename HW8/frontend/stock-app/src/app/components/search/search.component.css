@@ -12,15 +12,11 @@
 }
 
 app-search-bar {
-  height: 111px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
   margin-bottom: 30px;
 }
 
 app-stock-info {
-  height: 80%;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-content: center;
