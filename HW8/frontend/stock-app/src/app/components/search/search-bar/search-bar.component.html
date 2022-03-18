@@ -1,0 +1,47 @@
+<div class="search_box w-75 h-100 pt-4">
+  <p class="h3">Stock Search</p>
+  <div
+    class="mx-sm-1 border border-2 rounded-pill"
+    style="border-color: #2224ab !important"
+  >
+    <div class="input-group ps-3 pe-0">
+      <input
+        class="form-control border-0"
+        type="search"
+        placeholder="Enter stock ticker symbol"
+        id="search-input"
+        matInput
+        [matAutocomplete]="auto"
+        [formControl]="myControl"
+        (keyup.enter)="search_click()"
+      />
+      <span class="input-group-append">
+        <button class="btn pe-0" type="button" (click)="search_click()">
+          <i class="fa fa-search" style="color: #2224ab !important"></i>
+        </button>
+
+        <button class="btn" type="button pe-0">
+          <i
+            class="fa fa-times"
+            style="color: #2224ab !important"
+            (click)="clear_click()"
+          ></i>
+        </button>
+      </span>
+    </div>
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngIf="isLoading" class="is-loading">
+        <i class="fas fa-circle-notch fa-spin" style="color: #2224ab"></i>
+      </mat-option>
+      <ng-container *ngIf="!isLoading">
+        <mat-option
+          *ngFor="let suggestion of filteredOptions"
+          [value]="suggestion.symbol"
+        >
+          {{ suggestion.symbol }}| <small>{{ suggestion.description }}</small>
+        </mat-option>
+      </ng-container>
+    </mat-autocomplete>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+<app-loading-circle
+  class="h-100 w-100"
+  *ngIf="is_loading; else ready_content"
+></app-loading-circle>
+
+<ng-template #ready_content>
+  <div class="container-fluid w-100 h-100">
+    <div class="row row-cols-md-2 h-100">
+      <div
+        *ngFor="let news of valid_news"
+        class="col-sm6 d-flex justify-content-center align-content-center mb-2"
+        style="min-height: 100px"
+      >
+        <app-stock-sub-info-news-card
+          class="w-100 h-100"
+          [news]="news"
+        ></app-stock-sub-info-news-card>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

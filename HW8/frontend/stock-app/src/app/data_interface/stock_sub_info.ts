@@ -5,6 +5,7 @@ export interface Price_Summary {
   l: number;
   o: number;
   pc: number;
+  d: number;
 }
 
 export interface About_Info {

@@ -1,0 +1,10 @@
+<div class="my_container">
+  <button
+    [ngClass]="{ active: is_active }"
+    (click)="onClick()"
+    routerLink="{{ route_link }}"
+    style="flex: 1"
+  >
+    {{ text }}
+  </button>
+</div>
