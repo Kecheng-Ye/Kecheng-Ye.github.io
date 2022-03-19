@@ -7,23 +7,17 @@
   <div *ngIf="!is_loading" class="container-fluid h-100">
     <div class="row h-100">
       <div class="col-sm d-flex flex-column">
-        <div style="height: 45%; width: 100%">
-          <app-stock-sub-info-summary-price
-            class="h-100 w-100"
-            [summary]="stock_summary_data.price_info"
-          ></app-stock-sub-info-summary-price>
-        </div>
+        <app-stock-sub-info-summary-price
+          class="mb-2"
+          style="min-height: 150px;"
+          [summary]="stock_summary_data.price_info"
+        ></app-stock-sub-info-summary-price>
 
-        <div style="height: 55%; width: 100%">
-          <app-stock-sub-info-summary-about
-            class="h-100 w-100"
-          ></app-stock-sub-info-summary-about>
-        </div>
+        <app-stock-sub-info-summary-about style="flex: 1"></app-stock-sub-info-summary-about>
       </div>
 
-      <div class="col-sm" style="min-height: 300px;">
+      <div class="col-sm">
         <app-stock-sub-info-summary-chart
-          class="w-100"
           [hourly_price]="stock_summary_data.hourly_record"
           [ticker]="ticker"
           [color]="color"

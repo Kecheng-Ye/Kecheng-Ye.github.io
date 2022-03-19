@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, of, share, Subject } from "rxjs";
 import { HttpClient } from '@angular/common/http';
 import { Suggestion_query } from '../data_interface/suggestion';
 import * as moment from 'moment';

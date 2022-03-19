@@ -24,21 +24,25 @@
     class="border border-2 w-100 ps-2 d-flex flex-column"
     style="height: 90px; border-color: #dddddd"
   >
-    <h2 style="margin-bottom: 0;">Share</h2>
+    <h2 style="margin-bottom: 0">Share</h2>
 
-    <div class="d-flex" style="margin-top: 10px">
+    <div class="d-flex" style="flex: 1">
       <a
         href="https://twitter.com/share?title={{ news.headline }}&url={{
           news.url
         }}"
         class="twitter-share-button me-1"
         target="_blank"
-        style="margin-bottom: 0"
+        style="align-self: flex-end"
       >
         <i class="fa-brands fa-twitter-square h1"></i>
       </a>
       <script src="//platform.twitter.com/widgets.js"></script>
-      <a href="https://www.facebook.com/sharer/sharer.php?u={{news.url}}" target="_blank">
+      <a
+        style="align-self: flex-end"
+        href="https://www.facebook.com/sharer/sharer.php?u={{ news.url }}"
+        target="_blank"
+      >
         <i class="fa-brands fa-facebook-square h1"></i>
       </a>
     </div>

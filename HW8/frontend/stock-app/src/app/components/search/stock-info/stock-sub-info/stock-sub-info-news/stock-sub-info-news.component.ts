@@ -14,7 +14,7 @@ import { PreviousStateService } from '../../../../../services/previous-state.ser
 export class StockSubInfoNewsComponent implements OnInit {
   ticker: string = '';
   valid_news: News[] = [];
-  is_loading = false;
+  is_loading = true;
 
   constructor(
     private stock_query: StockQueryService,

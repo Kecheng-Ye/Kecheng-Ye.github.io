@@ -21,14 +21,13 @@ export class base_req {
 
   register(app, query_entry) {
     app.get(query_entry, async (req, res) => {
-      logger.info("Get request at " + req.url);
       const result = await this.fetch_data(req);
-      if (Object.keys(result).length == 0) {
-        // logger.info("Requst at " + req.url + " failed");
-        res.status(404).send(result);
+      if (Object.keys(result).length == 0 || result.hasOwnProperty("error")) {
+        logger.info("Request at " + req.url + " failed");
+        res.status(404).send("Nothing found");
         return;
       }
-      // logger.info("Requst at " + req.url + " succeed");
+      logger.info("Request at " + req.url + " succeed");
       res.send(result);
     });
   }
@@ -57,7 +56,10 @@ export class base_req_lst extends base_req {
 }
 
 export class stock_history_request extends base_req {
-  constructor(request_format, {resolution='D', years=0, months=0, days=0, hours=0}) {
+  constructor(
+    request_format,
+    { resolution = "D", years = 0, months = 0, days = 0, hours = 0 }
+  ) {
     super(request_format);
     this.resolution = resolution;
     this.years = years;

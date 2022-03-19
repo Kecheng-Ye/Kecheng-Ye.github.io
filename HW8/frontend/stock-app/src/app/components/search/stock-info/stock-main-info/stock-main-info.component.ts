@@ -34,7 +34,7 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
         switchMap(([ticker, ticker_change]) => {
           this.ticker = ticker;
           if (ticker_change) {
-            return this.do_joined_query();
+            return this.do_joined_query(true)();
           } else {
             return this.prev_info_query.get_prev_main_info();
           }
@@ -43,8 +43,8 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
       .subscribe(this.retrieve_data, this.handel_err, () => {});
 
     this.subscription = timer(TIME_INTERVAL, TIME_INTERVAL)
-      .pipe(switchMap(this.fetch_live_price))
-      .subscribe(this.update_live_price, this.handel_err, () => {});
+      .pipe(switchMap(this.do_joined_query(false)))
+      .subscribe(this.retrieve_data, this.handel_err, () => {});
 
     this.stock_query.get_search_state().subscribe((new_state) => {
       this.cur_state = new_state;
@@ -60,8 +60,8 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
     return cur < this.market_time;
   }
 
-  do_joined_query = () => {
-    this.stock_query.update_search_state(state.PENDING);
+  do_joined_query = (need_refresh: boolean) => () => {
+    if(need_refresh) this.stock_query.update_search_state(state.PENDING);
     const query_list = {
       brief: this.stock_query.get_brief(this.ticker),
       cur_price: this.stock_query.get_cur_price(this.ticker),
@@ -76,6 +76,8 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
     }else{
       this.retrieve_joined_query(result);
     }
+
+    this.stock_query.update_search_state(state.SUCCESS);
   }
 
   retrieve_joined_query = (result_dct: any) => {
@@ -91,27 +93,11 @@ export class StockMainInfoComponent implements OnInit, OnDestroy{
     };
 
     this.prev_info_query.update_main_info(this.main_info_data);
-    this.stock_query.update_search_state(state.SUCCESS);
   };
 
   handel_err = (err: any) => {
-    console.log("no such stock");
     this.stock_query.update_search_state(state.FAIL);
     this.subscription.unsubscribe();
-  };
-
-  fetch_live_price = () => {
-    return this.stock_query.get_cur_price(this.ticker);
-  };
-
-  update_live_price = (result: any) => {
-    this.stock_query.update_market_time(result.t);
-    this.market_time = moment.unix(result.t);
-    this.main_info_data.price = { ...result };
-    this.main_info_data.is_market_open = this.is_market_open();
-    this.main_info_data.market_time = this.market_time.format(
-      'YYYY-MM-DD HH:mm:ss'
-    );
   };
 
 }

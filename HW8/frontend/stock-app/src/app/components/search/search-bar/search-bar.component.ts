@@ -25,6 +25,7 @@ export class SearchBarComponent implements OnInit {
   ngOnInit() {
     this.myControl.valueChanges
       .pipe(
+        debounceTime(500),
         tap(() => {
           this.reload = false;
           this.filteredOptions = [];

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StockQueryService } from '../../../../../services/stock-query.service';
 import { SearchUpdateService } from '../../../../../services/search-update.service';
 import { PreviousStateService } from '../../../../../services/previous-state.service';
-import { forkJoin, of, switchMap } from 'rxjs';
+import { forkJoin, of, switchMap, take } from "rxjs";
 import {
   Earning_Info,
   Insights_Info,
@@ -20,7 +20,7 @@ import { Company_Brief } from "../../../../../data_interface/stock_main_info";
 })
 export class StockSubInfoInsightsComponent implements OnInit {
   ticker: string = '';
-  is_loading = false;
+  is_loading = true;
   insights_data: Insights_Info = {
     social_sentiments: {
       reddit: {total_mention: 0, negative: 0, positive: 0},
@@ -43,7 +43,7 @@ export class StockSubInfoInsightsComponent implements OnInit {
       this.stock_query.get_social_sentiments_lst(this.ticker),
       this.stock_query.get_recommend_info_lst(this.ticker),
       this.stock_query.get_earning_lst(this.ticker),
-      this.stock_query.get_brief(this.ticker),
+      this.prev_info_query.get_prev_main_info().pipe(take(1)),
     ]);
   };
 
@@ -60,7 +60,7 @@ export class StockSubInfoInsightsComponent implements OnInit {
   retrieve_query = (result: any) => {
     const [social_sentiments, recommend, earning, brief] = result;
 
-    this.retrieve_social_sentiments(social_sentiments, brief);
+    this.retrieve_social_sentiments(social_sentiments, brief.name);
     this.retrieve_recommend_lst(recommend);
     this.retrieve_earning_lst(earning);
 

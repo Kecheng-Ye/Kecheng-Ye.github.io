@@ -17,7 +17,7 @@ export const round = (x: number, n: number) => {
 
 export const second = 1000;
 export const TIME_INTERVAL = 15 * second;
-export const DEBUG = false;
+export const DEBUG = true;
 
 export enum state {
   PENDING = 0,

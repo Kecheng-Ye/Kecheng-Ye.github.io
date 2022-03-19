@@ -38,8 +38,8 @@ export class StockSubInfoSummaryComponent implements OnInit {
   joined_query_list = (need_fresh: boolean) => () => {
     this.is_loading = need_fresh;
     const query_list = {
-      cur_price: this.stock_query.get_cur_price(this.ticker),
-      brief_info: this.stock_query.get_brief(this.ticker),
+      // get brief info from main info data
+      main_info: this.prev_info_query.get_prev_main_info().pipe(take(1)),
       peers: this.stock_query.get_peers(this.ticker),
       hourly_record: this.stock_query.get_hourly_record(
         this.ticker,
@@ -68,8 +68,8 @@ export class StockSubInfoSummaryComponent implements OnInit {
 
   retrieve_query = (result_dict: any) => {
     this.stock_summary_data = {
-      price_info: result_dict.cur_price,
-      about: { ...result_dict.brief_info, peers: result_dict.peers },
+      price_info: result_dict.main_info.price,
+      about: { ...result_dict.main_info.name, peers: result_dict.peers },
       hourly_record: result_dict.hourly_record,
     };
 
@@ -77,27 +77,22 @@ export class StockSubInfoSummaryComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.stock_query
-      .get_market_time()
+    forkJoin([
+      this.stock_query.get_market_time().pipe(take(1)),
+      this.ticker_query.fetch_ticker().pipe(take(1)),
+    ])
       .pipe(
-        delay(100),
-        concatMap((new_time) => {
+        concatMap(([new_time, [ticker, ticker_change]]) => {
           this.market_time = new_time;
-          return this.ticker_query.fetch_ticker().pipe(
-            delay(100),
-            concatMap(([ticker, ticker_change]) => {
-              this.ticker = ticker;
-              if (ticker_change) {
-                return this.joined_query_list(true)();
-              } else {
-                return this.prev_info_query.get_prev_summary_info();
-              }
-            })
-          );
+          this.ticker = ticker;
+          if (ticker_change) {
+            return this.joined_query_list(true)();
+          } else {
+            return this.prev_info_query.get_prev_summary_info();
+          }
         })
       )
       .subscribe(this.retrieve_data);
-
 
     const _timer = timer(TIME_INTERVAL, TIME_INTERVAL);
 
@@ -105,7 +100,6 @@ export class StockSubInfoSummaryComponent implements OnInit {
       .pipe(
         concatMap(() => {
           return this.stock_query.get_market_time().pipe(
-            delay(100),
             concatMap((new_time) => {
               this.market_time = new_time;
               return this.joined_query_list(false)();
