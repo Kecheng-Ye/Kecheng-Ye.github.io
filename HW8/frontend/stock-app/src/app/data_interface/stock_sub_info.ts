@@ -1,5 +1,3 @@
-import { stringify } from '@angular/compiler/src/util';
-
 export interface Price_Summary {
   h: number;
   l: number;
@@ -74,7 +72,6 @@ export interface Social_Sentiment {
   score: number;
 }
 
-
 export interface Social_Sentiment_List {
   reddit: Social_Sentiment[];
   twitter: Social_Sentiment[];
@@ -87,7 +84,11 @@ export interface Sentiments_For_Plot {
 }
 
 export interface Insights_Info {
-  social_sentiments: {reddit: Sentiments_For_Plot; twitter: Sentiments_For_Plot, name: string};
+  social_sentiments: {
+    reddit: Sentiments_For_Plot;
+    twitter: Sentiments_For_Plot;
+    name: string;
+  };
   recommends: Recommend_Info[];
   earnings: Earning_Info[];
 }

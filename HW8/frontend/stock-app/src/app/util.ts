@@ -17,7 +17,7 @@ export const round = (x: number, n: number) => {
 
 export const second = 1000;
 export const TIME_INTERVAL = 15 * second;
-export const DEBUG = true;
+export const DEBUG = false;
 
 export enum state {
   PENDING = 0,
@@ -25,7 +25,7 @@ export enum state {
   FAIL = 2,
 }
 
-export const trime = (max_size: number) => (input: string) => {
+export const trim = (max_size: number) => (input: string) => {
   if (input.length < max_size) {
     return input;
   } else {

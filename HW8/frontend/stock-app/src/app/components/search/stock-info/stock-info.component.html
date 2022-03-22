@@ -1,4 +1,7 @@
-<div class="d-flex flex-column align-content-center w-75 h-100" style=" max-width: 1000px">
+<div
+  class="d-flex flex-column align-content-center w-75 h-100"
+  style="max-width: 1000px"
+>
   <app-loading-circle
     class="h-100 w-100"
     *ngIf="search_state == state.PENDING"
@@ -10,18 +13,20 @@
     class="w-100 h-100 d-flex flex-column"
   >
     <app-stock-main-info></app-stock-main-info>
-    <app-stock-sub-info *ngIf="search_state == state.SUCCESS" style="flex: 1;"></app-stock-sub-info>
+    <app-stock-sub-info
+      *ngIf="search_state == state.SUCCESS"
+      style="flex: 1"
+    ></app-stock-sub-info>
   </div>
 
   <div *ngIf="search_state == state.FAIL" class="container-xs">
     <ngb-alert
       type="danger"
       class="align-self-center mt-3 w-100 text-center"
-      style="max-width: 1000px;"
+      style="max-width: 1000px"
+      [dismissible]="false"
     >
       No data found. Please Enter a valid Ticker
-    </ngb-alert
-    >
+    </ngb-alert>
   </div>
 </div>
-

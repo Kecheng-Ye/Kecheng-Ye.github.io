@@ -42,7 +42,12 @@ import { NewsModalComponent } from './components/search/stock-info/stock-sub-inf
 import { StockSubInfoInsightsSocialSintimentsComponent } from './components/search/stock-info/stock-sub-info/stock-sub-info-insights/stock-sub-info-insights-social-sintiments/stock-sub-info-insights-social-sintiments.component';
 import { StockSubInfoInsightsRecommendsComponent } from './components/search/stock-info/stock-sub-info/stock-sub-info-insights/stock-sub-info-insights-recommends/stock-sub-info-insights-recommends.component';
 import { StockSubInfoInsightsEarningComponent } from './components/search/stock-info/stock-sub-info/stock-sub-info-insights/stock-sub-info-insights-earning/stock-sub-info-insights-earning.component';
-import { MatTabsModule } from "@angular/material/tabs";
+import { MatTabsModule } from '@angular/material/tabs';
+import { SingleWatchStockComponent } from './components/watchlist/single-watch-stock/single-watch-stock.component';
+import { BuyingModalComponent } from './components/portfolio/buying-modal/buying-modal.component';
+import { SellingModalComponent } from './components/portfolio/selling-modal/selling-modal.component';
+import { SinglePortfolioRecordComponent } from './components/portfolio/single-portfolio-record/single-portfolio-record.component';
+import { TransactionNoticeComponent } from './components/portfolio/transaction-notice/transaction-notice.component';
 
 const appRoutes: Routes = [
   { path: 'search/:ticker', component: SearchComponent },
@@ -82,6 +87,11 @@ const appRoutes: Routes = [
     StockSubInfoInsightsSocialSintimentsComponent,
     StockSubInfoInsightsRecommendsComponent,
     StockSubInfoInsightsEarningComponent,
+    SingleWatchStockComponent,
+    BuyingModalComponent,
+    SellingModalComponent,
+    SinglePortfolioRecordComponent,
+    TransactionNoticeComponent,
   ],
   imports: [
     BrowserModule,
@@ -97,7 +107,7 @@ const appRoutes: Routes = [
     FontAwesomeModule,
     ChartModule,
     HighchartsChartModule,
-    MatTabsModule
+    MatTabsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -27,6 +27,7 @@ export class StockSubInfoSummaryComponent implements OnInit {
   market_time: moment.Moment = moment();
   is_loading = true;
   subscription: Subscription = new Subscription();
+  first_routine: Subscription = new Subscription();
   color: string = 'black';
 
   constructor(
@@ -77,7 +78,7 @@ export class StockSubInfoSummaryComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    forkJoin([
+    this.first_routine = forkJoin([
       this.stock_query.get_market_time().pipe(take(1)),
       this.ticker_query.fetch_ticker().pipe(take(1)),
     ])
@@ -112,5 +113,6 @@ export class StockSubInfoSummaryComponent implements OnInit {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.first_routine.unsubscribe();
   }
 }

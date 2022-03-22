@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import { News } from "../../../../../../../data_interface/stock_sub_info";
 import * as moment from "moment";
 
 @Component({

@@ -1,0 +1,50 @@
+<div class="modal-header d-block">
+  <div class="d-flex">
+    <h1 class="modal-title" style="margin-bottom: 3px !important">
+      {{ data.name }}
+    </h1>
+    <button
+      type="button"
+      class="btn-close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    ></button>
+  </div>
+</div>
+<div class="modal-body d-flex flex-column">
+  <p>Current Price: {{ data.price }}</p>
+  <p>Money in Wallet: {{ balance }}</p>
+  <div class="form-outline d-flex text-center mb-2">
+    <div class="d-flex align-items-center me-1">
+      <p class="align-self-center" style="margin-bottom: 0 !important">
+        Quantities:
+      </p>
+    </div>
+    <input
+      type="number"
+      class="form-control w-75"
+      style="height: 30px"
+      value="0"
+      min="0"
+      [formControl]="myControl"
+    />
+  </div>
+  <p *ngIf="myControl.value > limit" style="color: red">
+    Not enough money in wallet
+  </p>
+</div>
+<div class="modal-footer d-flex justify-content-between align-self-center">
+  <p style="margin-bottom: 0 !important">
+    Total: {{ round(myControl.value * data.price, 2) }}
+  </p>
+
+  <button
+    type="button"
+    class="btn"
+    (click)="on_click_buy()"
+    [disabled]="myControl.value > limit"
+    style="background-color: green; color: white"
+  >
+    Buy
+  </button>
+</div>

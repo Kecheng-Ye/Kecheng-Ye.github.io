@@ -1,0 +1,17 @@
+<ngb-alert
+  *ngIf="buy_notice"
+  type="success"
+  class="align-self-center mt-3 w-100 text-center"
+  style="max-width: 1000px"
+>
+  {{ ticker }} bought successfully
+</ngb-alert>
+
+<ngb-alert
+  *ngIf="sell_notice"
+  type="danger"
+  class="align-self-center mt-3 w-100 text-center"
+  style="max-width: 1000px"
+>
+  {{ ticker }} sold successfully
+</ngb-alert>

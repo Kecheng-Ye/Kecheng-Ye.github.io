@@ -1,0 +1,52 @@
+<div class="card mb-3" (click)="on_route()" >
+  <div
+    class="d-flex justify-content-end"
+    style="
+      width: 0;
+      height: 0;
+      margin-left: auto;
+      margin-right: 5px;
+      z-index: 5;
+    "
+  >
+    <button
+      class="btn-close"
+      aria-label="Close"
+      type="button"
+      (click)="on_delete()"
+    ></button>
+  </div>
+
+  <div class="card-body">
+    <div class="d-flex align-content-center justify-content-between">
+      <div>
+        <h1 class="card-title">{{ data.ticker }}</h1>
+        <h3 class="card-subtitle mb-0">{{ data.name }}</h3>
+      </div>
+
+      <div
+        class="text-end"
+        [ngStyle]="{
+          color: data.d > 0 ? 'green' : data.d < 0 ? 'red' : 'black'
+        }"
+      >
+        <h1 class="card-title">{{ data.c }}</h1>
+        <div class="d-flex justify-content-end">
+          <fa-icon
+            *ngIf="data.d < 0"
+            [icon]="faCaretDown"
+            [classes]="['me-1', 'align-self-center']"
+            style="margin-top: 4px"
+          ></fa-icon>
+          <fa-icon
+            *ngIf="data.d > 0"
+            [icon]="faCaretUp"
+            [classes]="['me-1', 'align-self-center']"
+            style="margin-top: 4px"
+          ></fa-icon>
+          <h3 class="card-subtitle mb-0">{{ data.d }}({{ data.dp }}%)</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -5,7 +5,8 @@ import { BehaviorSubject, Observable, Subject } from "rxjs";
   providedIn: 'root'
 })
 export class SearchUpdateService {
-  private is_home_page = new BehaviorSubject(false);
+  private fresh = new BehaviorSubject(0);
+  private is_home_page = new BehaviorSubject(true);
   private cur_ticker = new BehaviorSubject(['', true] as [string, boolean]);
 
   constructor() { }
@@ -23,5 +24,13 @@ export class SearchUpdateService {
 
   fetch_ticker(): Observable<[string, boolean]> {
     return this.cur_ticker.asObservable();
+  }
+
+  fresh_header() {
+    this.fresh.next(this.fresh.getValue() + 1);
+  }
+
+  need_fresh(): Observable<number> {
+    return this.fresh.asObservable();
   }
 }

@@ -1,14 +1,76 @@
-<div style="width: 100%; height: 100%;">
+<div class="d-flex flex-column" style="width: 100%; height: 100%">
+  <ngb-alert
+    *ngIf="
+      cur_state == state.SUCCESS &&
+      watch_list_notice &&
+      !this.main_info_data.name.is_in_watch_list
+    "
+    type="danger"
+    class="align-self-center mt-3 w-100 text-center"
+    style="max-width: 1000px"
+    (closed)="close_watch_list_notice()"
+  >
+    {{ ticker }} removed from the WatchList
+  </ngb-alert>
+
+  <ngb-alert
+    *ngIf="
+      cur_state == state.SUCCESS &&
+      watch_list_notice &&
+      this.main_info_data.name.is_in_watch_list
+    "
+    type="success"
+    class="align-self-center mt-3 w-100 text-center"
+    style="max-width: 1000px"
+    (closed)="close_watch_list_notice()"
+  >
+    {{ ticker }} added to the WatchList
+  </ngb-alert>
+
+  <ngb-alert
+    *ngIf="
+      cur_state == state.SUCCESS &&
+      buy_notice
+    "
+    type="success"
+    class="align-self-center mt-3 w-100 text-center"
+    style="max-width: 1000px"
+    (closed)="close_buy_notice()"
+  >
+    {{ ticker }} bought successfully
+  </ngb-alert>
+
+  <ngb-alert
+    *ngIf="
+      cur_state == state.SUCCESS &&
+      sell_notice
+    "
+    type="danger"
+    class="align-self-center mt-3 w-100 text-center"
+    style="max-width: 1000px"
+    (closed)="close_sell_notice()"
+  >
+    {{ ticker }} sold successfully
+  </ngb-alert>
+
   <div class="stock">
     <div class="name">
       <app-stock-main-info-name
         *ngIf="cur_state == state.SUCCESS"
         [stock_name]="main_info_data.name"
+        (watch_list_click)="watch_list_change($event)"
+        (buy_click)="open_buy_modal()"
+        (sell_click)="open_sell_modal()"
       ></app-stock-main-info-name>
     </div>
     <div class="img">
       <div class="responsive">
-        <img *ngIf="cur_state == state.SUCCESS" [src]="main_info_data.img" alt="logo" class="responsive-img" />
+        <img
+          *ngIf="cur_state == state.SUCCESS"
+          [src]="main_info_data.img"
+          alt="logo"
+          class="responsive-img"
+        />
       </div>
     </div>
     <div class="price">

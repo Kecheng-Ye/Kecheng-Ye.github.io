@@ -1,1 +1,29 @@
-<p>watchlist works!</p>
+<div class="w-100 h-100 d-flex justify-content-center">
+  <div
+    *ngIf="is_ready"
+    class="d-flex flex-column w-75 align-content-center mt-3"
+    style="max-width: 1000px"
+  >
+    <p class="h3">My Watch List</p>
+
+    <div *ngIf="!is_empty">
+      <app-single-watch-stock
+        *ngFor="let stock of watch_list_result"
+        [data]="stock"
+        (delete_event) = "delete_stock($event)"
+      >
+      </app-single-watch-stock>
+    </div>
+
+    <div *ngIf="is_empty">
+      <ngb-alert
+        type="warning"
+        class="align-self-center mt-3 w-100 text-center"
+        style="max-width: 1000px;"
+        [dismissible]="false"
+      >
+        Currently you don't have any stock in your watchlist
+      </ngb-alert>
+    </div>
+  </div>
+</div>

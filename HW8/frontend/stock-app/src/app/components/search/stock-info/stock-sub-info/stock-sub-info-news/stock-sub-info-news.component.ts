@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StockQueryService } from '../../../../../services/stock-query.service';
 import { SearchUpdateService } from '../../../../../services/search-update.service';
 import { News } from '../../../../../data_interface/stock_sub_info';
-import { trime } from '../../../../../util';
-import { of, switchMap } from 'rxjs';
+import { switchMap, take } from 'rxjs';
 import { PreviousStateService } from '../../../../../services/previous-state.service';
 
 @Component({
@@ -28,9 +27,9 @@ export class StockSubInfoNewsComponent implements OnInit {
   };
 
   retrieve_data = (result: any) => {
-    if(result[0].hasOwnProperty('trim_header')) {
+    if (result[0].hasOwnProperty('trim_header')) {
       this.valid_news = result;
-    }else{
+    } else {
       this.retrieve_query(result);
     }
 
@@ -58,7 +57,7 @@ export class StockSubInfoNewsComponent implements OnInit {
     }
 
     this.prev_info_query.update_news_list(this.valid_news);
-  }
+  };
 
   ngOnInit(): void {
     this.ticker_query
@@ -69,7 +68,7 @@ export class StockSubInfoNewsComponent implements OnInit {
           if (ticker_change) {
             return this.joined_query_list();
           } else {
-            return this.prev_info_query.get_prev_news_list();
+            return this.prev_info_query.get_prev_news_list().pipe(take(1));
           }
         })
       )

@@ -1,7 +1,12 @@
 <div>
   <div class="mb-0 p-0 d-flex">
     <p class="h2 me-1">{{ stock_name.ticker }}</p>
-    <i class="fa-regular fa-star pt-1"></i>
+    <i
+      class="fa-star pt-1"
+      [ngClass]="stock_name.is_in_watch_list ? 'fa-solid' : 'fa-regular'"
+      [ngStyle]="{ color: stock_name.is_in_watch_list ? '#feda03' : 'black' }"
+      (click)="watch_list_onClick()"
+    ></i>
   </div>
 
   <div class="h4 mb-1" style="color: #dddddd">
@@ -18,7 +23,14 @@
       text="Buy"
       bg_color="green"
       text_color="white"
+      (click)="buy_onClick()"
     ></app-button>
-    <app-button text="Sell" bg_color="red" text_color="white"></app-button>
+    <app-button
+      *ngIf="stock_name.transaction_rec[0] > 0"
+      text="Sell"
+      bg_color="red"
+      text_color="white"
+      (click)="sell_onClick()"
+    ></app-button>
   </div>
 </div>

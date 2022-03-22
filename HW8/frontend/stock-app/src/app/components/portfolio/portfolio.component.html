@@ -1,1 +1,39 @@
-<p>portfolio works!</p>
+<div class="w-100 h-100 d-flex justify-content-center">
+  <div
+    *ngIf="is_ready"
+    class="d-flex flex-column w-75 align-content-center mt-3"
+    style="max-width: 1000px"
+  >
+    <app-transaction-notice
+      [buy_notice]="buy_notice"
+      [sell_notice]="sell_notice"
+      [ticker]="target_ticker"
+      (buy_cancel)="close_buy_notice()"
+      (sell_cancel)="close_sell_notice()"
+    ></app-transaction-notice>
+
+    <p class="h2">My Portfolio</p>
+    <p class="h4">Money in Wallet: ${{ balance }}</p>
+
+    <div *ngIf="!is_empty">
+      <app-single-portfolio-record
+        *ngFor="let stock of transaction_rec_list"
+        [data]="stock"
+        (buy_event)="open_buy_modal($event)"
+        (sell_event)="open_sell_modal($event)"
+      >
+      </app-single-portfolio-record>
+    </div>
+
+    <div *ngIf="is_empty">
+      <ngb-alert
+        type="warning"
+        class="align-self-center mt-3 w-100 text-center"
+        style="max-width: 1000px"
+        [dismissible]="false"
+      >
+        Currently you don't have any stock in your watchlist
+      </ngb-alert>
+    </div>
+  </div>
+</div>

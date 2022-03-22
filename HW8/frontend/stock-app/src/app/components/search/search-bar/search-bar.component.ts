@@ -4,6 +4,7 @@ import { StockQueryService } from '../../../services/stock-query.service';
 import { Suggestion } from '../../../data_interface/suggestion';
 import { FormControl } from '@angular/forms';
 import { debounceTime, finalize, Observable, of, switchMap, tap } from 'rxjs';
+import { SearchUpdateService } from "../../../services/search-update.service";
 
 const MAX_WIDTH = 400;
 
@@ -20,13 +21,14 @@ export class SearchBarComponent implements OnInit {
   reload = true;
   warning = false;
 
-  constructor(private router: Router, private stock_query: StockQueryService) {}
+  constructor(private router: Router, private stock_query: StockQueryService, private ticker_query: SearchUpdateService) {}
 
   ngOnInit() {
     this.myControl.valueChanges
       .pipe(
         debounceTime(500),
         tap(() => {
+          this.warning = false;
           this.reload = false;
           this.filteredOptions = [];
           this.isLoading = true;
@@ -35,8 +37,7 @@ export class SearchBarComponent implements OnInit {
       )
       .subscribe(
         (suggest_query) =>
-          (this.filteredOptions =
-            this.reload ? [] : suggest_query.result)
+          (this.filteredOptions = this.reload ? [] : suggest_query.result)
       );
   }
 
@@ -58,17 +59,18 @@ export class SearchBarComponent implements OnInit {
     this.isLoading = false;
     this.filteredOptions = [];
     this.reload = true;
-    if(!this.myControl.value) {
+    if (!this.myControl.value) {
       this.warning = true;
       return;
     }
 
     const target_ticker = this.myControl.value.toUpperCase();
-    this.router.navigateByUrl('/search/' + target_ticker);
+    this.router.navigateByUrl('/search/' + target_ticker).then(r => this.ticker_query.fresh_header());
   }
 
   clear_click(): void {
     this.myControl.setValue('');
+    this.router.navigateByUrl('/search/home').then(r => this.ticker_query.fresh_header());
   }
 
   close_warning() {
