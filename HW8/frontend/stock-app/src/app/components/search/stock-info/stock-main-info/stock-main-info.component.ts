@@ -71,8 +71,8 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
   }
 
   is_market_open(): boolean {
-    const cur = moment();
-    return cur < this.market_time;
+    const cur = moment().subtract(5, 'minutes');
+    return cur <= this.market_time;
   }
 
   do_joined_query = (need_refresh: boolean) => () => {

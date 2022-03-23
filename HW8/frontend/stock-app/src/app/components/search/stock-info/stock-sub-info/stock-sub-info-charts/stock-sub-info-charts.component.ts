@@ -115,8 +115,8 @@ export class StockSubInfoChartsComponent implements OnInit {
     this.chartOptions.series = [
       {
         type: 'candlestick',
-        name: 'AAPL',
-        id: 'aapl',
+        name: this.ticker,
+        id: 'stock_close',
         zIndex: 2,
         data: this.ohlc,
       },
@@ -129,7 +129,7 @@ export class StockSubInfoChartsComponent implements OnInit {
       },
       {
         type: 'vbp',
-        linkedTo: 'aapl',
+        linkedTo: 'stock_close',
         params: {
           volumeSeriesID: 'volume',
         },
@@ -142,7 +142,7 @@ export class StockSubInfoChartsComponent implements OnInit {
       },
       {
         type: 'sma',
-        linkedTo: 'aapl',
+        linkedTo: 'stock_close',
         zIndex: 1,
         marker: {
           enabled: false,

@@ -18,7 +18,8 @@ export class StockMainInfoPriceComponent implements OnInit {
 
   set price(new_price: stock_price) {
     this._price = {
-      ...new_price,
+      c: round(new_price.c, 2),
+      d: round(new_price.d, 2),
       dp: round(new_price.dp, 2),
       up: new_price.d > 0,
       down: new_price.d < 0,

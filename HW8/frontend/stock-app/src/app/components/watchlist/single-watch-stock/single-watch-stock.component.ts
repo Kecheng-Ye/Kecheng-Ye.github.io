@@ -18,6 +18,8 @@ export class SingleWatchStockComponent implements OnInit {
   set data(new_data: single_watch_info) {
     this._data = {
       ...new_data,
+      c: round(new_data.c, 2),
+      d: round(new_data.d, 2),
       dp: round(new_data.dp, 2),
     };
   }

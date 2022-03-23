@@ -4,6 +4,12 @@ import { Options } from 'highcharts/highstock';
 import { Hourly_Price_Record } from '../../../../../../data_interface/stock_sub_info';
 import { StockQueryService } from '../../../../../../services/stock-query.service';
 
+Highcharts.setOptions({
+  time: {
+    useUTC: false,
+  },
+});
+
 @Component({
   selector: 'app-stock-sub-info-summary-chart',
   templateUrl: './stock-sub-info-summary-chart.component.html',
@@ -15,9 +21,11 @@ export class StockSubInfoSummaryChartComponent implements OnInit {
     return this._hourly_price;
   }
   set hourly_price(new_hourly: Hourly_Price_Record) {
+    this._hourly_price = [];
     for (let i = 0; i < new_hourly['t'].length; i++) {
       this._hourly_price.push([new_hourly['t'][i] * 1000, new_hourly['c'][i]]);
     }
+    this.update_plot();
   }
   private _hourly_price: any = [];
   @Input() ticker: string = '';
@@ -29,7 +37,7 @@ export class StockSubInfoSummaryChartComponent implements OnInit {
     this._color = new_color;
     this.update_plot();
   }
-  private _color: string = "";
+  private _color: string = '';
   Highcharts: typeof Highcharts = Highcharts;
   chartOptions: Options = {
     rangeSelector: {
@@ -45,9 +53,7 @@ export class StockSubInfoSummaryChartComponent implements OnInit {
 
   constructor(private stock_query: StockQueryService) {}
 
-  ngOnInit(): void {
-    this.update_plot();
-  }
+  ngOnInit(): void {}
 
   update_plot() {
     this.chartOptions.series = [

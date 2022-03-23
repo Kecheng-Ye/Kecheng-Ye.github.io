@@ -59,8 +59,6 @@ export class MyProfileService implements OnDestroy {
     this._balance_observe.next(this.balance);
   }
 
-  private write_back_interval = 10 * second;
-
   constructor() {
     this.init_data_from_storage(this.WATCH_LIST_KEY);
     this.init_data_from_storage(this.PORTFOLIO_LIST_KEY);
@@ -184,7 +182,7 @@ export class MyProfileService implements OnDestroy {
 
       record.splice(0, idx);
       hold_shares -= shares;
-      result = [hold_shares, record]
+      result = [hold_shares, record];
 
       this._portfolio_list.set(ticker, result);
     }

@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { round } from 'src/app/util';
 import { one_portfolio_entry } from '../../../data_interface/portfolio';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+import { SearchUpdateService } from '../../../services/search-update.service';
 
 @Component({
   selector: 'app-single-portfolio-record',
@@ -16,7 +18,10 @@ export class SinglePortfolioRecordComponent implements OnInit {
   faCaretDown = faCaretDown;
   faCaretUp = faCaretUp;
 
-  constructor() {}
+  constructor(
+    private router: Router,
+    private ticker_query: SearchUpdateService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -26,5 +31,11 @@ export class SinglePortfolioRecordComponent implements OnInit {
 
   sell_on_click() {
     this.sell_event.emit(this.data.index);
+  }
+
+  on_route() {
+    this.router
+      .navigateByUrl('/search/' + this.data.ticker)
+      .then((r) => this.ticker_query.fresh_header());
   }
 }

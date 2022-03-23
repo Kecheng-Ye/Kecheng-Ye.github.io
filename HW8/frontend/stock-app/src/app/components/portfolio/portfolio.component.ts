@@ -105,7 +105,7 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
     data.total_cost = round(data.total_cost, 2);
     data.avg_cost = round(data.total_cost / data.record[0], 2);
-    data.change = round(data.avg_cost - data.c, 2);
+    data.change = round(data.c - data.avg_cost, 2);
     data.market_val = round(data.c * data.record[0], 2);
     data.color = data.change > 0 ? 'green' : data.change < 0 ? 'red' : 'black';
   }
