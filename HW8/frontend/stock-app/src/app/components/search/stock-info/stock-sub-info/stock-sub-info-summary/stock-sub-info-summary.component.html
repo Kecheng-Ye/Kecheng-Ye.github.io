@@ -9,11 +9,14 @@
       <div class="col-sm d-flex flex-column">
         <app-stock-sub-info-summary-price
           class="mb-2"
-          style="min-height: 150px;"
+          style="min-height: 150px"
           [summary]="stock_summary_data.price_info"
         ></app-stock-sub-info-summary-price>
 
-        <app-stock-sub-info-summary-about style="flex: 1"></app-stock-sub-info-summary-about>
+        <app-stock-sub-info-summary-about
+          style="flex: 1"
+          [about]="stock_summary_data.about"
+        ></app-stock-sub-info-summary-about>
       </div>
 
       <div class="col-sm">
