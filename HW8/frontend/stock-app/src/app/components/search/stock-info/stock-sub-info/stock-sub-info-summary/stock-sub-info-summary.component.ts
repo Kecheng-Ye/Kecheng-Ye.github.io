@@ -5,16 +5,16 @@ import {
   concat,
   concatMap,
   delay,
-  forkJoin,
+  forkJoin, of,
   Subscription,
   switchMap,
   take,
-  timer,
-} from 'rxjs';
+  timer
+} from "rxjs";
 import * as moment from 'moment';
 import { SearchUpdateService } from '../../../../../services/search-update.service';
 import { PreviousStateService } from '../../../../../services/previous-state.service';
-import { TIME_INTERVAL } from '../../../../../util';
+import { is_market_open, TIME_INTERVAL } from "../../../../../util";
 
 @Component({
   selector: 'app-stock-sub-info-summary',
@@ -83,7 +83,7 @@ export class StockSubInfoSummaryComponent implements OnInit {
       this.ticker_query.fetch_ticker().pipe(take(1)),
     ])
       .pipe(
-        concatMap(([new_time, [ticker, ticker_change]]) => {
+        switchMap(([new_time, [ticker, ticker_change]]) => {
           this.market_time = new_time;
           this.ticker = ticker;
           if (ticker_change) {
@@ -99,11 +99,14 @@ export class StockSubInfoSummaryComponent implements OnInit {
 
     this.subscription = _timer
       .pipe(
-        concatMap(() => {
+        switchMap(() => {
           return this.stock_query.get_market_time().pipe(
-            concatMap((new_time) => {
+            switchMap((new_time) => {
               this.market_time = new_time;
-              return this.joined_query_list(false)();
+              if(is_market_open(this.market_time)) {
+                return this.joined_query_list(false)();
+              }
+              return of(this.stock_summary_data);
             })
           );
         })

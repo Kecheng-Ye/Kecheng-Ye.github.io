@@ -21,7 +21,6 @@ export class StockSubInfoInsightsRecommendsComponent implements OnInit {
   chartOptions: Options = {
     chart: {
       type: 'column',
-      marginBottom: 90,
     },
     title: {
       text: 'Recommendation Trends',
@@ -43,8 +42,7 @@ export class StockSubInfoInsightsRecommendsComponent implements OnInit {
     legend: {
       align: 'center',
       verticalAlign: 'bottom',
-      x: 0,
-      y: 0,
+      layout: 'horizontal',
       itemDistance: 7,
     },
     tooltip: {
@@ -60,6 +58,21 @@ export class StockSubInfoInsightsRecommendsComponent implements OnInit {
       },
     },
     colors: ['#176f37', '#1cb954', '#b88b1d', '#f45b5a', '#813131'],
+
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            chart: {
+              marginBottom:120
+            },
+          },
+        },
+      ],
+    },
   };
 
   constructor() {}
@@ -69,7 +82,7 @@ export class StockSubInfoInsightsRecommendsComponent implements OnInit {
 
     for (let i = 0; i < n; i++) {
       const one_rec = this.data[i];
-      this.categories.push(one_rec.period);
+      this.categories.push(one_rec.period.slice(0, -3));
       this.strong_buy.push(one_rec.strongBuy);
       this.buy.push(one_rec.buy);
       this.hold.push(one_rec.hold);

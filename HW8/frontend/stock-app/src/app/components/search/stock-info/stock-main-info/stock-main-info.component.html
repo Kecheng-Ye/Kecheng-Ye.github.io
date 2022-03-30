@@ -1,4 +1,4 @@
-<div class="d-flex flex-column" style="width: 100%; height: 100%">
+<div class="d-flex flex-column w-100 h-100">
   <ngb-alert
     *ngIf="
       cur_state == state.SUCCESS &&
@@ -27,74 +27,59 @@
     {{ ticker }} added to the WatchList
   </ngb-alert>
 
-  <ngb-alert
-    *ngIf="
-      cur_state == state.SUCCESS &&
-      buy_notice
-    "
-    type="success"
-    class="align-self-center mt-3 w-100 text-center"
-    style="max-width: 1000px"
-    (closed)="close_buy_notice()"
-  >
-    {{ ticker }} bought successfully
-  </ngb-alert>
+  <app-transaction-notice
+    [buy_notice]="cur_state == state.SUCCESS && buy_notice"
+    [sell_notice]="cur_state == state.SUCCESS && sell_notice"
+    [ticker]="ticker"
+    (buy_cancel)="close_buy_notice()"
+    (sell_cancel)="close_sell_notice()"
+  ></app-transaction-notice>
 
-  <ngb-alert
-    *ngIf="
-      cur_state == state.SUCCESS &&
-      sell_notice
-    "
-    type="danger"
-    class="align-self-center mt-3 w-100 text-center"
-    style="max-width: 1000px"
-    (closed)="close_sell_notice()"
-  >
-    {{ ticker }} sold successfully
-  </ngb-alert>
-
-  <div class="stock">
-    <div class="name">
-      <app-stock-main-info-name
-        *ngIf="cur_state == state.SUCCESS"
-        [stock_name]="main_info_data.name"
-        (watch_list_click)="watch_list_change($event)"
-        (buy_click)="open_buy_modal()"
-        (sell_click)="open_sell_modal()"
-      ></app-stock-main-info-name>
-    </div>
-    <div class="img">
-      <div class="responsive">
-        <img
+  <div>
+    <div class="stock">
+      <div class="name">
+        <app-stock-main-info-name
           *ngIf="cur_state == state.SUCCESS"
-          [src]="main_info_data.img"
-          alt="logo"
-          class="responsive-img"
-        />
+          [stock_name]="main_info_data.name"
+          (watch_list_click)="watch_list_change($event)"
+          (buy_click)="open_buy_modal()"
+          (sell_click)="open_sell_modal()"
+        ></app-stock-main-info-name>
+      </div>
+      <div class="img">
+        <div class="responsive">
+          <img
+            *ngIf="cur_state == state.SUCCESS"
+            [src]="main_info_data.img"
+            alt="logo"
+            class="responsive-img"
+          />
+        </div>
+      </div>
+      <div class="price">
+        <app-stock-main-info-price
+          *ngIf="cur_state == state.SUCCESS"
+          [price]="main_info_data.price"
+        ></app-stock-main-info-price>
       </div>
     </div>
-    <div class="price">
-      <app-stock-main-info-price
-        *ngIf="cur_state == state.SUCCESS"
-        [price]="main_info_data.price"
-      ></app-stock-main-info-price>
+
+    <div
+      class="market d-flex justify-content-center align-content-center"
+      *ngIf="cur_state == state.SUCCESS && main_info_data.is_market_open"
+      style="color: green"
+    >
+      Market is Open
+    </div>
+
+    <div
+      class="market d-flex justify-content-center align-content-center"
+      *ngIf="cur_state == state.SUCCESS && !main_info_data.is_market_open"
+      style="color: red"
+    >
+      Market closed on
+      {{ main_info_data.market_time }}
     </div>
   </div>
 
-  <div
-    class="market d-flex justify-content-center align-content-center"
-    *ngIf="cur_state == state.SUCCESS && main_info_data.is_market_open"
-    style="color: green"
-  >
-    Market is Open
-  </div>
-
-  <div
-    class="market d-flex justify-content-center align-content-center"
-    *ngIf="cur_state == state.SUCCESS && !main_info_data.is_market_open"
-    style="color: red"
-  >
-    Market closed on
-    {{ main_info_data.market_time }}
-  </div>
 </div>

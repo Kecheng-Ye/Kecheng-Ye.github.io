@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { stock_main_info } from '../../../../data_interface/stock_main_info';
 import * as moment from 'moment';
-import { second, state, TIME_INTERVAL } from '../../../../util';
-import { forkJoin, Subscription, switchMap, take, timer } from 'rxjs';
+import { is_market_open, second, state, TIME_INTERVAL } from '../../../../util';
+import { forkJoin, of, Subscription, switchMap, take, timer } from 'rxjs';
 import { StockQueryService } from '../../../../services/stock-query.service';
 import { SearchUpdateService } from '../../../../services/search-update.service';
 import { PreviousStateService } from '../../../../services/previous-state.service';
@@ -31,12 +31,13 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   first_routine: Subscription = new Subscription();
   market_time: moment.Moment = moment();
-  moment = moment;
-  state = state;
   cur_state: state = state.PENDING;
   watch_list_notice = false;
   buy_notice = false;
+  buy_counter = 0;
   sell_notice = false;
+  sell_counter = 0;
+  state = state;
 
   constructor(
     private stock_query: StockQueryService,
@@ -53,6 +54,7 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
         switchMap(([ticker, ticker_change]) => {
           this.ticker = ticker;
           if (ticker_change) {
+            this.close_all_notice();
             return this.do_joined_query(true)();
           } else {
             return this.prev_info_query.get_prev_main_info();
@@ -62,7 +64,15 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
       .subscribe(this.retrieve_data, this.handel_err, () => {});
 
     this.subscription = timer(TIME_INTERVAL, TIME_INTERVAL)
-      .pipe(switchMap(this.do_joined_query(false)))
+      .pipe(
+        switchMap(() => {
+          if (this.main_info_data.is_market_open) {
+            return this.do_joined_query(false)();
+          } else {
+            return of(this.main_info_data);
+          }
+        })
+      )
       .subscribe(this.retrieve_data, this.handel_err, () => {});
 
     this.stock_query.get_search_state().subscribe((new_state) => {
@@ -70,9 +80,12 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  is_market_open(): boolean {
-    const cur = moment().subtract(5, 'minutes');
-    return cur <= this.market_time;
+  close_all_notice() {
+    this.watch_list_notice = false;
+    this.buy_notice = false;
+    this.buy_counter = 0;
+    this.sell_notice = false;
+    this.sell_counter = 0;
   }
 
   do_joined_query = (need_refresh: boolean) => () => {
@@ -124,7 +137,7 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
       },
       img: result_dct.brief.logo,
       price: { ...result_dct.cur_price },
-      is_market_open: this.is_market_open(),
+      is_market_open: is_market_open(this.market_time),
       market_time: this.market_time.format('YYYY-MM-DD HH:mm:ss'),
       balance: 0,
     };
@@ -173,10 +186,12 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
     this.main_info_data.balance = new_balance;
     this.main_info_data.name.transaction_rec = new_rec;
     this.buy_notice = true;
+    this.buy_counter++;
     setTimeout(() => this.close_buy_notice(), 5 * second);
   }
 
   close_buy_notice() {
+    if (--this.buy_counter > 0) return;
     this.buy_notice = false;
   }
 
@@ -202,10 +217,12 @@ export class StockMainInfoComponent implements OnInit, OnDestroy {
     this.main_info_data.balance = new_balance;
     this.main_info_data.name.transaction_rec = new_rec;
     this.sell_notice = true;
+    this.sell_counter++;
     setTimeout(() => this.close_sell_notice(), 5 * second);
   }
 
   close_sell_notice() {
+    if (--this.sell_counter > 0) return;
     this.sell_notice = false;
   }
 

@@ -32,7 +32,9 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   subscription: Subscription = new Subscription();
   transaction_rec_list: one_portfolio_entry[] = [];
   buy_notice = false;
+  buy_counter = 0;
   sell_notice = false;
+  sell_counter = 0;
   target_ticker: string = '';
 
   constructor(
@@ -93,7 +95,6 @@ export class PortfolioComponent implements OnInit, OnDestroy {
       this.transaction_rec_list.push(new_rec);
     }
 
-    console.log(this.transaction_rec_list);
     this.is_ready = true;
   };
 
@@ -132,11 +133,13 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     this.transaction_rec_list[index].record = new_rec;
     this.calculate_cost_data(this.transaction_rec_list[index]);
     this.buy_notice = true;
+    this.buy_counter++;
     this.target_ticker = this.transaction_rec_list[index].ticker;
     setTimeout(() => this.close_buy_notice(), 5 * second);
   }
 
   close_buy_notice() {
+    if(--this.buy_counter > 0) return;
     this.target_ticker = '';
     this.buy_notice = false;
   }
@@ -169,11 +172,13 @@ export class PortfolioComponent implements OnInit, OnDestroy {
       this.transaction_rec_list[index].record = new_rec;
       this.calculate_cost_data(this.transaction_rec_list[index]);
     }
+    this.sell_counter++;
     this.sell_notice = true;
     setTimeout(() => this.close_sell_notice(), 5 * second);
   }
 
   close_sell_notice() {
+    if(--this.sell_counter > 0) return;
     this.target_ticker = '';
     this.sell_notice = false;
   }

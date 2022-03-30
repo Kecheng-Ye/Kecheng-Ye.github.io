@@ -1,1 +1,1 @@
-zip -r result.zip frontend/* backend/* *.js package.json
+zip -r result.zip frontend/stock-app/dist/stock-app/ backend/* *.js package.json

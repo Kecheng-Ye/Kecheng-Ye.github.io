@@ -7,11 +7,18 @@ import { StockQueryService } from '../../../../../services/stock-query.service';
 import { SearchUpdateService } from '../../../../../services/search-update.service';
 import * as moment from 'moment';
 import { Options } from 'highcharts/highstock';
-import { of, switchMap } from "rxjs";
-import { PreviousStateService } from "../../../../../services/previous-state.service";
+import { switchMap } from 'rxjs';
+import { PreviousStateService } from '../../../../../services/previous-state.service';
 
 IndicatorsCore(Highcharts);
 VBP(Highcharts);
+// Highcharts.setOptions({
+//   lang: {
+//     // Pre-v9 legacy settings
+//     rangeSelectorFrom: 'From',
+//     rangeSelectorTo: 'To',
+//   },
+// });
 
 @Component({
   selector: 'app-stock-sub-info-charts',
@@ -24,15 +31,25 @@ export class StockSubInfoChartsComponent implements OnInit {
   volume: number[][] = [];
   Highcharts: typeof Highcharts = Highcharts;
   is_loading = true;
-  groupingUnits = [
+  normal_grouping_units = [
     [
       'day', // unit name
       [1], // allowed multiples
     ],
   ];
+  small_grouping_units = [
+    [
+      'week', // unit name
+      [1], // allowed multiples
+    ],
+  ];
+
   chartOptions: Options = {
     rangeSelector: {
       selected: 2,
+      // inputBoxBorderColor: 'gray',
+      // inputBoxHeight: 25,
+      // inputBoxWidth: 90,
     },
 
     subtitle: {
@@ -79,12 +96,33 @@ export class StockSubInfoChartsComponent implements OnInit {
       series: {
         dataGrouping: {
           // @ts-ignore
-          units: this.groupingUnits
-        }
+          units: this.normal_grouping_units,
+        },
       },
     },
 
     series: [],
+
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 500,
+          },
+          chartOptions: {
+            plotOptions: {
+              series: {
+                dataGrouping: {
+                  // @ts-ignore
+                  units: this.small_grouping_units,
+                },
+              },
+            },
+          }
+        },
+      ],
+
+    },
   };
 
   constructor(
@@ -101,11 +139,11 @@ export class StockSubInfoChartsComponent implements OnInit {
   };
 
   retrieve_data = (data: Historical_Record | [number[][], number[][]]) => {
-    if(Array.isArray(data)) {
+    if (Array.isArray(data)) {
       const [prev_olhc, prev_volume] = data;
       this.ohlc = prev_olhc;
       this.volume = prev_volume;
-    }else{
+    } else {
       this.retrieve_query(data);
     }
 
@@ -150,7 +188,7 @@ export class StockSubInfoChartsComponent implements OnInit {
       },
     ];
     this.is_loading = false;
-  }
+  };
 
   retrieve_query = (data: Historical_Record) => {
     let n = data.t.length;
@@ -173,7 +211,8 @@ export class StockSubInfoChartsComponent implements OnInit {
   };
 
   ngOnInit(): void {
-    this.ticker_query.fetch_ticker()
+    this.ticker_query
+      .fetch_ticker()
       .pipe(
         switchMap(([ticker, ticker_change]) => {
           this.ticker = ticker;
@@ -185,6 +224,5 @@ export class StockSubInfoChartsComponent implements OnInit {
         })
       )
       .subscribe(this.retrieve_data);
-
   }
 }
