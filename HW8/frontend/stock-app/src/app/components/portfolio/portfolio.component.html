@@ -4,13 +4,15 @@
     class="d-flex flex-column w-75 align-content-center mt-3"
     style="max-width: 1000px"
   >
-    <app-transaction-notice
-      [buy_notice]="buy_notice"
-      [sell_notice]="sell_notice"
-      [ticker]="target_ticker"
-      (buy_cancel)="close_buy_notice()"
-      (sell_cancel)="close_sell_notice()"
-    ></app-transaction-notice>
+    <div *ngFor="let one_notice of notice_map | keyvalue">
+      <app-transaction-notice
+        [buy_notice]="one_notice.value.buy_notice"
+        [sell_notice]="one_notice.value.sell_notice"
+        [ticker]="one_notice.value.target_ticker"
+        (buy_cancel)="close_buy_notice(one_notice.value.target_ticker)"
+        (sell_cancel)="close_sell_notice(one_notice.value.target_ticker)"
+      ></app-transaction-notice>
+    </div>
 
     <p class="h2">My Portfolio</p>
     <p class="h4">Money in Wallet: ${{ balance }}</p>

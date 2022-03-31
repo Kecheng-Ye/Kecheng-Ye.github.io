@@ -147,6 +147,31 @@ export class StockSubInfoChartsComponent implements OnInit {
       this.retrieve_query(data);
     }
 
+    this.fill_plot_data();
+    this.is_loading = false;
+  };
+
+  retrieve_query = (data: Historical_Record) => {
+    let n = data.t.length;
+    for (let i = 0; i < n; i++) {
+      this.ohlc.push([
+        data.t[i] * 1000, // the date
+        data.o[i], // open
+        data.h[i], // high
+        data.l[i], // low
+        data.c[i], // close
+      ]);
+
+      this.volume.push([
+        data.t[i] * 1000, // the date
+        data.v[i], // the volume
+      ]);
+    }
+
+    this.prev_info_query.update_historical_record([this.ohlc, this.volume]);
+  };
+
+  fill_plot_data() {
     this.chartOptions.title = {
       text: `${this.ticker} Historical`,
     };
@@ -187,28 +212,7 @@ export class StockSubInfoChartsComponent implements OnInit {
         },
       },
     ];
-    this.is_loading = false;
-  };
-
-  retrieve_query = (data: Historical_Record) => {
-    let n = data.t.length;
-    for (let i = 0; i < n; i++) {
-      this.ohlc.push([
-        data.t[i] * 1000, // the date
-        data.o[i], // open
-        data.h[i], // high
-        data.l[i], // low
-        data.c[i], // close
-      ]);
-
-      this.volume.push([
-        data.t[i] * 1000, // the date
-        data.v[i], // the volume
-      ]);
-    }
-
-    this.prev_info_query.update_historical_record([this.ohlc, this.volume]);
-  };
+  }
 
   ngOnInit(): void {
     this.ticker_query

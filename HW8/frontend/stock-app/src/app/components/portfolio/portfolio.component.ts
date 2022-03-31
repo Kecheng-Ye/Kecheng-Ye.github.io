@@ -17,6 +17,24 @@ import { round, second } from '../../util';
 import { SellingModalComponent } from './selling-modal/selling-modal.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+interface notice_info {
+  buy_notice: boolean;
+  buy_counter: number;
+  sell_notice: boolean;
+  sell_counter: number;
+  target_ticker: string;
+}
+
+function info_init(): notice_info {
+  return {
+    buy_notice: false,
+    buy_counter: 0,
+    sell_notice: false,
+    sell_counter: 0,
+    target_ticker: '',
+  } as notice_info;
+}
+
 @Component({
   selector: 'app-portfolio',
   templateUrl: './portfolio.component.html',
@@ -31,11 +49,8 @@ export class PortfolioComponent implements OnInit, OnDestroy {
   balance: number = 0;
   subscription: Subscription = new Subscription();
   transaction_rec_list: one_portfolio_entry[] = [];
-  buy_notice = false;
-  buy_counter = 0;
-  sell_notice = false;
-  sell_counter = 0;
-  target_ticker: string = '';
+  notice_lst: notice_info[] = [];
+  notice_map: Map<string, notice_info> = new Map();
 
   constructor(
     private my_profile_query: MyProfileService,
@@ -132,16 +147,36 @@ export class PortfolioComponent implements OnInit, OnDestroy {
     this.balance = new_balance;
     this.transaction_rec_list[index].record = new_rec;
     this.calculate_cost_data(this.transaction_rec_list[index]);
-    this.buy_notice = true;
-    this.buy_counter++;
-    this.target_ticker = this.transaction_rec_list[index].ticker;
-    setTimeout(() => this.close_buy_notice(), 5 * second);
+    const target_ticker = this.transaction_rec_list[index].ticker;
+    this.open_buy_notice(target_ticker);
   }
 
-  close_buy_notice() {
-    if(--this.buy_counter > 0) return;
-    this.target_ticker = '';
-    this.buy_notice = false;
+  open_buy_notice(target_ticker: string) {
+    let new_notice: notice_info;
+    if (this.notice_map.has(target_ticker)) {
+      new_notice = this.notice_map.get(target_ticker)!;
+      new_notice.buy_notice = true;
+      new_notice.buy_counter++;
+    } else {
+      new_notice = info_init();
+      new_notice.target_ticker = target_ticker;
+      new_notice.buy_notice = true;
+      new_notice.buy_counter = 1;
+      this.notice_map.set(new_notice.target_ticker, new_notice);
+    }
+    setTimeout(
+      () => this.close_buy_notice(new_notice.target_ticker),
+      5 * second
+    );
+  }
+
+  close_buy_notice(ticker: string) {
+    let target_notice = this.notice_map.get(ticker)!;
+    if (--target_notice.buy_counter > 0) return;
+    target_notice.buy_notice = false;
+    if (!target_notice.sell_notice) {
+      this.notice_map.delete(target_notice.target_ticker);
+    }
   }
 
   open_sell_modal(index: number) {
@@ -163,7 +198,6 @@ export class PortfolioComponent implements OnInit, OnDestroy {
 
   sell_operation_successful(result: any, index: number) {
     const [new_balance, new_rec] = result;
-    this.target_ticker = this.transaction_rec_list[index].ticker;
     this.balance = new_balance;
     if (new_rec[0] == 0) {
       this.transaction_rec_list.splice(index, 1);
@@ -172,15 +206,36 @@ export class PortfolioComponent implements OnInit, OnDestroy {
       this.transaction_rec_list[index].record = new_rec;
       this.calculate_cost_data(this.transaction_rec_list[index]);
     }
-    this.sell_counter++;
-    this.sell_notice = true;
-    setTimeout(() => this.close_sell_notice(), 5 * second);
+    const target_ticker = this.transaction_rec_list[index].ticker;
+    this.open_sell_notice(target_ticker);
   }
 
-  close_sell_notice() {
-    if(--this.sell_counter > 0) return;
-    this.target_ticker = '';
-    this.sell_notice = false;
+  open_sell_notice(target_ticker: string) {
+    let new_notice: notice_info;
+    if (this.notice_map.has(target_ticker)) {
+      new_notice = this.notice_map.get(target_ticker)!;
+      new_notice.sell_notice = true;
+      new_notice.sell_counter++;
+    } else {
+      new_notice = info_init();
+      new_notice.target_ticker = target_ticker;
+      new_notice.sell_notice = true;
+      new_notice.sell_counter = 1;
+      this.notice_map.set(new_notice.target_ticker, new_notice);
+    }
+    setTimeout(
+      () => this.close_sell_notice(new_notice.target_ticker),
+      5 * second
+    );
+  }
+
+  close_sell_notice(ticker: string) {
+    let target_notice = this.notice_map.get(ticker)!;
+    if (--target_notice.sell_counter > 0) return;
+    target_notice.sell_notice = false;
+    if (!target_notice.buy_notice) {
+      this.notice_map.delete(target_notice.target_ticker);
+    }
   }
 
   ngOnDestroy(): void {
