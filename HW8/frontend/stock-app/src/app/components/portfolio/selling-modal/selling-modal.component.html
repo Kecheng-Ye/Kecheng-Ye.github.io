@@ -42,7 +42,7 @@
     type="button"
     class="btn"
     (click)="on_click_sell()"
-    [disabled]="myControl.value > limit"
+    [disabled]="myControl.value > limit || myControl.value <= 0"
     style="background-color: red; color: white"
   >
     Sell
