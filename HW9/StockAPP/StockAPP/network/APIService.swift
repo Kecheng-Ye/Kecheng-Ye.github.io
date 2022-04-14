@@ -6,10 +6,10 @@
 //
 
 import Foundation
+//import Alamofire
 
 // Reference from https://github.com/gahntpo/CatAPISwiftUI/blob/main/CatAPIProject/CatAPIProject/networking/APIService.swift
 struct APIService {
-    
     func fetch<T: Decodable>(_ type: T.Type, url: URL?, completion: @escaping(Result<T, APIError>) -> Void) {
         
         // check if the input URL is empty or not
@@ -20,12 +20,11 @@ struct APIService {
         }
         
         // Define API Fetching Process
-        let task = URLSession.shared.dataTask(with: url) {(data , response, error) in
-            
+        let task = URLSession.shared.dataTask(with: url) {(data, response, error) in
             // Define each potential Error
             if let error = error as? URLError {
                 completion(Result.failure(APIError.url(error)))
-            }else if  let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
+            }else if let response = response as? HTTPURLResponse, !(200...299).contains(response.statusCode) {
                 completion(Result.failure(APIError.badResponse(statusCode: response.statusCode)))
             }else if let data = data {
                 let decoder = JSONDecoder()

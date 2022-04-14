@@ -7,7 +7,8 @@
 
 import Foundation
 
-typealias Peers = [String]
+typealias Peer = String
+typealias Peers = [Peer]
 
 func peersExample() -> Peers {
     [
@@ -23,4 +24,3 @@ func peersExample() -> Peers {
       "IONQ",
     ]
 }
-

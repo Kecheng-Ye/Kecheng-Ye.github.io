@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct HistoricalRecord: Codable {
+struct HistoricalRecord: Codable, APILinkable, APIDebugable, ReflectedStringConvertible {
     let closePrices: [Price]
     let highPrices: [Price]
     let lowPrices: [Price]
@@ -22,6 +22,25 @@ struct HistoricalRecord: Codable {
         case openPrices = "o"
         case volumes = "v"
         case timestamps = "t"
+    }
+    
+    init() {
+        closePrices = []
+        highPrices = []
+        lowPrices = []
+        openPrices = []
+        timestamps = []
+        volumes = []
+    }
+    
+    init(closePrices: [Price], highPrices: [Price], lowPrices: [Price],
+         openPrices: [Price], timestamps: [TimeInterval], volumes: [Int64]) {
+        self.closePrices = closePrices
+        self.highPrices = highPrices
+        self.lowPrices = lowPrices
+        self.openPrices = openPrices
+        self.timestamps = timestamps
+        self.volumes = volumes
     }
     
     static func example() -> HistoricalRecord {
@@ -423,5 +442,13 @@ struct HistoricalRecord: Codable {
                 89231766,
           ]
         )
+    }
+    
+    func API_URL(stockTicker: String) -> URL? {
+        return URL(string: APILink + "historical-charts/\(stockTicker)" + "?start=\(Int(Date().timeIntervalSince1970))")
+    }
+    
+    func APIExample() -> HistoricalRecord {
+        return Self.example()
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct EarningInfo: Codable {
+struct EarningInfo: Codable, ReflectedStringConvertible {
     let actual: Float32
     let estimate: Float32
     let period: String
@@ -60,6 +60,8 @@ struct EarningInfo: Codable {
     }
 }
 
+typealias EarningInfos = [EarningInfo]
+
 func EarningInfoList() -> [EarningInfo] {
     [
         EarningInfo.example1(),
@@ -67,4 +69,10 @@ func EarningInfoList() -> [EarningInfo] {
         EarningInfo.example3(),
         EarningInfo.example4()
     ]
+}
+
+extension APILinkable where Self == EarningInfos {
+    func API_URL(stockTicker: String) -> URL? {
+        return URL(string: APILink + "earnings/\(stockTicker)")
+    }
 }

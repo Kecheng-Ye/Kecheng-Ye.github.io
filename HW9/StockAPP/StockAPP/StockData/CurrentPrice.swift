@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CurrentPrice: Codable {
+struct CurrentPrice: Codable, APILinkable, APIDebugable, ReflectedStringConvertible {
     let currentPrice: Price
     let priceChange: Price
     let priceChangePercent: Price
@@ -26,6 +26,32 @@ struct CurrentPrice: Codable {
         case open = "o"
         case previousClose = "pc"
         case timestamp = "t"
+    }
+    
+    init(currentPrice: Price, priceChange: Price, priceChangePercent: Price,
+         high: Price, low: Price,
+         open: Price, previousClose: Price,
+         timestamp: TimeInterval) {
+        
+        self.currentPrice = currentPrice
+        self.priceChange = priceChange
+        self.priceChangePercent = priceChangePercent
+        self.high = high
+        self.low = low
+        self.open = open
+        self.previousClose = previousClose
+        self.timestamp = timestamp
+    }
+    
+    init() {
+        self.currentPrice = NAPrice
+        self.priceChange = NAPrice
+        self.priceChangePercent = NAPrice
+        self.high = NAPrice
+        self.low = NAPrice
+        self.open = NAPrice
+        self.previousClose = NAPrice
+        self.timestamp = NATime
     }
     
     static func example1() -> CurrentPrice {
@@ -65,5 +91,13 @@ struct CurrentPrice: Codable {
             previousClose: 154.73,
             timestamp: 1641647281134
         )
+    }
+    
+    func API_URL(stockTicker: String) -> URL? {
+        return URL(string: APILink + "price/\(stockTicker)")
+    }
+    
+    func APIExample() -> CurrentPrice {
+        return Self.example1()
     }
 }

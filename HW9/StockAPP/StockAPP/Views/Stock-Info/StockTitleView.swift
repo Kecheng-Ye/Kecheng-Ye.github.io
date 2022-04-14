@@ -34,26 +34,16 @@ struct StockTitleView: View {
                 .font(.largeTitle)
                 .fontWeight(.bold)
             Group {
-                priceArrow
+                priceArrow(currentPrice.priceChange)
                 Text("\(currentPrice.priceChange, specifier: "%.2f") (\(currentPrice.priceChangePercent, specifier: "%.2f")%)")
             }
             .stockColorify(priceChange: currentPrice.priceChange)
             .font(.title2)
         }
     }
-    
-    @ViewBuilder
-    var priceArrow: some View {
-        if currentPrice.priceChange > 0 {
-            Image(systemName: "arrow.up.right")
-        } else if currentPrice.priceChange < 0 {
-            Image(systemName: "arrow.down.left")
-        }
-    }
-    
+
     private struct drawingConstant {
         static let horizontalSpace: CGFloat = 20
-        static let lineWidth: CGFloat = 3
     }
 }
 

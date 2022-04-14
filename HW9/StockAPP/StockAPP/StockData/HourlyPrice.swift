@@ -7,13 +7,26 @@
 
 import Foundation
 
-struct HourlyPrice: Codable {
+struct HourlyPrice: Codable, APILinkable, APIDebugable, ReflectedStringConvertible, Dependable {
+    typealias DependDataType = TimeInterval
+    
     let closePrices: [Price]
     let timestamps: [TimeInterval]
+    var dependData: DependDataType = NATime
     
     enum CodingKeys: String, CodingKey {
         case closePrices = "c"
         case timestamps = "t"
+    }
+    
+    init() {
+        closePrices = []
+        timestamps = []
+    }
+    
+    init(closePrices: [Price], timestamps: [TimeInterval]) {
+        self.closePrices = closePrices
+        self.timestamps = timestamps
     }
     
     static func example() -> HourlyPrice {
@@ -46,5 +59,26 @@ struct HourlyPrice: Codable {
                 1647279600, 1647279900, 1647280200, 1647280500, 1647280800, 1647281100,
                 ]
         )
+    }
+    
+    func API_URL(stockTicker: String) -> URL? {
+        return URL(string: APILink + "hour-charts/\(stockTicker)" + "?start=\(Int(self.dependData))")
+    }
+    
+    func APIExample() -> HourlyPrice {
+        return Self.example()
+    }
+}
+
+protocol Dependable {
+    associatedtype DependDataType
+    var dependData: DependDataType { get set }
+    
+    mutating func updateDependData(data: DependDataType)
+}
+
+extension Dependable {
+    mutating func updateDependData(data: DependDataType) {
+        self.dependData = data
     }
 }

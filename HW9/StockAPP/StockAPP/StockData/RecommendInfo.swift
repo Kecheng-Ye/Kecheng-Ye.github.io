@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecommendInfo: Codable {
+struct RecommendInfo: Codable, ReflectedStringConvertible {
     let buy: Int32
     let hold: Int32
     let period: String
@@ -65,7 +65,9 @@ struct RecommendInfo: Codable {
     }
 }
 
-func RecommendInfoList() -> [RecommendInfo] {
+typealias RecommendInfos = [RecommendInfo]
+
+func RecommendInfoList() -> RecommendInfos {
     [
         RecommendInfo.example1(),
         RecommendInfo.example2(),

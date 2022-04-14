@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SocialSentiment: Codable {
+struct SocialSentiment: Codable, ReflectedStringConvertible {
     let atTime: String
     let mention: Int32
     let positiveScore: Float32
@@ -65,11 +65,35 @@ struct SocialSentiment: Codable {
     }
 }
 
-func SocialSentimentList() -> [SocialSentiment] {
-    [
-        SocialSentiment.example1(),
-        SocialSentiment.example2(),
-        SocialSentiment.example3(),
-        SocialSentiment.example4()
-    ]
+struct SocialSentimentList: Codable, APILinkable, APIDebugable, ReflectedStringConvertible {
+    let reddit: [SocialSentiment]
+    let twitter: [SocialSentiment]
+    let symbol: String
+    
+    init() {
+        self.reddit = []
+        self.twitter = []
+        self.symbol = NAString
+    }
+    
+    init(reddit: [SocialSentiment], twitter: [SocialSentiment], symbol: String) {
+        self.reddit = reddit
+        self.twitter = twitter
+        self.symbol = symbol
+    }
+    
+    static func example() -> Self {
+        return SocialSentimentList(
+            reddit: [SocialSentiment.example1(), SocialSentiment.example2()],
+            twitter: [SocialSentiment.example3(), SocialSentiment.example4()],
+            symbol: "AAPL")
+    }
+    
+    func API_URL(stockTicker: String) -> URL? {
+        return URL(string: APILink + "social-sentiments/\(stockTicker)")
+    }
+    
+    func APIExample() -> SocialSentimentList {
+        return Self.example()
+    }
 }

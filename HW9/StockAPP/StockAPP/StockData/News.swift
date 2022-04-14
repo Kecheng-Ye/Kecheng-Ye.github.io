@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SingleNews: Codable, Identifiable {
+struct SingleNews: Codable, Identifiable, ReflectedStringConvertible {
     let id: Int64
     let source: String
     let headline: String
@@ -76,4 +76,10 @@ struct SingleNews: Codable, Identifiable {
             datetime: 1649588400.0
         )
     }
+}
+
+typealias News = [SingleNews]
+
+func newsExample() -> News {
+    return [SingleNews.example1(), SingleNews.example2()]
 }
