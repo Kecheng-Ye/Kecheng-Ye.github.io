@@ -7,18 +7,12 @@
 
 import Foundation
 
-class StockQuery: ObservableObject {
-    @Published var isLoading: Bool = false
+class StockQuery: GroupQuery {
     @Published var stockData = StockInfo()
-    var APIServices: [Serviceable] = []
     let semaphore = DispatchSemaphore(value: 0)
     var currentTime = NATime
     
-    init() {
-        APIServicesInit()
-    }
-    
-    func APIServicesInit() {
+    override func APIServicesInit() {
         APIServices = [
             SingleItemQuery<CompanyBrief>(data: stockData.companyBrief,
                                           update: update(propertyName: "companyBrief")),
@@ -58,17 +52,25 @@ class StockQuery: ObservableObject {
     }
     
     func startQuery(for stockTicker: String) {
-        let group = DispatchGroup()
-        isLoading = true
+        super.startQuery(for: stockTicker, postQuery: {print(self.stockData)})
+    }
+    
+    func filterNews(rawNewsList: News) -> News {
+        var count = 0
+        var result = News()
         
-        for service in APIServices {
-            group.enter()
-            service.startQuery(stockTicker: stockTicker, group: group)
+        for singleNews in rawNewsList {
+            
+            if !singleNews.hasNilValue() {
+                result.append(singleNews)
+                count += 1
+            }
+            
+            if count == NEWS_LIMIT {
+                break
+            }
         }
         
-        group.notify(queue: .main, execute: {
-            self.isLoading = false
-            print("All Tasks finished")
-        })
+        return result
     }
 }

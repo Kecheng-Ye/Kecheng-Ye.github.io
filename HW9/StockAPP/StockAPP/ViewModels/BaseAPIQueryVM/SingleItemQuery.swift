@@ -41,7 +41,7 @@ class SingleItemQuery<T: APILinkable & APIDebugable & Codable>: Serviceable {
                             self.errorMessage = error.localizedDescription
                             print(error)
                         case .success(let result):
-                            print("--- sucess with \(result)")
+//                            print("--- sucess with \(result)")
                             self.updateFunc(result)
                     }
                 }

@@ -11,6 +11,7 @@ import SwiftUI
 typealias Price = Float32
 
 let APILink = "http://kecheng-ye-hw8.us-east-1.elasticbeanstalk.com/api/"
+let FinnhubLink = "https://finnhub.io/"
 let NAString = "N.A"
 let NAInt: Int32 = 0
 let NAFloat: Float32 = 0
@@ -18,7 +19,10 @@ let NATime: TimeInterval = 0
 let NAPrice: Price = 0
 let NAURL: URL? = nil
 
-let DEBUG = true
+let DEBUG = false
+let AUTO_UPDATE_INTERVAL = 15.0
+let START_BALANCE: Price = 25000
+let NEWS_LIMIT: Int = 5
 
 func timestampToString(_ datetime: TimeInterval) -> String {
     let dateFormatter = DateFormatter()
@@ -80,3 +84,9 @@ extension ReflectedStringConvertible {
     return str
   }
 }
+
+
+func roundToTwoDecimal(_ data: Price) -> String {
+    return String(format: "%.2f", data)
+}
+

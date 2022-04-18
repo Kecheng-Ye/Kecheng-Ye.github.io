@@ -7,17 +7,10 @@
 
 import Foundation
 
-class AutoSuggestions: ObservableObject {
-    @Published var stockTicker: String = ""
+class AutoSuggestions: GroupQuery {
     @Published var suggestionList = SearchSuggestion()
-    @Published var isLoading = false
-    var APIServices: [Serviceable] = []
     
-    init() {
-        APIServicesInit()
-    }
-    
-    func APIServicesInit() {
+    override func APIServicesInit() {
         APIServices = [
             SingleItemQuery<SearchSuggestion>(data: suggestionList,
                                               update: { newData in
@@ -31,18 +24,8 @@ class AutoSuggestions: ObservableObject {
     }
     
     // MARK: - Intents()
-    func startQuery() {
-        let group = DispatchGroup()
-        isLoading = true
-        
-        for service in APIServices {
-            group.enter()
-            service.startQuery(stockTicker: stockTicker.uppercased(), group: group)
-        }
-        
-        group.notify(queue: .main, execute: {
-            self.isLoading = false
-        })
+    func startQuery(stockTicker: String) {
+        super.startQuery(for: stockTicker)
     }
     
     func emptyResult() {

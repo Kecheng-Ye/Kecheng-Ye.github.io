@@ -10,23 +10,64 @@ import Combine
 
 struct MainView: View {
     @StateObject var autoSuggestions = AutoSuggestions()
-    @Environment(\.isSearching) var isSearching
-
+    @StateObject var userProfileVM = UserProfileVM()
+    @StateObject var priceQuery = PriceQuery()
+    @StateObject var briefQuery = BriefQuery()
+    @ObservedObject var searchBar = SearchBar()
+    
     var body: some View {
+        if priceQuery.isLoading || briefQuery.isLoading {
+            loadingPage
+        } else {
+            readyPage
+        }
+    }
+    
+    var loadingPage: some View {
+        ZStack {
+            Color("backgroundGray")
+            Image("app icon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 250, height: 250)
+        }
+        .ignoresSafeArea()
+        .onAppear(perform: autoUpdateData)
+    }
+    
+    var readyPage: some View {
         NavigationView {
-            MainPageView().navigationTitle("Stocks")
+            MainPageView(isSearching: self.searchBar.isSearching)
+                .toolbar { EditButton() }
+                .add(self.searchBar)
+                .navigationTitle("Stocks")
         }
-        .searchable(text: $autoSuggestions.stockTicker)
-//        .onReceive(autoSuggestions.$stockTicker.debounce(for: .seconds(1.5), scheduler: DispatchQueue.main)) {
-//            guard !$0.isEmpty else { return }
-////            autoSuggestions.startQuery()
-//            autoSuggestions.suggestionList.update(new_data: SearchSuggestion.example())
-//        }
-        .onSubmit(of: .search) {
-    //                autoSuggestions.startQuery()
-            autoSuggestions.suggestionList.update(new_data: SearchSuggestion.example())
-        }
+        .onAppear(perform: mainPageInit)
+        .environmentObject(userProfileVM)
         .environmentObject(autoSuggestions)
+        .environmentObject(priceQuery)
+        .environmentObject(briefQuery)
+    }
+    
+    func mainPageInit() {
+        searchBarFuncInit()
+    }
+    
+    func searchBarFuncInit() {
+        searchBar.initQuery(startSearch: self.autoSuggestions.startQuery)
+        searchBar.initCancel(cancelSearch: self.autoSuggestions.emptyResult)
+    }
+    
+    func autoUpdateData() {
+        priceQuery.startQuery(
+            watcListTickers: userProfileVM.watchListSequence,
+            portfolioTickers: userProfileVM.portfolioSequence
+        )
+        
+        briefQuery.startQuery(
+            watcListTickers: userProfileVM.watchListSequence,
+            portfolioTickers: userProfileVM.portfolioSequence
+        )
     }
 }
 

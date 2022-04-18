@@ -1,2 +1,2 @@
 github "Alamofire/Alamofire" ~> 5.5
-
+github "https://github.com/highcharts/highcharts-ios" >= 6.1.0

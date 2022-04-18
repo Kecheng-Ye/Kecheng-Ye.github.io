@@ -12,21 +12,33 @@ struct StockTitleView: View {
     let currentPrice: CurrentPrice
     
     var body: some View {
-        HStack {
+        VStack(alignment: .leading, spacing: drawingConstant.horizontalSpace) {
             title
+            priceInfo
         }
     }
     
     var title: some View {
-        VStack(alignment: .leading, spacing: drawingConstant.horizontalSpace) {
-            Text(companyBrief.ticker)
-                .font(.largeTitle)
-                .fontWeight(.bold)
+        HStack(alignment: .center) {
             Text(companyBrief.name)
                 .foregroundColor(.gray)
-            priceInfo
+            
+            Spacer()
+            
+            AsyncImage(
+                url: companyBrief.logo,
+                content: { image in
+                    image.resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 50, maxHeight: 50)
+                },
+                placeholder: {
+                    ProgressView()
+                }
+            )
         }
     }
+    
     
     var priceInfo: some View {
         HStack {

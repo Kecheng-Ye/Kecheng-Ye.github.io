@@ -65,6 +65,8 @@ struct SocialSentiment: Codable, ReflectedStringConvertible {
     }
 }
 
+typealias SentimentConclusion = (Total: Int32, Positive: Int32, Negative: Int32)
+
 struct SocialSentimentList: Codable, APILinkable, APIDebugable, ReflectedStringConvertible {
     let reddit: [SocialSentiment]
     let twitter: [SocialSentiment]
@@ -80,6 +82,23 @@ struct SocialSentimentList: Codable, APILinkable, APIDebugable, ReflectedStringC
         self.reddit = reddit
         self.twitter = twitter
         self.symbol = symbol
+    }
+    
+    func conclusionForPlot() -> (reddit: SentimentConclusion, twitter: SentimentConclusion) {
+        return (reddit: singleConclusion(sentiments: self.reddit),
+                twitter: singleConclusion(sentiments: self.twitter))
+    }
+    
+    func singleConclusion(sentiments: [SocialSentiment]) -> SentimentConclusion {
+        var result = (Total: 0 as Int32, Positive: 0 as Int32, Negative: 0 as Int32)
+        
+        for oneSentiment in sentiments {
+            result.Total += oneSentiment.mention;
+            result.Positive += oneSentiment.positiveMention;
+            result.Negative += oneSentiment.negativeMention;
+        }
+        
+        return result
     }
     
     static func example() -> Self {

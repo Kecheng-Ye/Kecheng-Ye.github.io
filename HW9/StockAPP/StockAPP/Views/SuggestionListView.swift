@@ -15,18 +15,28 @@ struct SuggestionListView: View {
     }
     
     var body: some View {
-        VStack {
-            List(suggestions, id: \.self) { eachSuggestion in
-                NavigationLink(destination: SingleStockInfo(stockTicker: eachSuggestion.symbol)) {
-                    VStack(alignment: .leading) {
-                        Text(eachSuggestion.symbol).fontWeight(.bold)
-                        Text(eachSuggestion.description).foregroundColor(.gray)
-                    }
+        ZStack {
+            Color.init(UIColor.lightGray)
+            
+            VStack {
+                List(suggestions, id: \.self) { eachSuggestion in
+                    oneSuggestion(eachSuggestion: eachSuggestion)
                 }
             }
-            Spacer()
         }
-        .ignoresSafeArea()
+    }
+}
+
+struct oneSuggestion: View {
+    let eachSuggestion: Suggestion
+    
+    var body: some View {
+        NavigationLink(destination: SingleStockInfo(stockTicker: eachSuggestion.symbol)) {
+            VStack(alignment: .leading) {
+                Text(eachSuggestion.symbol).fontWeight(.bold)
+                Text(eachSuggestion.description).foregroundColor(.gray)
+            }
+        }
     }
 }
 
