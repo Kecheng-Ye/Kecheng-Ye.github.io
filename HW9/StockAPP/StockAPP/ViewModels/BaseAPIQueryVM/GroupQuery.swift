@@ -10,8 +10,10 @@ import Foundation
 class GroupQuery: ObservableObject {
     @Published var isLoading: Bool = true
     var APIServices: [Serviceable] = []
+    var name: String
     
     init() {
+        self.name = "BaseGroupQuery"
         APIServicesInit()
     }
     
@@ -32,7 +34,7 @@ class GroupQuery: ObservableObject {
         
         group.notify(queue: .main, execute: {
             self.isLoading = false
-            print("All Tasks finished")
+            print("Log: \(self.name) Tasks finished")
             postQuery()
         })
     }
@@ -55,7 +57,7 @@ class GroupQuery: ObservableObject {
         
         group.notify(queue: .main, execute: {
             self.isLoading = false
-            print("All Tasks finished")
+            print("Log: \(self.name) Tasks finished")
             postQuery()
         })
     }

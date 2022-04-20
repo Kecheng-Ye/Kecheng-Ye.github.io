@@ -10,7 +10,8 @@ import SwiftUI
 
 typealias Price = Float32
 
-let APILink = "http://kecheng-ye-hw8.us-east-1.elasticbeanstalk.com/api/"
+//let APILink = "http://kecheng-ye-hw8.us-east-1.elasticbeanstalk.com/api/"
+let APILink = "http://127.0.0.1:5555/api/"
 let FinnhubLink = "https://finnhub.io/"
 let NAString = "N.A"
 let NAInt: Int32 = 0

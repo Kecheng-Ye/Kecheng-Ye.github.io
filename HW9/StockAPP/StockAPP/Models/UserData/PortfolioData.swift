@@ -10,27 +10,42 @@ import Foundation
 struct SingleStockPortfolio: Codable {
     var sharesRemain: Int
     var records: [Trasaction]
+    var index: Int
     
     enum CodingKeys: CodingKey {
         case sharesRemain
         case records
+        case index
     }
 
     init(sharesRemain: Int, records: [Trasaction]) {
         self.sharesRemain = sharesRemain
         self.records = records
+        self.index = 0
+    }
+    
+    init(sharesRemain: Int, records: [Trasaction], index: Int) {
+        self.sharesRemain = sharesRemain
+        self.records = records
+        self.index = index
     }
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.sharesRemain = try container.decode(Int.self, forKey: .sharesRemain)
         self.records = try container.decode([Trasaction].self, forKey: .records)
+        self.index = try container.decode(Int.self, forKey: .index)
     }
 
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(sharesRemain, forKey: .sharesRemain)
         try container.encode(records, forKey: .records)
+        try container.encode(index, forKey: .index)
+    }
+    
+    func changeIdx(newIndex: Int) -> Self {
+        return SingleStockPortfolio(sharesRemain: self.sharesRemain, records: self.records, index: newIndex)
     }
     
     static func example1() -> Self {

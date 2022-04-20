@@ -11,6 +11,7 @@ struct Toast<Presenting>: View where Presenting: View {
 
     /// The binding that decides the appropriate drawing in the body.
     @Binding var isShowing: Bool
+    @Binding var counter: Int
     /// The view that will be "presenting" this toast
     let presenting: () -> Presenting
     /// The text to show
@@ -19,32 +20,33 @@ struct Toast<Presenting>: View where Presenting: View {
     var body: some View {
 
         GeometryReader { geometry in
-
             ZStack(alignment: .center) {
-
-                self.presenting()
-                    .blur(radius: self.isShowing ? 1 : 0)
-
-                VStack {
-                    self.text
+                presenting()
+                
+                if self.isShowing {
+                    VStack {
+                        Spacer()
+                        self.text
+                            .frame(width: geometry.size.width / 1.5,
+                                    height: geometry.size.height / 10)
+                            .background(.gray)
+                            .foregroundColor(Color.primary)
+                            .cornerRadius(20)
+                            .transition(.slide)
+                    }
+                    .onAppear {
+                        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { timer in
+                            self.counter -= 1
+                            
+                            if self.counter == 0 {
+                                withAnimation {
+                                    self.isShowing = false
+                                }
+                            }
+                        }
+                    }
                 }
-                .frame(width: geometry.size.width / 2,
-                       height: geometry.size.height / 5)
-                .background(Color.secondary.colorInvert())
-                .foregroundColor(Color.primary)
-                .cornerRadius(20)
-                .transition(.slide)
-                .opacity(self.isShowing ? 1 : 0)
-//                .onAppear {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-//                      withAnimation {
-//                        self.isShowing = false
-//                      }
-//                    }
-//                }
-
             }
-
         }
 
     }
@@ -52,11 +54,10 @@ struct Toast<Presenting>: View where Presenting: View {
 }
 
 extension View {
-
-    func toast(isShowing: Binding<Bool>, text: Text) -> some View {
+    func toast(isShowing: Binding<Bool>, counter: Binding<Int>, text: Text) -> some View {
         Toast(isShowing: isShowing,
+              counter: counter,
               presenting: { self },
               text: text)
     }
-
 }

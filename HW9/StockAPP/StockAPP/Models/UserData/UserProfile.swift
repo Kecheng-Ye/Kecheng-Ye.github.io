@@ -36,6 +36,7 @@ struct UserProfile: Codable, ReflectedStringConvertible {
         let idxToRemove = watchList[stockTicker]!
         watchListSequence.remove(at: idxToRemove)
         watchList.removeValue(forKey: stockTicker)
+        updateWatchListSeq()
     }
     
     mutating func moveWatchListItem(from prev: IndexSet, to curr: Int) {
@@ -59,7 +60,6 @@ struct UserProfile: Codable, ReflectedStringConvertible {
         
         var idx = 0
             
-            
         for ticker in watchListSequence {
             watchList[ticker] = idx
             idx += 1
@@ -68,16 +68,13 @@ struct UserProfile: Codable, ReflectedStringConvertible {
     
     // MARK: - Portfolio  Related
     func isStockInPortfolio(for stockTicker: String) -> Bool {
-        if let oneStockRecord = portfolio[stockTicker] {
-            return oneStockRecord.sharesRemain != 0
-        } else {
-            return false
-        }
+        return portfolio[stockTicker] != nil
     }
     
     mutating func BuyStock(stockTicker: String, record: Trasaction) {
         if portfolio[stockTicker] == nil {
-            portfolio[stockTicker] = SingleStockPortfolio(sharesRemain: 0, records: [])
+            portfolio[stockTicker] = SingleStockPortfolio(sharesRemain: 0, records: [], index: portfolioSequence.count)
+            portfolioSequence.append(stockTicker)
         }
         
         var oneStockTransaction = portfolio[stockTicker]!
@@ -97,7 +94,10 @@ struct UserProfile: Codable, ReflectedStringConvertible {
         self.balance = self.balance + soldPrice * Float(soldShares);
         
         if remainShares == soldShares {
+            let idxToRemove = portfolio[stockTicker]!.index
+            portfolioSequence.remove(at: idxToRemove)
             self.portfolio.removeValue(forKey: stockTicker)
+            updatePortfolioSeq()
         } else {
             var tempShares = soldShares, idx = 0
             
@@ -115,7 +115,24 @@ struct UserProfile: Codable, ReflectedStringConvertible {
             if tempShares != 0 {
                 newRecords[0] = Trasaction(price: newRecords[0].price, shares: newRecords[0].shares - tempShares)
             }
-            portfolio[stockTicker] = SingleStockPortfolio(sharesRemain: remainShares, records: newRecords)
+            portfolio[stockTicker] = SingleStockPortfolio(sharesRemain: remainShares,
+                                                          records: newRecords,
+                                                          index: targetStockPortfolio.index)
+        }
+    }
+    
+    mutating func movePortfolioItem(from prev: IndexSet, to curr: Int) {
+        portfolioSequence.move(fromOffsets: prev, toOffset: curr)
+        updatePortfolioSeq()
+    }
+    
+    mutating func updatePortfolioSeq() {
+        var idx = 0
+            
+        for ticker in portfolioSequence {
+            let old = portfolio[ticker]!
+            portfolio[ticker] = old.changeIdx(newIndex: idx)
+            idx += 1
         }
     }
     

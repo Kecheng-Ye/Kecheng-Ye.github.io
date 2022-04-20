@@ -9,6 +9,7 @@ import SwiftUI
 
 struct StockPortfolioView: View {
     @EnvironmentObject var userProfileVM: UserProfileVM
+    @State var showTransaction: Bool = false
     let companyBrief: CompanyBrief
     let currentPrice: CurrentPrice
     
@@ -20,6 +21,9 @@ struct StockPortfolioView: View {
                 right: TradeButton,
                 alignment2: .center
             ).contentfy()
+        }
+        .sheet(isPresented: $showTransaction) {
+            TransactionSheet(companyBrief: companyBrief, currentPrice: currentPrice)
         }
     }
     
@@ -35,7 +39,9 @@ struct StockPortfolioView: View {
     }
     
     var TradeButton: some View {
-        Button(action: {}) {
+        Button(action: {
+            self.showTransaction.toggle()
+        }) {
             Text("Trade").font(.body).foregroundColor(.white).frame(width: 120)
         }
         .padding()

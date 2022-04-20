@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CurrentPrice: Codable, APILinkable, APIDebugable, ReflectedStringConvertible {
+struct CurrentPrice: Codable, APILinkable, APIDebugable, ReflectedStringConvertible, NAInitable {
     let currentPrice: Price
     let priceChange: Price
     let priceChangePercent: Price

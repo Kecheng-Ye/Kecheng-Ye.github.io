@@ -54,3 +54,7 @@ extension Updateable {
         self = new_data
     }
 }
+
+protocol NAInitable {
+    init()
+}

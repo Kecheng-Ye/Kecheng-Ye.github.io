@@ -30,7 +30,7 @@ class SingleItemQuery<T: APILinkable & APIDebugable & Codable>: Serviceable {
         } else {
             let APIFetcher = APIService()
             
-            APIFetcher.fetch(T.self, url: data.API_URL(stockTicker: stockTicker), completion: {[unowned self] result in
+            APIFetcher.fetch(T.self, url: data.API_URL(stockTicker: stockTicker), completion: {result in
                 DispatchQueue.main.async {
                     defer {
                         group.leave()
@@ -39,7 +39,7 @@ class SingleItemQuery<T: APILinkable & APIDebugable & Codable>: Serviceable {
                     switch result {
                         case .failure(let error):
                             self.errorMessage = error.localizedDescription
-                            print(error)
+                            print("Log: API error with \(error)")
                         case .success(let result):
 //                            print("--- sucess with \(result)")
                             self.updateFunc(result)

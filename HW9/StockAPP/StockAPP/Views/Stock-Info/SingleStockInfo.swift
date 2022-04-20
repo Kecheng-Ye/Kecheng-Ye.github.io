@@ -9,20 +9,17 @@ import SwiftUI
 
 struct SingleStockInfo: View {
     let stockTicker: String
-    var comeFromFav: Bool = false
+    @State var addWatchlistSuccess: Bool = false
+    @State var addWatchlistCounter: Int = 0
+    @State var removeWatchlistSuccess: Bool = false
+    @State var removeWatchlistCounter: Int = 0
     @EnvironmentObject var userProfileVM: UserProfileVM
     @EnvironmentObject var priceQuery: PriceQuery
     @EnvironmentObject var briefQuery: BriefQuery
     @StateObject var stockQuery = StockQuery()
-    @Environment(\.presentationMode) var presentationMode
     
     init(stockTicker: String) {
         self.stockTicker = stockTicker
-    }
-    
-    init(stockTicker: String, comeFromFav: Bool) {
-        self.stockTicker = stockTicker
-        self.comeFromFav = true
     }
     
     var body: some View {
@@ -75,7 +72,9 @@ struct SingleStockInfo: View {
                 }
                 .padding(.horizontal, margin(for: geomtry.size.width))
             }
-            .navigationTitle(readyInfo.companyBrief.ticker)
+            .toast(isShowing: $addWatchlistSuccess, counter: $addWatchlistCounter, text: Text("Adding \(stockTicker) to Favorites"))
+            .toast(isShowing: $removeWatchlistSuccess, counter: $removeWatchlistCounter, text: Text("Removing \(stockTicker) from Favorites"))
+            .navigationTitle(stockTicker)
             .navigationBarItems(
                 trailing: watchListBtn
             )
@@ -91,15 +90,16 @@ struct SingleStockInfo: View {
         }
     }
     
-    func freshMainPage() {
-        priceQuery.needRefresh = true
-        briefQuery.needRefresh = true
+    func MainPageUpdate(for stockTicker: String) {
+        priceQuery.updateOneStock(for: stockTicker)
+        briefQuery.updateOneStock(for: stockTicker)
     }
     
     var addWatchListBtn: some View {
         Button(action: {
+            MainPageUpdate(for: stockTicker)
             userProfileVM.addToWatchlist(for: stockTicker)
-            freshMainPage()
+            addSuccess()
         }) {
             Image(systemName: "plus.circle")
         }
@@ -108,12 +108,22 @@ struct SingleStockInfo: View {
     var removeWatchListBtn: some View {
         Button(action: {
             userProfileVM.removeFromWatchlist(for: stockTicker)
-            if comeFromFav {
-                self.presentationMode.wrappedValue.dismiss()
-            }
+            removeSuccess()
         }) {
             Image(systemName: "plus.circle.fill")
         }
+    }
+    
+    func addSuccess() {
+        self.removeWatchlistSuccess = false
+        self.addWatchlistSuccess = true
+        self.addWatchlistCounter += 1
+    }
+    
+    func removeSuccess() {
+        self.removeWatchlistSuccess = true
+        self.removeWatchlistCounter += 1
+        self.addWatchlistSuccess = false
     }
 }
 

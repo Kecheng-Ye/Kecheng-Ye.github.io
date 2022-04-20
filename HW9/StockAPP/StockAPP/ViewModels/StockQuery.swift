@@ -12,6 +12,11 @@ class StockQuery: GroupQuery {
     let semaphore = DispatchSemaphore(value: 0)
     var currentTime = NATime
     
+    override init() {
+        super.init()
+        self.name = "StockQuery"
+    }
+    
     override func APIServicesInit() {
         APIServices = [
             SingleItemQuery<CompanyBrief>(data: stockData.companyBrief,
@@ -52,7 +57,7 @@ class StockQuery: GroupQuery {
     }
     
     func startQuery(for stockTicker: String) {
-        super.startQuery(for: stockTicker, postQuery: {print(self.stockData)})
+        super.startQuery(for: stockTicker)
     }
     
     func filterNews(rawNewsList: News) -> News {

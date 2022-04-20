@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CompanyBrief: Codable, APILinkable, APIDebugable, ReflectedStringConvertible {
+struct CompanyBrief: Codable, APILinkable, APIDebugable, ReflectedStringConvertible, NAInitable {
     let ipo: String
     let finnhubIndustry: String
     let name: String

@@ -7,32 +7,64 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C64CAF94-2868-4865-B2B0-A3F8665294E4"
+            uuid = "3AF37E7A-D0F7-4EA4-BA51-F301637B5D88"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StockAPP/ViewModels/PriceQuery.swift"
+            filePath = "StockAPP/Views/Stock-Info/Portfolio/StockPortfolioView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
-            landmarkName = "startQuery(watcListTickers:portfolioTickers:updateLoad:)"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "priceInfo(stockPortfolio:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "428B50F7-7203-4992-9885-5C2C51E67288"
+            uuid = "853FF0FF-21E8-4D47-8AC1-F495DD79ADC0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StockAPP/ViewModels/PriceQuery.swift"
+            filePath = "StockAPP/Views/MainPage/MainPageView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "18"
-            endingLineNumber = "18"
-            landmarkName = "APIServicesInit(watcListTickers:portfolioTickers:)"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "init(isSearching:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C18D62DE-2029-47EF-9D7F-ACA4455B95A1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StockAPP/Views/Stock-Info/SingleStockInfo.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "101"
+            endingLineNumber = "101"
+            landmarkName = "addWatchListBtn"
+            landmarkType = "24">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "353D5229-9876-42DC-83B0-CAF29000541E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StockAPP/Views/MainPage/MainPageView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
+            landmarkName = "endTimer()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA078B77280F5021002C886E /* MultipleTickerQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA078B76280F5021002C886E /* MultipleTickerQuery.swift */; };
 		BA21AB1E28032502008693B1 /* StockAPPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA21AB1D28032502008693B1 /* StockAPPApp.swift */; };
 		BA21AB2028032502008693B1 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA21AB1F28032502008693B1 /* MainView.swift */; };
 		BA21AB2228032503008693B1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA21AB2128032503008693B1 /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 		BA21AB462803D707008693B1 /* SocialSentiment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA21AB452803D707008693B1 /* SocialSentiment.swift */; };
 		BA21AB4A2803DB4B008693B1 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA21AB492803DB4B008693B1 /* LoadingView.swift */; };
 		BA21AB4C2803E011008693B1 /* StockTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA21AB4B2803E011008693B1 /* StockTitleView.swift */; };
+		BA3CFFE8280E0CB40030F75D /* TransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA3CFFE7280E0CB40030F75D /* TransactionSheet.swift */; };
 		BA56E187280B643000989BE1 /* PriceQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA56E186280B643000989BE1 /* PriceQuery.swift */; };
 		BA56E189280B64DF00989BE1 /* GroupQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA56E188280B64DF00989BE1 /* GroupQuery.swift */; };
 		BA7F3E7828078C8B002F6F9C /* Debouncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7F3E7728078C8B002F6F9C /* Debouncer.swift */; };
@@ -74,6 +76,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		BA078B76280F5021002C886E /* MultipleTickerQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleTickerQuery.swift; sourceTree = "<group>"; };
 		BA21AB1A28032502008693B1 /* StockAPP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StockAPP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA21AB1D28032502008693B1 /* StockAPPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockAPPApp.swift; sourceTree = "<group>"; };
 		BA21AB1F28032502008693B1 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -94,6 +97,7 @@
 		BA21AB452803D707008693B1 /* SocialSentiment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialSentiment.swift; sourceTree = "<group>"; };
 		BA21AB492803DB4B008693B1 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BA21AB4B2803E011008693B1 /* StockTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockTitleView.swift; sourceTree = "<group>"; };
+		BA3CFFE7280E0CB40030F75D /* TransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSheet.swift; sourceTree = "<group>"; };
 		BA56E186280B643000989BE1 /* PriceQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceQuery.swift; sourceTree = "<group>"; };
 		BA56E188280B64DF00989BE1 /* GroupQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupQuery.swift; sourceTree = "<group>"; };
 		BA7F3E7728078C8B002F6F9C /* Debouncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debouncer.swift; sourceTree = "<group>"; };
@@ -140,6 +144,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA078B75280F4FFA002C886E /* MultipleTickerQuery */ = {
+			isa = PBXGroup;
+			children = (
+				BA078B76280F5021002C886E /* MultipleTickerQuery.swift */,
+			);
+			path = MultipleTickerQuery;
+			sourceTree = "<group>";
+		};
 		BA21AB1128032501008693B1 = {
 			isa = PBXGroup;
 			children = (
@@ -160,9 +172,9 @@
 		BA21AB1C28032502008693B1 /* StockAPP */ = {
 			isa = PBXGroup;
 			children = (
-				BAD65AE5280B5A2900B9C7D9 /* Models */,
 				BA7F3E7B28079D40002F6F9C /* Info.plist */,
 				BA7F3E7628078C71002F6F9C /* Utils */,
+				BAD65AE5280B5A2900B9C7D9 /* Models */,
 				BAA041A22805040A001825DF /* ViewModels */,
 				BA21AB472803DAF4008693B1 /* Views */,
 				BA21AB1D28032502008693B1 /* StockAPPApp.swift */,
@@ -211,12 +223,8 @@
 		BA21AB472803DAF4008693B1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BA3CFFE2280DEF750030F75D /* MainPage */,
 				BA21AB482803DB26008693B1 /* Stock-Info */,
-				BAA041A02805010D001825DF /* MainPageView.swift */,
-				BAA0419E2804ECF8001825DF /* SingleStockInfo.swift */,
-				BAF3ED2E280764EE009404B5 /* SuggestionListView.swift */,
-				BAA97E0B280BC33D0019C1FF /* PortfolioView.swift */,
-				BAA97E0D280BC3A10019C1FF /* FavoritesView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -224,16 +232,101 @@
 		BA21AB482803DB26008693B1 /* Stock-Info */ = {
 			isa = PBXGroup;
 			children = (
+				BA3CFFE0280DEF490030F75D /* Insights */,
+				BA3CFFDF280DEF340030F75D /* Portfolio */,
+				BA3CFFDE280DEF280030F75D /* About */,
+				BA3CFFDD280DEF1E0030F75D /* Stats */,
+				BA3CFFDC280DEF140030F75D /* Title */,
 				BAD65AE0280B4CD000B9C7D9 /* News */,
 				BA21AB492803DB4B008693B1 /* LoadingView.swift */,
-				BA21AB4B2803E011008693B1 /* StockTitleView.swift */,
-				BAC756032808BBEB004C03F6 /* StatsView.swift */,
-				BAC756052808C61D004C03F6 /* AboutView.swift */,
-				BAC7560728091168004C03F6 /* SocialSentimentView.swift */,
-				BAC756092809123D004C03F6 /* InsightsView.swift */,
-				BAAC976F280A5260005110EE /* StockPortfolioView.swift */,
+				BAA0419E2804ECF8001825DF /* SingleStockInfo.swift */,
 			);
 			path = "Stock-Info";
+			sourceTree = "<group>";
+		};
+		BA3CFFDC280DEF140030F75D /* Title */ = {
+			isa = PBXGroup;
+			children = (
+				BA21AB4B2803E011008693B1 /* StockTitleView.swift */,
+			);
+			path = Title;
+			sourceTree = "<group>";
+		};
+		BA3CFFDD280DEF1E0030F75D /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				BAC756032808BBEB004C03F6 /* StatsView.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
+		BA3CFFDE280DEF280030F75D /* About */ = {
+			isa = PBXGroup;
+			children = (
+				BAC756052808C61D004C03F6 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		BA3CFFDF280DEF340030F75D /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				BAAC976F280A5260005110EE /* StockPortfolioView.swift */,
+				BA3CFFE7280E0CB40030F75D /* TransactionSheet.swift */,
+			);
+			path = Portfolio;
+			sourceTree = "<group>";
+		};
+		BA3CFFE0280DEF490030F75D /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				BA3CFFE1280DEF5D0030F75D /* SocialSentiment */,
+				BAC756092809123D004C03F6 /* InsightsView.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		BA3CFFE1280DEF5D0030F75D /* SocialSentiment */ = {
+			isa = PBXGroup;
+			children = (
+				BAC7560728091168004C03F6 /* SocialSentimentView.swift */,
+			);
+			path = SocialSentiment;
+			sourceTree = "<group>";
+		};
+		BA3CFFE2280DEF750030F75D /* MainPage */ = {
+			isa = PBXGroup;
+			children = (
+				BA3CFFE6280DEFC30030F75D /* Portfolio */,
+				BA3CFFE5280DEFB50030F75D /* Favorites */,
+				BA3CFFE3280DEF970030F75D /* AutoSuggestion */,
+				BAA041A02805010D001825DF /* MainPageView.swift */,
+			);
+			path = MainPage;
+			sourceTree = "<group>";
+		};
+		BA3CFFE3280DEF970030F75D /* AutoSuggestion */ = {
+			isa = PBXGroup;
+			children = (
+				BAF3ED2E280764EE009404B5 /* SuggestionListView.swift */,
+			);
+			path = AutoSuggestion;
+			sourceTree = "<group>";
+		};
+		BA3CFFE5280DEFB50030F75D /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				BAA97E0D280BC3A10019C1FF /* FavoritesView.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		BA3CFFE6280DEFC30030F75D /* Portfolio */ = {
+			isa = PBXGroup;
+			children = (
+				BAA97E0B280BC33D0019C1FF /* PortfolioView.swift */,
+			);
+			path = Portfolio;
 			sourceTree = "<group>";
 		};
 		BA56E18A280B665500989BE1 /* BaseAPIQueryVM */ = {
@@ -271,6 +364,7 @@
 		BAA041A22805040A001825DF /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				BA078B75280F4FFA002C886E /* MultipleTickerQuery */,
 				BA56E18A280B665500989BE1 /* BaseAPIQueryVM */,
 				BAA041A32805041F001825DF /* StockQuery.swift */,
 				BAF3ED302807654F009404B5 /* AutoSuggestions.swift */,
@@ -420,6 +514,7 @@
 				BAC755FF28088B99004C03F6 /* SearchBar.swift in Sources */,
 				BA21AB3E2803721D008693B1 /* News.swift in Sources */,
 				BA21AB3A28036DE0008693B1 /* HourlyPrice.swift in Sources */,
+				BA3CFFE8280E0CB40030F75D /* TransactionSheet.swift in Sources */,
 				BAD65AE9280B5D8B00B9C7D9 /* PortfolioData.swift in Sources */,
 				BAA041A928066749001825DF /* SingleItemQuery.swift in Sources */,
 				BAABB776280B0E6A006074B7 /* NewsView.swift in Sources */,
@@ -428,6 +523,7 @@
 				BAA97E0E280BC3A10019C1FF /* FavoritesView.swift in Sources */,
 				BAC755F828086BFC004C03F6 /* APIProtocols.swift in Sources */,
 				BA21AB322803313C008693B1 /* CompanyBrief.swift in Sources */,
+				BA078B77280F5021002C886E /* MultipleTickerQuery.swift in Sources */,
 				BA21AB4C2803E011008693B1 /* StockTitleView.swift in Sources */,
 				BAC7560828091168004C03F6 /* SocialSentimentView.swift in Sources */,
 				BAC755FD28088B73004C03F6 /* ViewControllerResolver.swift in Sources */,
@@ -580,6 +676,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -617,6 +714,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

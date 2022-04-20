@@ -15,22 +15,23 @@ struct MainPageView: View {
     @State var isTimerStop: Bool = true
     let isSearching: Bool
     
+    init(isSearching: Bool) {
+        self.isSearching = isSearching
+        print("Log: Main Page get constructed")
+    }
+    
     var body: some View {
         if !isSearching {
-            if priceQuery.needRefresh || briefQuery.needRefresh {
-                LoadingView().onAppear(perform: autoUpdateData)
-            } else {
-                Form {
-                    dateSection
-                    favoritesSection
-                    finnhubAckSection
-                }
-                .onAppear(perform: {
-                    startTimer()
-                    search.emptyResult()
-                })
-                .onDisappear(perform: endTimer)
+            Form {
+                dateSection
+                portfolioSection
+                favoritesSection
+                finnhubAckSection
             }
+            .onAppear(perform: {
+                startTimer()
+                search.emptyResult()
+            })
         } else {
             SuggestionListView(suggestions: self.search.suggestions)
         }
@@ -47,41 +48,13 @@ struct MainPageView: View {
     
     var favoritesSection: some View {
         Section(header: Text("FAVORITES")) {
-            ForEach(userProfileVM.watchListSequence, id: \.self) { ticker in
-                NavigationLink(destination: SingleStockInfo(stockTicker: ticker, comeFromFav: true)) {
-                    oneFavorites(stockTicker: ticker)
-                }
-            }
-            .onMove(perform: moveWatchListItem)
-            .onDelete(perform: deleteWatchListItem)
+            FavoritesView(endTimer: endTimer)
         }
     }
     
-    func moveWatchListItem(prev: IndexSet, curr: Int) {
-        userProfileVM.moveWatchListItem(from: prev, to: curr)
-    }
-    
-    func deleteWatchListItem(target: IndexSet) {
-        userProfileVM.deleteWatchListItem(for: target)
-    }
-    
-    func oneFavorites(stockTicker: String) -> some View {
-        HStack {
-            VStack(alignment: .leading) {
-                Text(stockTicker).font(.title2).fontWeight(.bold)
-                Text(briefQuery[stockTicker]!.name).foregroundColor(.gray)
-            }
-            
-            Spacer()
-            
-            VStack(alignment: .trailing) {
-                Text("$\(roundToTwoDecimal(priceQuery[stockTicker]!.currentPrice))").fontWeight(.bold)
-                HStack(spacing: 5) {
-                    priceArrow(priceQuery[stockTicker]!.priceChange)
-                    Text("\(roundToTwoDecimal(priceQuery[stockTicker]!.priceChange))(\(roundToTwoDecimal(priceQuery[stockTicker]!.priceChangePercent))%)")
-                }
-                .stockColorify(priceChange: priceQuery[stockTicker]!.priceChange)
-            }
+    var portfolioSection: some View {
+        Section(header: Text("PORTFOLIO")) {
+            PortfolioView(endTime: endTimer)
         }
     }
     
@@ -111,18 +84,23 @@ struct MainPageView: View {
     }
     
     func startTimer() {
+        print("Log: Timer Start")
         isTimerStop = false
         
         Timer.scheduledTimer(withTimeInterval: AUTO_UPDATE_INTERVAL, repeats: true) { timer in
             if isTimerStop {
+                print("Log: Timer fire cancelled")
                 timer.invalidate()
+                return
             }
             
+            print("Log: Timer fire succeed")
             autoUpdateData()
         }
     }
     
     func endTimer() {
+        print("Log: Timer ends")
         isTimerStop = true
     }
 }

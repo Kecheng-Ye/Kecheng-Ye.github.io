@@ -13,7 +13,7 @@ struct MainView: View {
     @StateObject var userProfileVM = UserProfileVM()
     @StateObject var priceQuery = PriceQuery()
     @StateObject var briefQuery = BriefQuery()
-    @ObservedObject var searchBar = SearchBar()
+    @StateObject var searchBar = SearchBar()
     
     var body: some View {
         if priceQuery.isLoading || briefQuery.isLoading {
@@ -42,6 +42,7 @@ struct MainView: View {
                 .add(self.searchBar)
                 .navigationTitle("Stocks")
         }
+        .navigationViewStyle(StackNavigationViewStyle())
         .onAppear(perform: mainPageInit)
         .environmentObject(userProfileVM)
         .environmentObject(autoSuggestions)

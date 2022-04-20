@@ -8,27 +8,28 @@
 import SwiftUI
 
 struct NewsSheet: View {
-    @Environment(\.dismiss) var dismiss
     let singleNews: SingleNews
     
     var body: some View {
-        VStack(alignment: .leading) {
-            dissmissBtn
-            title
-            Divider()
-            content
-            Spacer()
+        ScrollView(.vertical) {
+            VStack(alignment: .leading) {
+                dissmissBtn
+                title
+                Divider()
+                content
+                Spacer()
+            }
         }
         .fullWidth()
         .padding()
     }
     
     var dissmissBtn: some View {
-        Image(systemName: "multiply")
-            .fullWidth(alignment: .trailing)
-            .padding(.vertical, 10)
-            .onTapGesture {
-            dismiss()
+        Button(action: closesheet) {
+            Image(systemName: "multiply")
+                .fullWidth(alignment: .trailing)
+                .padding(.vertical, 10)
+                .foregroundColor(.black)
         }
     }
     

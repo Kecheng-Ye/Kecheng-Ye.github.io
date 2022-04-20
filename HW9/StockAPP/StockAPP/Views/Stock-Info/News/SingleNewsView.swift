@@ -17,7 +17,7 @@ struct headNews: View {
             title
         }
         .onTapGesture {
-            showingSheet = true
+            showingSheet.toggle()
         }
         .sheet(isPresented: $showingSheet) {
             NewsSheet(singleNews: singleNews)
@@ -63,7 +63,7 @@ struct normalSingleNews: View {
             image
         }
         .onTapGesture {
-            showingSheet = true
+            showingSheet.toggle()
         }
         .sheet(isPresented: $showingSheet) {
             NewsSheet(singleNews: singleNews)

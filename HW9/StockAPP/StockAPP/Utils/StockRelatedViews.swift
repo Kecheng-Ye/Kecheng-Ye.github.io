@@ -150,3 +150,13 @@ extension View {
         overlay(EdgeBorder(width: width, edges: edges).foregroundColor(color))
     }
 }
+
+func closesheet() {
+    if var topController = UIApplication.shared.windows.first!.rootViewController {
+        while let presentedViewController = topController.presentedViewController {
+            topController = presentedViewController
+        }
+        topController.dismiss(animated: true)
+    }
+}
+

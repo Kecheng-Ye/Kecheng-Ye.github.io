@@ -10,6 +10,11 @@ import Foundation
 class AutoSuggestions: GroupQuery {
     @Published var suggestionList = SearchSuggestion()
     
+    override init() {
+        super.init()
+        self.name = "AutoSuggestionsQuery"
+    }
+    
     override func APIServicesInit() {
         APIServices = [
             SingleItemQuery<SearchSuggestion>(data: suggestionList,

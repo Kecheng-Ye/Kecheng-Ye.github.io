@@ -12,6 +12,11 @@ typealias CostStats = (TotalCost: Price, AverageCost: Price, Change: Price, Mark
 
 class UserProfileVM: ObservableObject  {
     @AppStorage("UserProfile") var userProfile = UserProfile()
+    @Published var isDetailActive = false
+    
+    init() {
+        print("Log: UserProfileVM Constructed")
+    }
     
     var balance: Price {
         userProfile.balance
@@ -31,6 +36,22 @@ class UserProfileVM: ObservableObject  {
     
     var portfolio: [String: SingleStockPortfolio] {
         userProfile.portfolio
+    }
+    
+    var netWorth: Price {
+        var result = balance
+        
+        for (_, singlePortfolio) in portfolio {
+            var totalCost = Price(0.0)
+            
+            for transaction in singlePortfolio.records {
+                totalCost += (Float(transaction.shares) * transaction.price)
+            }
+            
+            result += totalCost
+        }
+        
+        return result
     }
     
     func isStockInWatchList(for stockTicker: String) -> Bool {
@@ -66,31 +87,43 @@ class UserProfileVM: ObservableObject  {
     // MARK: - Intents()
     func addToWatchlist(for stockTicker: String) {
         userProfile.addToWatchlist(for: stockTicker)
+        print("Log: watchlist after add \(watchList) \(watchListSequence)")
         self.objectWillChange.send()
     }
     
     func removeFromWatchlist(for stockTicker: String) {
         userProfile.removeFromWatchlist(for: stockTicker)
+        print("Log: watchlist after remove \(watchList) \(watchListSequence)")
         self.objectWillChange.send()
     }
     
     func moveWatchListItem(from Indices: IndexSet, to curr: Int) {
         userProfile.moveWatchListItem(from: Indices, to: curr)
+        print("Log: watchlist after move \(watchList) \(watchListSequence)")
         self.objectWillChange.send()
     }
     
     func deleteWatchListItem(for Indices: IndexSet) {
         userProfile.deleteWatchListItem(for: Indices)
+        print("Log: watchlist after delete \(watchList) \(watchListSequence)")
         self.objectWillChange.send()
     }
     
     func buyStock(stockTicker: String, record: Trasaction) {
         userProfile.BuyStock(stockTicker: stockTicker, record: record)
+        print("Log: portfolio after buy \(portfolio) \(portfolioSequence)")
         self.objectWillChange.send()
     }
     
     func sellStock(stockTicker: String, record: Trasaction) {
         userProfile.SellStock(stockTicker: stockTicker, trans: record)
+        print("Log: portfolio after sell \(portfolio) \(portfolioSequence)")
+        self.objectWillChange.send()
+    }
+    
+    func movePortfolioItem(from Indices: IndexSet, to curr: Int) {
+        userProfile.movePortfolioItem(from: Indices, to: curr)
+        print("Log: portfolio after move \(portfolio) \(portfolioSequence)")
         self.objectWillChange.send()
     }
     
