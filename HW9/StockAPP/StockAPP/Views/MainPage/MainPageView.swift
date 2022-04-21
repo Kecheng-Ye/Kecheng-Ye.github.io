@@ -33,7 +33,7 @@ struct MainPageView: View {
                 search.emptyResult()
             })
         } else {
-            SuggestionListView(suggestions: self.search.suggestions)
+            SuggestionListView(suggestions: self.search.suggestions).onAppear(perform: endTimer)
         }
     }
     

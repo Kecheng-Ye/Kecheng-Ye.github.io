@@ -71,8 +71,18 @@ func EarningInfoList() -> [EarningInfo] {
     ]
 }
 
-extension APILinkable where Self == EarningInfos {
-    func API_URL(stockTicker: String) -> URL? {
-        return URL(string: APILink + "earnings/\(stockTicker)")
+typealias EarningInfoPlotData = (categories: [String], actual: [Float32], estimate: [Float32])
+
+func EarningInfoListToHighChartDraw(_ infos: EarningInfos) -> EarningInfoPlotData {
+    var categories: [String] = []
+    var actual: [Float32] = []
+    var estimate: [Float32] = []
+    
+    for info in infos {
+        categories.append("<small>\(info.period)</small><br>Surprise: \(roundToTwoDecimal(info.surprise))")
+        estimate.append(Float(roundToTwoDecimal(info.estimate))!);
+        actual.append(Float(roundToTwoDecimal(info.actual))!);
     }
+    
+    return (categories, actual, estimate)
 }

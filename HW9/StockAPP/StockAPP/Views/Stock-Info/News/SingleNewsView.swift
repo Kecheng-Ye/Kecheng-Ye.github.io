@@ -30,8 +30,7 @@ struct headNews: View {
             content: { image in
                 image
                     .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: 500)
-                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: .infinity, maxHeight: 200)
                     .cornerRadius(10)
             },
             placeholder: {
@@ -87,7 +86,7 @@ struct normalSingleNews: View {
             content: { image in
                 image
                     .resizable()
-                    .frame(maxWidth: 100, maxHeight: 100)
+                    .frame(maxWidth: 100, maxHeight: 90)
                     .scaledToFill()
                     .cornerRadius(10)
             },

@@ -47,9 +47,6 @@ export class StockSubInfoChartsComponent implements OnInit {
   chartOptions: Options = {
     rangeSelector: {
       selected: 2,
-      // inputBoxBorderColor: 'gray',
-      // inputBoxHeight: 25,
-      // inputBoxWidth: 90,
     },
 
     subtitle: {

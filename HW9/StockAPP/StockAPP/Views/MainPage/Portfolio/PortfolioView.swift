@@ -21,13 +21,14 @@ struct PortfolioView: View {
             }
             .isDetailLink(false)
         }
+        .onMove(perform: userProfileVM.movePortfolioItem)
     }
     
     var balanceBrief: some View {
         HStack {
             VStack(alignment: .leading) {
                 Text("Net Worth")
-                Text("$\(roundToTwoDecimal(userProfileVM.netWorth))").fontWeight(.bold)
+                Text("$\(roundToTwoDecimal(userProfileVM.netWorth(priceInfo: priceQuery.InfoList)))").fontWeight(.bold)
             }
             .font(.title3)
             

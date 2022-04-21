@@ -35,23 +35,33 @@ class MultipleTickerQuery<T: Codable & APILinkable & APIDebugable & ReflectedStr
 
     // MARK: - Intents()
     func startQuery(watcListTickers: [String], portfolioTickers: [String], updateLoad: Bool = true) {
+        if !isMarketOpen {
+            print("Log: Market has closed")
+            return
+        }
+        
+        print("Log: Market is open")
         let uniqueTickerList = APIServicesInit(watcListTickers: watcListTickers, portfolioTickers: portfolioTickers)
         
-        super.startQuery(for: uniqueTickerList, updateLoad: updateLoad, postQuery: {
-            self.objectWillChange.send()
-        })
+        super.startQuery(for: uniqueTickerList, updateLoad: updateLoad, postQuery: postQuery)
     }
     
     func updateOneStock(for stockTicker: String) {
+        if !isMarketOpen {
+            return
+        }
+        
         APIServices = [SingleItemQuery<T>(data: T(), update: update(stockTicker: stockTicker))]
         let uniqueTickerList = [stockTicker]
         
-        super.startQuery(for: uniqueTickerList, updateLoad: false, postQuery: {
-            self.objectWillChange.send()
-        })
+        super.startQuery(for: uniqueTickerList, updateLoad: false, postQuery: postQuery)
     }
     
     subscript(stockTicker: String) -> T {
         InfoList[stockTicker] ?? T()
+    }
+    
+    func postQuery() {
+        self.objectWillChange.send()
     }
 }

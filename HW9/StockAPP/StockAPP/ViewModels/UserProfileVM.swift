@@ -38,17 +38,13 @@ class UserProfileVM: ObservableObject  {
         userProfile.portfolio
     }
     
-    var netWorth: Price {
+    func netWorth(priceInfo: [String: CurrentPrice]) -> Price {
         var result = balance
         
-        for (_, singlePortfolio) in portfolio {
-            var totalCost = Price(0.0)
+        for (ticker, singlePortfolio) in portfolio {
+            let revenue = Float(singlePortfolio.sharesRemain) * priceInfo[ticker]!.currentPrice
             
-            for transaction in singlePortfolio.records {
-                totalCost += (Float(transaction.shares) * transaction.price)
-            }
-            
-            result += totalCost
+            result += revenue
         }
         
         return result

@@ -68,6 +68,16 @@ struct HourlyPrice: Codable, APILinkable, APIDebugable, ReflectedStringConvertib
     func APIExample() -> HourlyPrice {
         return Self.example()
     }
+    
+    func toHighChartDraw() -> [[Price]] {
+        var result: [[Price]] = []
+        
+        for i in 0..<self.closePrices.count {
+            result.append([Float(self.timestamps[i]), self.closePrices[i]])
+        }
+        
+        return result
+    }
 }
 
 protocol Dependable {

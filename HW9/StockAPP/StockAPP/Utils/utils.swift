@@ -10,8 +10,8 @@ import SwiftUI
 
 typealias Price = Float32
 
-//let APILink = "http://kecheng-ye-hw8.us-east-1.elasticbeanstalk.com/api/"
-let APILink = "http://127.0.0.1:5555/api/"
+let APILink = "http://kecheng-ye-hw8.us-east-1.elasticbeanstalk.com/api/"
+//let APILink = "http://127.0.0.1:5555/api/"
 let FinnhubLink = "https://finnhub.io/"
 let NAString = "N.A"
 let NAInt: Int32 = 0
@@ -86,8 +86,29 @@ extension ReflectedStringConvertible {
   }
 }
 
-
 func roundToTwoDecimal(_ data: Price) -> String {
     return String(format: "%.2f", data)
 }
 
+typealias JSONDict = Dictionary<String, (data: Any, type: Any.Type)>
+
+func toJSONString(_ type: Any.Type, _ data: Any) -> String {
+    switch type {
+    case is String.Type: return "\"\(data as! String)\""
+    case is JSONDict.Type: return encodeJSON(data as! JSONDict)
+    default: return "\(data)"
+    }
+}
+
+func encodeJSON(_ data: JSONDict) -> String {
+    var result = "{"
+
+    for (key, value) in data {
+        result += toJSONString(String.self, key) + ":"
+        result += toJSONString(value.type, value.data) + ","
+    }
+    
+    let _ = result.popLast()
+    result += "}"
+    return result
+}

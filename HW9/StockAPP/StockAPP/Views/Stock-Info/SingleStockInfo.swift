@@ -45,6 +45,14 @@ struct SingleStockInfo: View {
                     )
                     .sectionfy()
                     
+                    PriceCharts(
+                        companyBrief: readyInfo.companyBrief,
+                        historicalData: readyInfo.historicRecord,
+                        currentPrice: readyInfo.currentPrice,
+                        hourlyPrice: readyInfo.hourlyPrice
+                    )
+                    .sectionfy()
+                    
                     StockPortfolioView(
                         companyBrief: readyInfo.companyBrief,
                         currentPrice: readyInfo.currentPrice
@@ -64,7 +72,9 @@ struct SingleStockInfo: View {
                     
                     InsightsView(
                         socialSentiments: readyInfo.socialSentiments,
-                        companyBrief: readyInfo.companyBrief
+                        companyBrief: readyInfo.companyBrief,
+                        recommendInfos: readyInfo.recommendInfos,
+                        earningInfos: readyInfo.earningInfos
                     )
                     .sectionfy()
                     

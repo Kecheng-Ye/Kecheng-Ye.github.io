@@ -451,4 +451,30 @@ struct HistoricalRecord: Codable, APILinkable, APIDebugable, ReflectedStringConv
     func APIExample() -> HistoricalRecord {
         return Self.example()
     }
+    
+    func toHighChartDraw() -> (ohlc: [[Price]], volume: [[Price]]) {
+        var ohlc = [[Price]]()
+        var volume = [[Price]]()
+        
+        for i in 0..<self.timestamps.count {
+            ohlc.append(
+                [
+                    Float(self.timestamps[i]) * 1000, // the date
+                    self.openPrices[i], // open
+                    self.highPrices[i], // high
+                    self.lowPrices[i], // low
+                    self.closePrices[i] // close
+                ]
+            );
+
+            volume.append(
+                [
+                    Float(self.timestamps[i]) * 1000, // the date
+                    Float(self.volumes[i]) // the volume
+                ]
+            );
+        }
+        
+        return (ohlc, volume)
+    }
 }

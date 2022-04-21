@@ -75,3 +75,26 @@ func RecommendInfoList() -> RecommendInfos {
         RecommendInfo.example4()
     ]
 }
+
+typealias RecommendInfoPlotData = (categories: [String], strongBuy: [Int32], buy: [Int32], hold: [Int32], sell: [Int32], strongSell: [Int32])
+
+func RecommendInfotoHighChartDraw(_ data: RecommendInfos) -> RecommendInfoPlotData {
+    var categories: [String] = [];
+    var strongBuy: [Int32] = [];
+    var buy: [Int32] = [];
+    var hold: [Int32] = [];
+    var sell: [Int32] = [];
+    var strongSell: [Int32] = [];
+    
+    for info in data {
+        strongBuy.append(info.strongBuy)
+        buy.append(info.buy)
+        hold.append(info.hold)
+        sell.append(info.sell)
+        strongSell.append(info.strongSell)
+        let index = info.period.index(info.period.endIndex, offsetBy: -3)
+        categories.append(String(info.period[..<index]))
+    }
+    
+    return (categories, strongBuy, buy, hold, sell, strongSell)
+}
