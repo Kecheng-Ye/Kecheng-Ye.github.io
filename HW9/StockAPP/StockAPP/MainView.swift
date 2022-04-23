@@ -14,9 +14,14 @@ struct MainView: View {
     @StateObject var priceQuery = PriceQuery()
     @StateObject var briefQuery = BriefQuery()
     @StateObject var searchBar = SearchBar()
+    @State var isTimerStop: Bool = false
+    var debounce = Debouncer(delay: SEARCH_DEBOUNCE_DELAY)
+    var isPageReady: Bool {
+        return !(priceQuery.isLoading || briefQuery.isLoading || !isTimerStop)
+    }
     
     var body: some View {
-        if priceQuery.isLoading || briefQuery.isLoading {
+        if !isPageReady {
             loadingPage
         } else {
             readyPage
@@ -32,7 +37,7 @@ struct MainView: View {
                 .frame(width: 250, height: 250)
         }
         .ignoresSafeArea()
-        .onAppear(perform: autoUpdateData)
+        .onAppear(perform: launchScreenInit)
     }
     
     var readyPage: some View {
@@ -55,8 +60,24 @@ struct MainView: View {
     }
     
     func searchBarFuncInit() {
-        searchBar.initQuery(startSearch: self.autoSuggestions.startQuery)
-        searchBar.initCancel(cancelSearch: self.autoSuggestions.emptyResult)
+        searchBar.initQuery(startSearch: debounceSearch)
+        searchBar.initCancel(cancelSearch: cancelSearch)
+    }
+    
+    func debounceSearch(ticker: String) {
+        debounce.run {
+            self.autoSuggestions.startQuery(stockTicker: ticker)
+        }
+    }
+    
+    func cancelSearch() {
+        debounce.cancel()
+        self.autoSuggestions.emptyResult()
+    }
+    
+    func launchScreenInit() {
+        startTimer()
+        autoUpdateData()
     }
     
     func autoUpdateData() {
@@ -69,6 +90,14 @@ struct MainView: View {
             watcListTickers: userProfileVM.watchListSequence,
             portfolioTickers: userProfileVM.portfolioSequence
         )
+    }
+    
+    func startTimer() {
+        isTimerStop = false
+        
+        Timer.scheduledTimer(withTimeInterval: SLPASH_SCREEN_DURATION, repeats: false) { timer in
+            isTimerStop = true
+        }
     }
 }
 

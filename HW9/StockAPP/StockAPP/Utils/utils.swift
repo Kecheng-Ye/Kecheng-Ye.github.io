@@ -21,9 +21,15 @@ let NAPrice: Price = 0
 let NAURL: URL? = nil
 
 let DEBUG = false
-let AUTO_UPDATE_INTERVAL = 15.0
 let START_BALANCE: Price = 25000
-let NEWS_LIMIT: Int = 5
+let NEWS_LIMIT: Int = 20
+
+// Time Interval
+let MAIN_PAGE_AUTO_UPDATE_INTERVAL = 15.0
+let SLPASH_SCREEN_DURATION = 1.0
+let TOAST_DURATION = 1.5
+let SEARCH_DEBOUNCE_DELAY = 1.0
+
 
 func timestampToString(_ datetime: TimeInterval) -> String {
     let dateFormatter = DateFormatter()

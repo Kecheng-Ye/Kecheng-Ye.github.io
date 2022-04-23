@@ -14,11 +14,13 @@ protocol Serviceable {
 class SingleItemQuery<T: APILinkable & APIDebugable & Codable>: Serviceable {
     var data: T
     let updateFunc: (T) -> Void
+    let failFunc: () -> Void
     var errorMessage: String? = nil
     
-    init(data: T, update: @escaping (T) -> Void) {
+    init(data: T, update: @escaping (T) -> Void, fail: @escaping () -> Void = {}) {
         self.data = data
         self.updateFunc = update
+        self.failFunc = fail
     }
     
     func startQuery(stockTicker: String, group: DispatchGroup) {
@@ -40,8 +42,8 @@ class SingleItemQuery<T: APILinkable & APIDebugable & Codable>: Serviceable {
                         case .failure(let error):
                             self.errorMessage = error.localizedDescription
                             print("Log: API error with \(error)")
+                            self.failFunc()
                         case .success(let result):
-//                            print("--- sucess with \(result)")
                             self.updateFunc(result)
                     }
                 }

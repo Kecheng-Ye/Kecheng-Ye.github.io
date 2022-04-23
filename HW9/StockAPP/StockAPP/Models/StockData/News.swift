@@ -151,3 +151,22 @@ typealias News = [SingleNews]
 func newsExample() -> News {
     return [SingleNews.example1(), SingleNews.example2(), SingleNews.example3(), SingleNews.example4(), SingleNews.example5()]
 }
+
+func filterNews(rawNewsList: News) -> News {
+    var count = 0
+    var result = News()
+    
+    for singleNews in rawNewsList {
+        
+        if !singleNews.hasNilValue() {
+            result.append(singleNews)
+            count += 1
+        }
+        
+        if count == NEWS_LIMIT {
+            break
+        }
+    }
+    
+    return result
+}

@@ -9,10 +9,9 @@ import SwiftUI
 
 struct NewsView: View {
     let news: News
-    @EnvironmentObject var stockQuery: StockQuery
     
     var body: some View {
-        let filteredNews = stockQuery.filterNews(rawNewsList: news)
+        let filteredNews = filterNews(rawNewsList: news)
         
         VStack(alignment: .leading) {
             Text("News").subTitlefy()
@@ -30,6 +29,6 @@ struct NewsView: View {
 
 struct NewsView_Previews: PreviewProvider {
     static var previews: some View {
-        NewsView(news: newsExample()).environmentObject(StockQuery())
+        NewsView(news: newsExample())
     }
 }

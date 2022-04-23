@@ -30,12 +30,12 @@ struct Toast<Presenting>: View where Presenting: View {
                             .frame(width: geometry.size.width / 1.5,
                                     height: geometry.size.height / 10)
                             .background(.gray)
-                            .foregroundColor(Color.primary)
+                            .foregroundColor(.white)
                             .cornerRadius(20)
                             .transition(.slide)
                     }
                     .onAppear {
-                        Timer.scheduledTimer(withTimeInterval: 1.5, repeats: false) { timer in
+                        Timer.scheduledTimer(withTimeInterval: TOAST_DURATION, repeats: false) { timer in
                             self.counter -= 1
                             
                             if self.counter == 0 {

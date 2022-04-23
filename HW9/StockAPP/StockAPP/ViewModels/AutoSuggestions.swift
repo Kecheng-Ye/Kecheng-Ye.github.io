@@ -9,6 +9,7 @@ import Foundation
 
 class AutoSuggestions: GroupQuery {
     @Published var suggestionList = SearchSuggestion()
+    var counter = 0
     
     override init() {
         super.init()
@@ -18,10 +19,16 @@ class AutoSuggestions: GroupQuery {
     override func APIServicesInit() {
         APIServices = [
             SingleItemQuery<SearchSuggestion>(data: suggestionList,
-                                              update: { newData in
-                                                  self.suggestionList.update(new_data: newData)
-                                              })
+                                              update: updateResult)
         ]
+    }
+    
+    func updateResult(newData: SearchSuggestion) {
+        counter -= 1
+        
+        if counter == 0 {
+            self.suggestionList.update(new_data: newData)
+        }
     }
     
     var suggestions: Array<Suggestion> {
@@ -30,6 +37,7 @@ class AutoSuggestions: GroupQuery {
     
     // MARK: - Intents()
     func startQuery(stockTicker: String) {
+        counter += 1
         super.startQuery(for: stockTicker)
     }
     

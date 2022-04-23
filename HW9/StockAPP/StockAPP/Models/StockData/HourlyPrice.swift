@@ -73,7 +73,7 @@ struct HourlyPrice: Codable, APILinkable, APIDebugable, ReflectedStringConvertib
         var result: [[Price]] = []
         
         for i in 0..<self.closePrices.count {
-            result.append([Float(self.timestamps[i]), self.closePrices[i]])
+            result.append([Float(self.timestamps[i] * 1000), self.closePrices[i]])
         }
         
         return result

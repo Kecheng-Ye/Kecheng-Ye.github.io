@@ -87,7 +87,7 @@ struct MainPageView: View {
         print("Log: Timer Start")
         isTimerStop = false
         
-        Timer.scheduledTimer(withTimeInterval: AUTO_UPDATE_INTERVAL, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: MAIN_PAGE_AUTO_UPDATE_INTERVAL, repeats: true) { timer in
             if isTimerStop {
                 print("Log: Timer fire cancelled")
                 timer.invalidate()

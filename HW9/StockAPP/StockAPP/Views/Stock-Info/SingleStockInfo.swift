@@ -23,12 +23,39 @@ struct SingleStockInfo: View {
     }
     
     var body: some View {
-        if stockQuery.isLoading {
-            LoadingView().onAppear(perform: {
-                stockQuery.startQuery(for: stockTicker)
-            })
-        } else {
-            readyContent
+        switch stockQuery.status {
+            case .PENDING:
+                LoadingView().onAppear(perform: {
+                    stockQuery.startQuery(for: stockTicker)
+                })
+            case .SUCCESS:
+                readyContent
+            case .FAILED:
+                failedPage
+        }
+    }
+    
+    var failedPage: some View {
+        VStack {
+            Text("No data found\nPlease enter a valid ticker!")
+                .font(.system(size: 25))
+                .foregroundColor(.white)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(.red)
+                .cornerRadius(20)
+            
+            Button(action:
+                    { stockQuery.startQuery(for: stockTicker) }
+            ) {
+                Text("Reload")
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                    .frame(width: 100, height: 50)
+            }
+            .background(Color("backgroundGray"))
+            .clipShape(Capsule())
+            .padding()
         }
     }
     
@@ -78,7 +105,10 @@ struct SingleStockInfo: View {
                     )
                     .sectionfy()
                     
-                    NewsView(news: readyInfo.news).sectionfy().environmentObject(stockQuery)
+                    NewsView(
+                        news: readyInfo.news
+                    )
+                    .sectionfy()
                 }
                 .padding(.horizontal, margin(for: geomtry.size.width))
             }

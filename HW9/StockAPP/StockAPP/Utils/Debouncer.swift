@@ -19,12 +19,12 @@ public class Debouncer {
     }
 
     public func run(action: @escaping () -> Void) {
-        workItem?.cancel()
+        self.cancel()
         let workItem = DispatchWorkItem(block: action)
         queue.asyncAfter(deadline: .now() + delay, execute: workItem)
         self.workItem = workItem
     }
-
+    
     public func cancel() {
         print("Task Cancel")
         workItem?.cancel()
