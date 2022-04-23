@@ -4,3 +4,5 @@
 **/__pycache__/*
 *.pyc
 HW8/bot.log
+.vscode/*
+Cloud-Example/*
