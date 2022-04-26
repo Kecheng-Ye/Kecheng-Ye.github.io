@@ -39,7 +39,7 @@ extension SearchBar: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         // Publish search bar text changes.
         if let searchBarText = searchController.searchBar.text {
-            if searchBarText != self.text {
+            if searchBarText != self.text && !searchBarText.isEmpty {
                 self.text = searchBarText
                 self.startSearch(self.text)
             }
@@ -53,6 +53,7 @@ extension SearchBar: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_: UISearchBar) {
+        self.text = ""
         self.cancelSearch()
     }
 }

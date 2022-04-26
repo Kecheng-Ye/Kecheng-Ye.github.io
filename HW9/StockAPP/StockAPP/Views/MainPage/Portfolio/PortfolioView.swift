@@ -66,7 +66,7 @@ struct onePortfolio: View {
                 Text("$\(roundToTwoDecimal(priceStats.MarketValue))").fontWeight(.bold)
                 HStack(spacing: 5) {
                     priceArrow(priceStats.Change)
-                    Text("\(roundToTwoDecimal(priceStats.Change))(\(roundToTwoDecimal(priceStats.Change/priceStats.AverageCost * 100))%)")
+                    Text("\(roundToTwoDecimal(priceStats.Change *  Float(portfolio.sharesRemain)))(\(roundToTwoDecimal(priceStats.Change/priceStats.AverageCost * 100))%)")
                 }
                 .stockColorify(priceChange: priceStats.Change)
             }

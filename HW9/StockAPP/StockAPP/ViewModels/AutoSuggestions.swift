@@ -37,8 +37,10 @@ class AutoSuggestions: GroupQuery {
     
     // MARK: - Intents()
     func startQuery(stockTicker: String) {
-        counter += 1
-        super.startQuery(for: stockTicker)
+        if !stockTicker.isEmpty {
+            counter += 1
+            super.startQuery(for: stockTicker)
+        }
     }
     
     func emptyResult() {

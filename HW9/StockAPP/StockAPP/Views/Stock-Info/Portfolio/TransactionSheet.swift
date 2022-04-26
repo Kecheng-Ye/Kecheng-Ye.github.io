@@ -289,8 +289,8 @@ struct TransactionSheet: View {
     }
     
     func MainPageUpdate(for stockTicker: String) {
-        priceQuery.updateOneStock(for: stockTicker)
-        briefQuery.updateOneStock(for: stockTicker)
+        priceQuery.updateOneStock(for: stockTicker, data: currentPrice)
+        briefQuery.updateOneStock(for: stockTicker, data: companyBrief)
     }
 }
 

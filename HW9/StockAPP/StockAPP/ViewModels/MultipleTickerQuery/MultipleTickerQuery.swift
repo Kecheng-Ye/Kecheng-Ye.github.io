@@ -46,15 +46,9 @@ class MultipleTickerQuery<T: Codable & APILinkable & APIDebugable & ReflectedStr
         super.startQuery(for: uniqueTickerList, updateLoad: updateLoad, postQuery: postQuery)
     }
     
-    func updateOneStock(for stockTicker: String) {
-        if !isMarketOpen {
-            return
-        }
-        
-        APIServices = [SingleItemQuery<T>(data: T(), update: update(stockTicker: stockTicker))]
-        let uniqueTickerList = [stockTicker]
-        
-        super.startQuery(for: uniqueTickerList, updateLoad: false, postQuery: postQuery)
+    func updateOneStock(for stockTicker: String, data: T) {
+        update(stockTicker: stockTicker)(data)
+        postQuery()
     }
     
     subscript(stockTicker: String) -> T {

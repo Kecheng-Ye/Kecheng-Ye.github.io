@@ -66,12 +66,12 @@ struct StockPortfolioView: View {
                 
                 HStack {
                     Text("Total Cost: ").fontWeight(.semibold)
-                    Text("$\(roundToTwoDecimal(costStats.AverageCost))")
+                    Text("$\(roundToTwoDecimal(costStats.AverageCost * Float(stockPortfolio.sharesRemain)))")
                 }
                 
                 HStack {
                     Text("Change: ").fontWeight(.semibold)
-                    Text("$\(roundToTwoDecimal(abs(costStats.Change)))").stockColorify(priceChange: costStats.Change)
+                    Text("$\(roundToTwoDecimal(abs(costStats.Change * Float(stockPortfolio.sharesRemain))))").stockColorify(priceChange: costStats.Change)
                 }
                 
                 HStack {

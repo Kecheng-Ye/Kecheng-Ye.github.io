@@ -74,7 +74,7 @@ class UserProfileVM: ObservableObject  {
         }
         
         result.AverageCost  = result.TotalCost / Float(stockRecord.sharesRemain)
-        result.Change       = currentPrice.currentPrice - result.AverageCost
+        result.Change       = (currentPrice.currentPrice - result.AverageCost)
         result.MarketValue  = currentPrice.currentPrice * Float(stockRecord.sharesRemain)
         
         return result
