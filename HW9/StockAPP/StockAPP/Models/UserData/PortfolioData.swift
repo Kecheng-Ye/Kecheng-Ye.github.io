@@ -17,7 +17,13 @@ struct SingleStockPortfolio: Codable {
         case records
         case index
     }
-
+    
+    init() {
+        self.sharesRemain = 0
+        self.records = []
+        self.index = -1
+    }
+    
     init(sharesRemain: Int, records: [Trasaction]) {
         self.sharesRemain = sharesRemain
         self.records = records

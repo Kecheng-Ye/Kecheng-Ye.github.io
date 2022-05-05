@@ -64,7 +64,7 @@ function createGraph(ticker, ohlc, volume) {
     plotOptions: {
       series: {
         dataGrouping: {
-          units: small_grouping_units,
+          units: normal_grouping_units,
         },
       },
     },

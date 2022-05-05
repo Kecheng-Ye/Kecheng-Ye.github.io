@@ -50,7 +50,7 @@ struct onePortfolio: View {
     let stockTicker: String
     
     var body: some View {
-        let portfolio = userProfileVM.portfolio[stockTicker]!
+        let portfolio = userProfileVM.portfolio[stockTicker] ?? SingleStockPortfolio()
         let currentPrice = priceQuery[stockTicker]
         let priceStats = userProfileVM.calculateCostData(stockRecord: portfolio, currentPrice: currentPrice)
         
